@@ -120,20 +120,100 @@ export const vegetables_list = [
     { imgSrc: vege_22, item_name: "Red Chilli", item_price: "65 - 1kg" },
     { imgSrc: vege_23, item_name: "Sweet Potato", item_price: "45 - 1kg" },
     { imgSrc: vege_24, item_name: "Tomato", item_price: "60 - 1kg" },
-]
+];
 
 export const coldrinks_list = [{
 
-}]
+}];
 
-export const snacks_list = [{
+import snacks_1 from '../Images/Snacks_Images/Bingo.png';
+import snacks_2 from '../Images/Snacks_Images/Doritos.png';
+import snacks_3 from '../Images/Snacks_Images/Cheetos.png';
+import snacks_4 from '../Images/Snacks_Images/TooYu.png';
+import snacks_5 from '../Images/Snacks_Images/Food_Locker.png';
+import snacks_6 from '../Images/Snacks_Images/Krack-Jack.png';
+import snacks_7 from '../Images/Snacks_Images/KURKURE.png';
+import snacks_8 from '../Images/Snacks_Images/Lays.png';
+import snacks_9 from '../Images/Snacks_Images/Maggi.png';
+import snacks_10 from '../Images/Snacks_Images/Monaco_Cheeslings.png';
+import snacks_11 from '../Images/Snacks_Images/MongDal.png';
+import snacks_12 from '../Images/Snacks_Images/Potato_Mint_Chips.png';
+import snacks_13 from '../Images/Snacks_Images/Pringles.png';
+import snacks_14 from '../Images/Snacks_Images/PotatoChips.png';
+import snacks_15 from '../Images/Snacks_Images/Soya_Sticks.png';
+import snacks_16 from '../Images/Snacks_Images/Chipssy.png';
 
-}]
+export const snacks_list = [
+    { imgSrc: snacks_1, item_name: "Bingo", item_price: "10 Rs" },
+    { imgSrc: snacks_2, item_name: "Doritos", item_price: "10 Rs" },
+    { imgSrc: snacks_3, item_name: "Cheetos", item_price: "10 Rs" },
+    { imgSrc: snacks_4, item_name: "Too Yumm", item_price: "10 Rs" },
+    { imgSrc: snacks_5, item_name: "Food Lacker", item_price: "10 Rs" },
+    { imgSrc: snacks_6, item_name: "Krack Jack", item_price: "10 Rs" },
+    { imgSrc: snacks_7, item_name: "Kurkure", item_price: "10 Rs" },
+    { imgSrc: snacks_8, item_name: "Lays", item_price: "10 Rs" },
+    { imgSrc: snacks_9, item_name: "Maggi", item_price: "10 Rs" },
+    { imgSrc: snacks_10, item_name: "Monaco", item_price: "10 Rs" },
+    { imgSrc: snacks_11, item_name: "Mong Dal", item_price: "10 Rs" },
+    { imgSrc: snacks_12, item_name: "Potato Mint", item_price: "10 Rs" },
+    { imgSrc: snacks_13, item_name: "Pringles", item_price: "10 Rs" },
+    { imgSrc: snacks_14, item_name: "Potato Chips", item_price: "10 Rs" },
+    { imgSrc: snacks_15, item_name: "Soya Sticks", item_price: "10 Rs" },
+    { imgSrc: snacks_16, item_name: "Chippsy", item_price: "10 Rs" },
+];
 
-export const chocolates_list = [{
+import choco_1 from '../Images/Chocolates_Images/5Star.png'
+import choco_2 from '../Images/Chocolates_Images/DairyMilk.png'
+import choco_3 from '../Images/Chocolates_Images/Twix.png'
+import choco_4 from '../Images/Chocolates_Images/MilkyWay.png'
+import choco_5 from '../Images/Chocolates_Images/Kinder-joy.png'
+import choco_6 from '../Images/Chocolates_Images/Amul_Dark.png'
+import choco_7 from '../Images/Chocolates_Images/Amul_Milk.png'
+import choco_8 from '../Images/Chocolates_Images/Munch.png'
+import choco_9 from '../Images/Chocolates_Images/Kinder_Bueno.png'
+import choco_10 from '../Images/Chocolates_Images/Hersheys.png'
+import choco_11 from '../Images/Chocolates_Images/Snickers.png'
+import choco_12 from '../Images/Chocolates_Images/Perk.png'
+import choco_13 from '../Images/Chocolates_Images/Crunch.png'
+import choco_14 from '../Images/Chocolates_Images/Gems.png'
+import choco_15 from '../Images/Chocolates_Images/Oreo.png'
+import choco_16 from '../Images/Chocolates_Images/Mars.png'
+import choco_17 from '../Images/Chocolates_Images/Kit-kat.png'
+import choco_18 from '../Images/Chocolates_Images/kishmi.png'
+import choco_19 from '../Images/Chocolates_Images/TicTac.png'
+import choco_20 from '../Images/Chocolates_Images/Center-fresh.png'
+import choco_21 from '../Images/Chocolates_Images/Eclairs.png'
+import choco_22 from '../Images/Chocolates_Images/lolipops.png'
+import choco_23 from '../Images/Chocolates_Images/Orange.png'
+import choco_24 from '../Images/Chocolates_Images/Melody.png'
 
-}]
+export const chocolates_list = [
+    { imgSrc: choco_1, item_name: "5 Star", item_price: "20 rs" },
+    { imgSrc: choco_2, item_name: "Dairy Milk", item_price: "25 rs" },
+    { imgSrc: choco_3, item_name: "Twix", item_price: "20 rs" },
+    { imgSrc: choco_4, item_name: "MilkyWay", item_price: "25 rs" },
+    { imgSrc: choco_5, item_name: "Kinder joy", item_price: "40 rs" },
+    { imgSrc: choco_6, item_name: "Amul Dark", item_price: "50 rs" },
+    { imgSrc: choco_7, item_name: "Amul Milk", item_price: "50 rs" },
+    { imgSrc: choco_8, item_name: "Munch", item_price: "20 rs" },
+    { imgSrc: choco_9, item_name: "Kinder Bueno", item_price: "25 rs" },
+    { imgSrc: choco_10, item_name: "Hersheys", item_price: "20 rs" },
+    { imgSrc: choco_11, item_name: "Snickers", item_price: "20 rs" },
+    { imgSrc: choco_12, item_name: "Perk", item_price: "10 rs" },
+    { imgSrc: choco_13, item_name: "Crunch", item_price: "20 rs" },
+    { imgSrc: choco_14, item_name: "Gems", item_price: "15 rs" },
+    { imgSrc: choco_15, item_name: "Oreo", item_price: "25 rs" },
+    { imgSrc: choco_16, item_name: "Mars", item_price: "30 rs" },
+    { imgSrc: choco_17, item_name: "Kit Kat", item_price: "20 rs" },
+    { imgSrc: choco_18, item_name: "Kishmi", item_price: "10 rs" },
+    { imgSrc: choco_19, item_name: "Tic Tac", item_price: "20 rs" },
+    { imgSrc: choco_20, item_name: "Center Fresh", item_price: "5 rs" },
+    { imgSrc: choco_21, item_name: "Eclairs", item_price: "5 rs" },
+    { imgSrc: choco_22, item_name: "Lolipops", item_price: "10 rs" },
+    { imgSrc: choco_23, item_name: "Orange", item_price: "5 rs" },
+    { imgSrc: choco_24, item_name: "Melody", item_price: "5 rs" },
+];
 
 export const grocerys_list = [{
 
-}]
+}];

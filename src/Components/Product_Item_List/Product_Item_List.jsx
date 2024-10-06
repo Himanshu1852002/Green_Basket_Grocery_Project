@@ -2,7 +2,6 @@
 
 import PropTypes from "prop-types";
 import './Product_Item_List.css';
-
 // Reusable Card component
 const Card = ({ title, price, imageSrc }) => {
     return (
