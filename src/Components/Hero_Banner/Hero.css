@@ -1,0 +1,147 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.banner {
+    margin-top: 70px;
+}
+
+.banner hr {
+    height: 2px;
+    color: black;
+    padding: 0;
+    margin: 0;
+}
+
+.first-col {
+    display: flex;
+    flex-direction: column;
+    animation: animate 2s;
+}
+
+.first-col h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--green-color);
+    margin-left: 100px;
+
+}
+
+.first-col h1 span {
+    color: #EB5B00;
+
+}
+
+.first-col p {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #1E201E;
+    margin-left: 100px;
+
+}
+
+.first-col button {
+    height: 45px;
+    width: 120px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    background-color: #059212;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    margin-left: 100px;
+
+}
+
+.first-col button:hover,
+active {
+    background-color: #EB5B00;
+    color: #fff;
+    border: none;
+}
+
+.second-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.second-col img {
+    margin-top: 30px;
+    height: 350px;
+    width: 350px;
+}
+
+@keyframes animate {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+@media (max-width:1200px) {
+    .first-col h1 {
+        font-size: 2.2rem;
+    }
+
+    .first-col p {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width:992px) {
+    .first-col h1 {
+        margin-left: 50px;
+        font-size: 1.8rem;
+    }
+
+    .first-col p {
+        margin-left: 50px;
+    }
+
+    .first-col button {
+        margin-left: 50px;
+    }
+
+    .second-col img {
+        margin-top: 30px;
+        height: 320px;
+        width: 320px;
+    }
+}
+
+@media (max-width:768px) {
+    .first-col h1 {
+        font-size: 1.6rem;
+    }
+
+    .first-col p {
+        font-size: 1rem;
+    }
+
+    .first-col button {
+        height: 35px;
+        width: 100px;
+        font-size: 0.8rem;
+    }
+
+    .second-col img {
+        margin-top: 30px;
+        height: 300px;
+        width: 300px;
+    }
+}
+
+@media (max-width:576px) {
+    .second-col img {
+        margin-top: 30px;
+        height: 250px;
+        width: 250px;
+    }
+}

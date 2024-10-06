@@ -1,0 +1,143 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.testimonials {
+    /* background-color: #E7F0DC; */
+    padding-bottom: 50px;
+    position: relative;
+}
+
+.testimonials h1 {
+    text-align: center;
+    font-weight: bold;
+    color: orangered;
+    text-transform: uppercase;
+}
+
+.testimonials h1::after {
+    content: "";
+    background: #000000;
+    display: block;
+    height: 3px;
+    width: 170px;
+    margin: 20px auto 10px;
+}
+
+.testimonials p {
+    color: #222831;
+    font-weight: 600;
+}
+
+.profile {
+    position: relative;
+    background-color: #2f353d;
+
+    padding: 70px 20px 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.profile img {
+    position: absolute;
+    top: -60px;
+    left: calc(50% - 60px);
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 10px solid #E7FBE6;
+    background-color: white;
+}
+
+.user {
+    object-fit: cover;
+}
+
+.profile h3 {
+    font-size: 20px;
+    margin-top: 15px;
+    color: green;
+}
+
+.profile h3 span {
+    font-size: 12px;
+    color: #E7F0DC;
+    display: block;
+}
+
+.blockquote {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-top: 20px;
+}
+
+.blockquote p {
+    color: #E7F0DC;
+}
+
+.profile:hover {
+    box-shadow: 0 0 15px 10px rgba(198, 197, 197, 0.2);
+    cursor: pointer;
+}
+
+/* Default styles */
+.cc-prev,
+.cc-next {
+    position: absolute;
+    top: 100%;
+    width: 40px;
+    height: 40px;
+    transform: translateY(-50%);
+    background-color: #059212;
+    border-radius: 50%;
+    opacity: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Large screens (default) */
+.cc-prev {
+    left: 45%;
+}
+
+.cc-next {
+    right: 45%;
+}
+
+/* Medium screens */
+@media (max-width: 992px) {
+    .cc-prev {
+        left: 40%;
+    }
+
+    .cc-next {
+        right: 40%;
+    }
+}
+
+/* Small screens */
+@media (max-width: 768px) {
+    .cc-prev {
+        left: 35%;
+    }
+
+    .cc-next {
+        right: 35%;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 576px) {
+    .cc-prev {
+        left: 30%;
+    }
+
+    .cc-next {
+        right: 30%;
+    }
+}
