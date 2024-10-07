@@ -10,7 +10,7 @@
  }
 
  .product_card,
- .card-body {
+ .product_card_body {
      display: flex;
      justify-content: center;
      align-items: center;
@@ -24,7 +24,7 @@
  }
 
  @media (max-width: 768px) {
-     .card-body {
+     .product_card_body {
          text-align: center;
      }
 

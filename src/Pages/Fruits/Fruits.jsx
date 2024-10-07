@@ -3,7 +3,10 @@ import Banners from "../../Components/Banners/Banners"
 import Product_Item_List from '../../Components/Product_Item_List/Product_Item_List';
 import { fruits_list } from '../../assets/Images/assets'
 import ExploreMenu from '../../Components/Explore_Menu/Explore_Menu';
+import { useState } from 'react';
+
 const Fruits = () => {
+    const [category, setCategory] = useState("Fruits")
     return (
         <>
             <Banners
@@ -13,7 +16,7 @@ const Fruits = () => {
                 item_img={fruits_img}
 
             />
-            <ExploreMenu />
+            <ExploreMenu category={category} setCategory={setCategory} />
             <Product_Item_List
                 items={fruits_list}
             />

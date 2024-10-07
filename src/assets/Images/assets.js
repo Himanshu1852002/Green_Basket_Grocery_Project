@@ -246,6 +246,8 @@ export const chocolates_list = [
     { imgSrc: choco_24, item_name: "Melody", item_price: "5 rs" },
 ];
 
+ 
+
 export const grocerys_list = [{
 
 }];
