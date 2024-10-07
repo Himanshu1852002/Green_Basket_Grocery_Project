@@ -9,7 +9,7 @@ import coca_cola_img from '../../assets/Images/Images/coca-cola.png';
 import termaric_img from '../../assets/Images/Images/termaric.png';
 import rice_img from '../../assets/Images/Images/rice.png';
 
-const Card = ({ imgSrc, title, description }) => {
+const Cards = ({ imgSrc, title, description }) => {
     return (
         <div className="col">
             <div className="card h-100">
@@ -25,7 +25,7 @@ const Card = ({ imgSrc, title, description }) => {
 };
 
 // PropTypes for validation
-Card.propTypes = {
+Cards.propTypes = {
     imgSrc: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired
@@ -49,14 +49,14 @@ const Featured_Product = () => {
             {/* First row of cards */}
             <div className="row row-cols-1 row-cols-s-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4">
                 {cards.slice(0, 4).map((card, index) => (
-                    <Card key={index} imgSrc={card.imgSrc} title={card.title} description={card.description} />
+                    <Cards key={index} imgSrc={card.imgSrc} title={card.title} description={card.description} />
                 ))}
             </div>
 
             {/* Second row of cards */}
             <div className="row row-cols-1 row-cols-s-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4 mt-4">
                 {cards.slice(4).map((card, index) => (
-                    <Card key={index} imgSrc={card.imgSrc} title={card.title} description={card.description} />
+                    <Cards key={index} imgSrc={card.imgSrc} title={card.title} description={card.description} />
                 ))}
             </div>
         </div>
