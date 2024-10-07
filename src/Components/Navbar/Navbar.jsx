@@ -47,9 +47,9 @@ const Navbar = ({ setShowLogin }) => {
                                     More
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown2">
-                                    <li><a className="dropdown-item" href="#">About</a></li>
-                                    <li><a className="dropdown-item" href="#">Blogs</a></li>
-                                    <li><a className="dropdown-item" href="#">Contact</a></li>
+                                    <li><Link to={'/about'} className="dropdown-item">About</Link></li>
+                                    <li><Link to={'/blog'} className="dropdown-item">Blogs</Link></li>
+                                    <li><Link to={'/contact'} className="dropdown-item">Contact</Link></li>
                                 </ul>
                             </li>
                         </ul>

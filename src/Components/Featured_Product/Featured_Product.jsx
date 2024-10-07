@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'; // Import PropTypes
+import PropTypes from 'prop-types';
 import './Featured_Product.css';
 import apple_img from '../../assets/Images/Images/apple.png';
 import strawberry from '../../assets/Images/Images/Strawberry.png';

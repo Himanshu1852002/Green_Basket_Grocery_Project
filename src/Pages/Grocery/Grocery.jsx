@@ -2,6 +2,8 @@ import Grocery_img from '../../assets/Images/Images/grocery_items.png'
 import Banners from '../../Components/Banners/Banners'
 import ExploreMenu from '../../Components/Explore_Menu/Explore_Menu'
 import { useState } from 'react'
+import Product_Item_List from '../../Components/Product_Item_List/Product_Item_List';
+import { grocerys_list } from '../../assets/Images/assets';
 
 const Grocery = () => {
     const [category, setCategory] = useState("Grocery")
@@ -14,6 +16,9 @@ const Grocery = () => {
                 item_img={Grocery_img}
             />
             <ExploreMenu category={category} setCategory={setCategory} />
+            <Product_Item_List
+                items={grocerys_list}
+            />
         </>
     )
 }

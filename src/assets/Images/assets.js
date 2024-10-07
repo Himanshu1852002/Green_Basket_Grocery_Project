@@ -246,8 +246,54 @@ export const chocolates_list = [
     { imgSrc: choco_24, item_name: "Melody", item_price: "5 rs" },
 ];
 
- 
+import gro_1 from '../Images/Grocery_Item_Images/Oil.png';
+import gro_2 from '../Images/Grocery_Item_Images/Aashirvad Aata.png';
+import gro_3 from '../Images/Grocery_Item_Images/Amul_Batter.png';
+import gro_4 from '../Images/Grocery_Item_Images/Basmati_Rice.png';
+import gro_5 from '../Images/Grocery_Item_Images/Bru_gold_coffee.png';
+import gro_6 from '../Images/Grocery_Item_Images/Cashews.png';
+import gro_7 from '../Images/Grocery_Item_Images/Chana_Dal.png';
+import gro_8 from '../Images/Grocery_Item_Images/Chocos.png';
+import gro_9 from '../Images/Grocery_Item_Images/Chole_Masala.png';
+import gro_10 from '../Images/Grocery_Item_Images/Coriander.png';
+import gro_11 from '../Images/Grocery_Item_Images/Ghee.png';
+import gro_12 from '../Images/Grocery_Item_Images/Ginger_Garlic_Paste.png';
+import gro_13 from '../Images/Grocery_Item_Images/Honey.png';
+import gro_14 from '../Images/Grocery_Item_Images/Kissan_Ketchup.png';
+import gro_15 from '../Images/Grocery_Item_Images/Nescafe.png';
+import gro_16 from '../Images/Grocery_Item_Images/Paneer-masala.png';
+import gro_17 from '../Images/Grocery_Item_Images/Pasta.png';
+import gro_18 from '../Images/Grocery_Item_Images/Pista_Nuts.png';
+import gro_19 from '../Images/Grocery_Item_Images/Red_Chilli_Powder.png';
+import gro_20 from '../Images/Grocery_Item_Images/Saffola_oats.png';
+import gro_21 from '../Images/Grocery_Item_Images/Sugar.png';
+import gro_22 from '../Images/Grocery_Item_Images/Toor_Dal.png';
+import gro_23 from '../Images/Grocery_Item_Images/Tata_Salt.png';
+import gro_24 from '../Images/Grocery_Item_Images/Tata_Tea.png';
 
-export const grocerys_list = [{
-
-}];
+export const grocerys_list = [
+    { imgSrc: gro_1, item_name: "Oil", item_price: "100rs - 1kg" },
+    { imgSrc: gro_2, item_name: "Aashirvad Aata", item_price: "30rs - 1kg" },
+    { imgSrc: gro_3, item_name: "Amul Butter", item_price: "90rs - 1kg" },
+    { imgSrc: gro_4, item_name: "Basmati Rice", item_price: "110rs - 1kg" },
+    { imgSrc: gro_5, item_name: "Bru Gold Coffee", item_price: "50rs - 1kg" },
+    { imgSrc: gro_6, item_name: "Cashews", item_price: "200rs - 1kg" },
+    { imgSrc: gro_7, item_name: "Chana Dal", item_price: "120rs - 1kg" },
+    { imgSrc: gro_8, item_name: "Chocos", item_price: "50rs - 1kg" },
+    { imgSrc: gro_9, item_name: "Chole Masala", item_price: "40rs - 100g" },
+    { imgSrc: gro_10, item_name: "Coriander", item_price: "40rs - 100g" },
+    { imgSrc: gro_11, item_name: "Ghee", item_price: "400rs - 1kg" },
+    { imgSrc: gro_12, item_name: "Ginger Garlic Paste", item_price: "100rs - 250g" },
+    { imgSrc: gro_13, item_name: "Honey", item_price: "100rs - 500g" },
+    { imgSrc: gro_14, item_name: "Kissan Ketchup", item_price: "100rs - 250g" },
+    { imgSrc: gro_15, item_name: "Nescafe", item_price: "100rs - 1kg" },
+    { imgSrc: gro_16, item_name: "Paneer Masala", item_price: "80rs - 100g" },
+    { imgSrc: gro_17, item_name: "Pasta", item_price: "100rs - 1kg" },
+    { imgSrc: gro_18, item_name: "Pista Nuts", item_price: "300rs - 1kg" },
+    { imgSrc: gro_19, item_name: "Red Chilli Powder", item_price: "100rs - 1kg" },
+    { imgSrc: gro_20, item_name: "Saffola Oats", item_price: "100rs - 1kg" },
+    { imgSrc: gro_21, item_name: "Sugar", item_price: "40rs - 1kg" },
+    { imgSrc: gro_22, item_name: "Toor Dal", item_price: "100rs - 1kg" },
+    { imgSrc: gro_23, item_name: "Tata Salt", item_price: "25rs - 1kg" },
+    { imgSrc: gro_24, item_name: "Tata Tea", item_price: "100rs - 1kg" },
+];
