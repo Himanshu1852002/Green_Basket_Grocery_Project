@@ -1,4 +1,5 @@
 import Banners from "../../Components/Banners/Banners"
+import ExploreMenu from "../../Components/Explore_Menu/Explore_Menu"
 import Product_Item_List from "../../Components/Product_Item_List/Product_Item_List"
 import veges_img from '../../assets/Images/Images/veges.png'
 import { vegetables_list } from "../../assets/Images/assets"
@@ -11,8 +12,9 @@ const Vegetables = () => {
                 heading="CHOOSE FRESH AND GREEN VEGETABLES FOR HEALTH"
                 item_img={veges_img}
             />
+            <ExploreMenu />
             <Product_Item_List
-            items={vegetables_list}
+                items={vegetables_list}
             />
         </>
     )

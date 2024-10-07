@@ -122,9 +122,41 @@ export const vegetables_list = [
     { imgSrc: vege_24, item_name: "Tomato", item_price: "60 - 1kg" },
 ];
 
-export const coldrinks_list = [{
+import drink_1 from '../Images/Coldrinks_Images/Crush.png';
+import drink_2 from '../Images/Coldrinks_Images/Fanta-purple.png';
+import drink_3 from '../Images/Coldrinks_Images/Sprite.png';
+import drink_4 from '../Images/Coldrinks_Images/Coca-Cola.png';
+import drink_5 from '../Images/Coldrinks_Images/Dr_Pepper.png';
+import drink_6 from '../Images/Coldrinks_Images/Fanta-orange.png';
+import drink_7 from '../Images/Coldrinks_Images/Fresh-Juice.png';
+import drink_8 from '../Images/Coldrinks_Images/Mirinda-orange.png';
+import drink_9 from '../Images/Coldrinks_Images/Fanta-Rashberry.png';
+import drink_10 from '../Images/Coldrinks_Images/Pepsi.png';
+import drink_11 from '../Images/Coldrinks_Images/Monster.png';
+import drink_12 from '../Images/Coldrinks_Images/Sting.png';
+import drink_13 from '../Images/Coldrinks_Images/Strawberry_Juice.png';
+import drink_14 from '../Images/Coldrinks_Images/appyFizz.png';
+import drink_15 from '../Images/Coldrinks_Images/Maaza.png';
+import drink_16 from '../Images/Coldrinks_Images/7_UP.png';
 
-}];
+export const coldrinks_list = [
+    { imgSrc: drink_1, item_name: "Crush", item_price: "40rs - 1lt" },
+    { imgSrc: drink_2, item_name: "Fanta Grapsh", item_price: "40rs - 1lt" },
+    { imgSrc: drink_3, item_name: "Sprite", item_price: "40rs - 1lt" },
+    { imgSrc: drink_4, item_name: "Coca Cola", item_price: "40rs - 1lt" },
+    { imgSrc: drink_5, item_name: "DR Pepper", item_price: "40rs - 1lt" },
+    { imgSrc: drink_6, item_name: "Fanta Orange", item_price: "40rs - 1lt" },
+    { imgSrc: drink_7, item_name: "Fresh Juice", item_price: "40rs - 1lt" },
+    { imgSrc: drink_8, item_name: "Mirinda Orange", item_price: "40rs - 1lt" },
+    { imgSrc: drink_9, item_name: "Fanta Rashberry", item_price: "40rs - 1lt" },
+    { imgSrc: drink_10, item_name: "Pepsi", item_price: "40rs - 1lt" },
+    { imgSrc: drink_11, item_name: "Monster", item_price: "40rs - 1lt" },
+    { imgSrc: drink_12, item_name: "Sting", item_price: "40rs - 1lt" },
+    { imgSrc: drink_13, item_name: "Strawberry Juice", item_price: "40rs - 1lt" },
+    { imgSrc: drink_14, item_name: "Appy Fizz", item_price: "40rs - 1lt" },
+    { imgSrc: drink_15, item_name: "Maaza", item_price: "40rs - 1lt" },
+    { imgSrc: drink_16, item_name: "7 UP", item_price: "40rs - 1lt" },
+];
 
 import snacks_1 from '../Images/Snacks_Images/Bingo.png';
 import snacks_2 from '../Images/Snacks_Images/Doritos.png';

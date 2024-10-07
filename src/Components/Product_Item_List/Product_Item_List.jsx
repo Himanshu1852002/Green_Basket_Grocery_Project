@@ -32,7 +32,7 @@ const Product_Item_List = ({ items }) => {
     }
 
     return (
-        <div className="container">
+        <div className="container product_container">
             {rows.map((row, rowIndex) => (
                 <div className="row" key={rowIndex}>
                     {row.map((card, index) => (
