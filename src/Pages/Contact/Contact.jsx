@@ -9,7 +9,7 @@ const Contact = () => {
             <div className="container-fluid contact_container">
                 <div className="row contact_row_1">
                     <div className="col-12 d-flex justify-content-center align-items-center contact_heading">
-                        <h1>CONTACT US</h1>
+                        <h1 className="fw-bold fs-1">CONTACT US</h1>
                     </div>
                 </div>
                 <div className="row  contact_row_2">

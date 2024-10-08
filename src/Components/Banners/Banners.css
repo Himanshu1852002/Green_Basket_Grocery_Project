@@ -2,7 +2,6 @@
  @import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Ribeye&display=swap');
 
  .banner_row {
-     background-color: #C0EBA6;
      margin-top: 70px;
  }
 
@@ -10,15 +9,15 @@
      font-size: 3.8rem;
      font-family: "Ribeye", serif;
      font-weight: 900;
-     color: #ff5e01;
+     color: black;
      margin-bottom: 0;
  }
 
  .banner_text .second_text {
      font-size: 3.8rem;
      font-family: "Lilita One", sans-serif;
-     font-weight: 900;
-     color: green;
+     font-weight: 700;
+     color: black;
      font-style: normal;
      margin-top: 0;
  }

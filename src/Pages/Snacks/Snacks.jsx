@@ -11,9 +11,10 @@ const Snacks = () => {
         <>
             <Banners
                 title1='Spicy and'
-                title2='Cruchy Snacks'
+                title2='Crunchy Snacks'
                 heading='CHOOSE CRUNCHINES FOR MORNING MOOD'
                 item_img={chips_img}
+                backgroundColor='#E72929'
             />
             <ExploreMenu category={category} setCategory={setCategory} />
             <Product_Item_List

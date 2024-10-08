@@ -7,6 +7,7 @@ import { FaAddressCard } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
 import { FaInstagramSquare } from "react-icons/fa";
 import { FaFacebookSquare } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 const Footer = () => {
     return (
 
@@ -18,32 +19,32 @@ const Footer = () => {
                         <div className="col-lg-3 col-md-6 col-sm-6 mb-md-3 mb-sm-3 colm">
                             <h3>Quick Links</h3>
                             <ul className="list-group">
-                                <li className="list-group-item"><a href="#">Home</a></li>
-                                <li className="list-group-item"><a href="#">Offer</a></li>
-                                <li className="list-group-item"><a href="#">Wishlist</a></li>
-                                <li className="list-group-item"><a href="#">Cart</a></li>
-                                <li className="list-group-item"><a href="#">Account</a></li>
+                                <li className="list-group-item"><Link to={'/'}>Home</Link></li>
+                                <li className="list-group-item"><Link >Offer</Link></li>
+                                <li className="list-group-item"><Link >Wishlist</Link></li>
+                                <li className="list-group-item"><Link >Cart</Link></li>
+                                <li className="list-group-item"><Link >Account</Link></li>
                             </ul>
                         </div>
                         <div className="col-lg-3 col-md-6 col-sm-6 mb-md-3 mb-sm-3 colm">
                             <h3>Information</h3>
                             <ul className="list-group">
-                                <li className="list-group-item"><a href="#">About Us</a></li>
-                                <li className="list-group-item"><a href="#">Blogs</a></li>
-                                <li className="list-group-item"><a href="#">Contact Us</a></li>
-                                <li className="list-group-item"><a href="#">Terms and Services</a></li>
-                                <li className="list-group-item"><a href="#">Refund Policy</a></li>
+                                <li className="list-group-item"><Link to={'/about'}>About Us</Link></li>
+                                <li className="list-group-item"><Link to={'/blog'}>Blogs</Link></li>
+                                <li className="list-group-item"><Link to={'/contact'}>Contact Us</Link></li>
+                                <li className="list-group-item"><Link to={'/'}>Terms and Services</Link></li>
+                                <li className="list-group-item"><Link to={'/'}>Refund Policy</Link></li>
                             </ul>
                         </div>
                         <div className="col-lg-3 col-md-6 col-sm-6 colm">
                             <h3>Categories</h3>
                             <ul className="list-group">
-                                <li className="list-group-item"><a href="#">Fruits</a></li>
-                                <li className="list-group-item"><a href="#">Vegetables</a></li>
-                                <li className="list-group-item"><a href="#">Chocolate</a></li>
-                                <li className="list-group-item"><a href="#">Coldrinks</a></li>
-                                <li className="list-group-item"><a href="#">Snacks</a></li>
-                                <li className="list-group-item"><a href="#">Groceries</a></li>
+                                <li className="list-group-item"><Link to={'/fruits'}>Fruits</Link></li>
+                                <li className="list-group-item"><Link to={'/vegetables'}>Vegetables</Link></li>
+                                <li className="list-group-item"><Link to={'/chocolates'}>Chocolate</Link></li>
+                                <li className="list-group-item"><Link to={'/drinks'}>Coldrinks</Link></li>
+                                <li className="list-group-item"><Link to={'/snacks'}>Snacks</Link></li>
+                                <li className="list-group-item"><Link to={'/grocery'}>Grocery</Link></li>
                             </ul>
                         </div>
                         <div className="col-lg-3 col-md-6 col-sm-6 colm">

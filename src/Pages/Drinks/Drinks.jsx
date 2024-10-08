@@ -13,6 +13,7 @@ const Drinks = () => {
                 title2="Fresh Drinks"
                 heading="DRINK FRESH AND MOOD FRESH"
                 item_img={coldrinks_img}
+                backgroundColor="#344C64"
             />
             <ExploreMenu category={category} setCategory={setCategory} />
             <Product_Item_List

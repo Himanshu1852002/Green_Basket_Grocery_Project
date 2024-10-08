@@ -14,6 +14,7 @@ const Fruits = () => {
                 title2='Fruits'
                 heading='CHOOSE FROM OUR BEST ITEMS'
                 item_img={fruits_img}
+                backgroundColor='#EB5B00'
 
             />
             <ExploreMenu category={category} setCategory={setCategory} />
