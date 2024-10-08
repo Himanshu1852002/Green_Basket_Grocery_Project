@@ -1,7 +1,6 @@
  .card-box {
      height: 100%;
      width: 100%;
-     /* background-color: #F5EDED; */
  }
 
  .cards {
@@ -16,16 +15,13 @@
      padding-top: 15px;
      border-radius: 15px;
      height: 200px;
-     width: 300px;
+     width: 280px;
      display: flex;
      justify-content: center;
      align-items: center;
      background-color: #2f353d;
      background-size: cover;
      position: relative;
-
-     /* filter: drop-shadow(5px 12px 20px #000000); */
-     /* box-shadow: 0px 50px 100px -20px rgba(50, 50, 93, 0.25), 0px 30px 60px -30px rgba(0, 0, 0, 0.3), inset 0px -2px 6px 0px rgba(10, 37, 64, 0.35); */
  }
 
  .body-card h2 {
@@ -51,11 +47,7 @@
      }
  }
 
- @media (max-width:1120px) {
-     .card-create {
-         width: 230px;
-     }
- }
+
 
  @media (max-width:992px) {
      .card-create {
@@ -69,11 +61,6 @@
      }
  }
 
- @media (max-width:629px) {
-     .card-create {
-         width: 250px;
-     }
- }
 
  @media (max-width:575px) {
      .card-create {
