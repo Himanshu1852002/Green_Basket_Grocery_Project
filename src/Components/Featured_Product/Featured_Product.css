@@ -16,13 +16,18 @@
     color: orangered;
 }
 
-/* Card image styling */
 .card img {
     width: 60%;
     height: auto;
 }
 
-/* Set image size according to viewport */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    background-color: orangered;
+}
+
 @media (min-width: 576px) {
     .card img {
         max-width: 120px;
