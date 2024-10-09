@@ -1,13 +1,26 @@
 import PropTypes from "prop-types";
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../Store/cartSlice';
 
-const Card = ({ title, price, imageSrc }) => {
+const Card = ({ item_id, title, price, imageSrc }) => {
 
     const [isWishlisted, setIsWishlisted] = useState(false);
+    const dispatch = useDispatch();
 
     const toggleWishlist = () => {
         setIsWishlisted(!isWishlisted);
+    };
+
+    const handleAddToCart = () => {
+        // Dispatch the addToCart action with the item details
+        dispatch(addToCart({
+            item_id,       // Unique ID of the product
+            item_name: title,
+            item_price: price,
+            imgSrc: imageSrc,
+        }));
     };
 
     return (
@@ -23,8 +36,9 @@ const Card = ({ title, price, imageSrc }) => {
                 </span>
                 <div className="card-body product_card_body">
                     <h5 className="card-title">{title}</h5>
-                    <p className="card-text">{price}</p>
-                    <button className="btn ">Add to cart</button>
+                    <p className="card-text">{price} - rs</p>
+                    <button className="btn " onClick={handleAddToCart}
+                    >Add to cart</button>
                 </div>
             </div>
         </div>
@@ -32,6 +46,7 @@ const Card = ({ title, price, imageSrc }) => {
 }
 
 Card.propTypes = {
+    item_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     title: PropTypes.string.isRequired,
     price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     imageSrc: PropTypes.string.isRequired,

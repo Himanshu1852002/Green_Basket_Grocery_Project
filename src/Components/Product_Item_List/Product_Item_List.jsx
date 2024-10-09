@@ -12,8 +12,12 @@ const Product_Item_List = ({ items }) => {
         <div className="container product_container">
             {rows.map((row, rowIndex) => (
                 <div className="row" key={rowIndex}>
-                    {row.map((card, index) => (
-                        <Card key={index} title={card.item_name} price={card.item_price} imageSrc={card.imgSrc} />
+                    {row.map((item, index) => (
+                        <Card key={index}
+                            item_id={item.item_id}
+                            title={item.item_name}
+                            price={item.item_price}
+                            imageSrc={item.imgSrc} />
                     ))}
                 </div>
             ))}
@@ -24,6 +28,7 @@ const Product_Item_List = ({ items }) => {
 Product_Item_List.propTypes = {
     items: PropTypes.arrayOf(
         PropTypes.shape({
+            item_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
             item_name: PropTypes.string.isRequired,
             item_price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
             imgSrc: PropTypes.string.isRequired,
