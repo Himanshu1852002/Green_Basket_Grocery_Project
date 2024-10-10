@@ -1,16 +1,28 @@
 import PropTypes from "prop-types";
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
-import { useState } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../Store/cartSlice';
+import { addToWishlist, removeFromWishlist } from "../../Store/wishlistSlice";
 
 const Card = ({ item_id, title, price, imageSrc }) => {
 
-    const [isWishlisted, setIsWishlisted] = useState(false);
     const dispatch = useDispatch();
 
+    const wishlist = useSelector((state)=>state.wishlist.items);
+    const isWishlisted = wishlist.find((item) => item.item_id === item_id);
+
     const toggleWishlist = () => {
-        setIsWishlisted(!isWishlisted);
+        if(isWishlisted){
+            dispatch(removeFromWishlist({item_id}));
+        }
+        else{
+            dispatch(addToWishlist({
+                item_id,
+                title,
+                price,
+                imageSrc,
+            }))
+        }
     };
 
     const handleAddToCart = () => {

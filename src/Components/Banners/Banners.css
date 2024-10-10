@@ -9,7 +9,7 @@
      font-size: 3.8rem;
      font-family: "Ribeye", serif;
      font-weight: 900;
-     color: black;
+     color: #fff;
      margin-bottom: 0;
  }
 
@@ -32,8 +32,8 @@
      border-radius: 25px;
      font-size: 1rem;
      font-weight: 700;
-     background-color: black;
-     color: #fff;
+     background-color:transparent;
+     color: #000;
      height: 40px;
      width: 120px;
  }
@@ -51,25 +51,47 @@
      filter: drop-shadow(1px 22px 27px #000000);
  }
 
- @media (max-width:992px) {
+ @media (max-width:1200px) {
      .banner_img img {
-         height: 310px;
-         width: 310px;
+         height: 270px;
+         width: 270px;
      }
 
      .banner_text .first_text {
-         font-size: 3.2rem;
+         font-size: 3rem;
 
      }
 
      .banner_text .second_text {
-         font-size: 3.2rem;
+         font-size: 3rem;
      }
 
      .banner_text h5 {
          color: black;
          font-size: 1rem;
-         font-weight: 800;
+         font-weight: 700;
+     }
+ }
+
+ @media (max-width:992px) {
+     .banner_img img {
+         height: 270px;
+         width: 270px;
+     }
+
+     .banner_text .first_text {
+         font-size: 3rem;
+
+     }
+
+     .banner_text .second_text {
+         font-size: 3rem;
+     }
+
+     .banner_text h5 {
+         color: black;
+         font-size: 0.8rem;
+         font-weight: 700;
      }
 
      .banner_text button {
@@ -84,21 +106,21 @@
 
  @media (max-width:767px) {
      .banner_img img {
-         height: 280px;
-         width: 280px;
+         height: 250px;
+         width: 250px;
      }
 
      .banner_text .first_text {
-         font-size: 3rem;
+         font-size: 2rem;
      }
 
      .banner_text .second_text {
-         font-size: 3rem;
+         font-size: 2rem;
      }
 
      .banner_text h5 {
          color: black;
-         font-size: 0.9rem;
+         font-size: 0.7rem;
          font-weight: 800;
      }
 
@@ -114,11 +136,13 @@
 
  @media (max-width:576px) {
      .banner_text .first_text {
-         font-size: 3.4rem;
+         margin-top: 20px;
+         font-size: 2.7rem;
+
      }
 
      .banner_text .second_text {
-         font-size: 3.4rem;
+         font-size: 2.7rem;
      }
 
      .banner_text h5 {

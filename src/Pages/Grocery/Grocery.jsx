@@ -14,7 +14,7 @@ const Grocery = () => {
                 title2='Make Healthy'
                 heading='CHOOSE FRESH AND HEALTHY ITEMS'
                 item_img={Grocery_img}
-                backgroundColor='#FFAF45'
+                backgroundColor='#D5B4B4'
             />
             <ExploreMenu category={category} setCategory={setCategory} />
             <Product_Item_List

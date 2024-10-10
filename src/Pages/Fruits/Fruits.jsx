@@ -10,11 +10,11 @@ const Fruits = () => {
     return (
         <>
             <Banners
-                title1='Fresh'
-                title2='Fruits'
+                title1='Fresh &'
+                title2='Juicy Fruits'
                 heading='CHOOSE FROM OUR BEST ITEMS'
                 item_img={fruits_img}
-                backgroundColor='#EB5B00'
+                backgroundColor='#FF8911'
 
             />
             <ExploreMenu category={category} setCategory={setCategory} />

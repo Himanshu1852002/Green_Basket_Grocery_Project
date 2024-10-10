@@ -8,18 +8,20 @@ import { IoMenu } from "react-icons/io5";
 import { FaShoppingCart } from "react-icons/fa";
 import PropTypes from 'prop-types'
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
+
 const Navbar = ({ setShowLogin }) => {
 
-
+    const totalItems = useSelector((state) => state.cart.totalQuantity);
 
     return (
         <div>
             <nav className="navbar navbar-expand-lg">
                 <div className="container-fluid nav-container">
-                    <a className="navbar-brand" href="#">
+                    <Link className="navbar-brand">
                         <img src={logo_img} alt="Logo" style={{ width: 40 }} />
                         <img src={logo_text} alt />
-                    </a>
+                    </Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span><IoMenu /></span>
                     </button>
@@ -29,9 +31,9 @@ const Navbar = ({ setShowLogin }) => {
                                 <Link to={'/'} className="nav-link">Home</Link>
                             </li>
                             <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <Link className="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Product
-                                </a>
+                                </Link>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li><Link to={'/fruits'} className="dropdown-item">Fruits</Link></li>
                                     <li><Link to={'/vegetables'} className="dropdown-item">Vegetables</Link></li>
@@ -61,13 +63,28 @@ const Navbar = ({ setShowLogin }) => {
                         </form>
                         <ul className="navbar-nav ms-3">
                             <li className="nav-item">
-                                <a className="nav-link" href="#"><FaHeart /><span className="badge bg-light text-dark">0</span></a>
+                                <Link to={'/wishlist'} className="nav-link"><FaHeart size={22} /></Link>
+                            </li>
+                            <li className="nav-item" style={{ position: 'relative' }}>
+                                <Link to={'/cart'} className="nav-link"><FaShoppingCart size={22} /> 
+                                    {totalItems > 0 && (
+                                        <div
+                                            style={{
+                                                width: '10px',
+                                                height: '10px',
+                                                backgroundColor: 'orange',
+                                                borderRadius: '50%',
+                                                position: 'absolute',
+                                                top: '0',
+                                                right: '0'
+                                            }}
+                                        >
+                                        </div>
+                                    )}
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <Link to={'/cart'} className="nav-link"><FaShoppingCart /><span className="badge  bg-light text-dark">0</span></Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link onClick={() => setShowLogin(true)} className="nav-link" href="#"><FaUser /></Link>
+                                <Link onClick={() => setShowLogin(true)} className="nav-link" href="#"><FaUser size={22} /></Link>
                             </li>
                         </ul>
                     </div>

@@ -30,7 +30,7 @@ const Cart = () => {
            </div>
 
             {cartItems.length === 0 ? (
-                <p className="text-center fw-bold fs-3 my-4">Your cart is empty.</p>
+                <p className="text-center fw-bold fs-3 my-5">Your cart is empty.</p>
             ) : (
                 <>
                     <div className="row">

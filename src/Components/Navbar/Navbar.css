@@ -31,7 +31,6 @@
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--green-color);
-    transition: 0.2s;
 }
 
 .nav-link:focus,
@@ -41,16 +40,20 @@
     color: orangered;
 }
 
-.navbar-nav .nav-link:hover {
-    color: var(--green-color);
-    transform: scale(1.1);
-}
 
-@media (max-width:992) {
+
+@media (max-width:992px) {
     .navbar-nav .nav-link:hover {
         color: var(--green-color);
-        transform: scale(0);
     }
+
+    .navbar-collapse ul li{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    
 }
 
 .search-box {

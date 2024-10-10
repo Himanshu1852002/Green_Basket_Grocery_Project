@@ -14,6 +14,7 @@ import About from './Pages/About/About';
 import Blog from './Pages/Blog/Blog';
 import Contact from './Pages/Contact/Contact';
 import Grocery from './Pages/Grocery/Grocery';
+import Wishlist from './Pages/wishlist/wishlist';
 import { useState } from 'react';
 import LoginPopup from './Components/Login_Popup/LoginPopup';
 
@@ -39,6 +40,7 @@ function App() {
           <Route path='/about' element={<About />} />
           <Route path='/blog' element={<Blog />} />
           <Route path='/contact' element={<Contact />} />
+          <Route path='/wishlist' element={<Wishlist />} />
         </Routes>
       </div>
       <Footer />
