@@ -31,7 +31,7 @@ const Navbar = ({ setShowLogin }) => {
                                 <Link to={'/'} className="nav-link">Home</Link>
                             </li>
                             <li className="nav-item dropdown">
-                                <Link className="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <Link className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Product
                                 </Link>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -66,21 +66,24 @@ const Navbar = ({ setShowLogin }) => {
                                 <Link to={'/wishlist'} className="nav-link"><FaHeart size={22} /></Link>
                             </li>
                             <li className="nav-item" style={{ position: 'relative' }}>
-                                <Link to={'/cart'} className="nav-link"><FaShoppingCart size={22} /> 
+                                <Link to={'/cart'} className="nav-link"><FaShoppingCart size={22} />
                                     {totalItems > 0 && (
-                                        <div
+                                        <span
+                                            className="badge rounded-circle bg-danger"
                                             style={{
-                                                width: '10px',
-                                                height: '10px',
-                                                backgroundColor: 'orange',
-                                                borderRadius: '50%',
                                                 position: 'absolute',
-                                                top: '0',
-                                                right: '0'
+                                                top: '-5px',
+                                                right: '-5px',
+                                                fontSize: '0.8rem',
+                                                width: '5px',
+                                                display: 'flex',
+                                                justifyContent: "center"
+
+
                                             }}
                                         >
-                                        </div>
-                                    )}
+                                            {totalItems}
+                                        </span>)}
                                 </Link>
                             </li>
                             <li className="nav-item">

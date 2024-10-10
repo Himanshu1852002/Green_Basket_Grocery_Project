@@ -10,7 +10,7 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        addToCart(state, action) {
+        increaseItem(state, action) {
             const newItem = action.payload;
             const existingItem = state.cartItems.find((item) => item.item_id === newItem.item_id);
             if (existingItem) {
@@ -29,7 +29,7 @@ const cartSlice = createSlice({
             }
             state.totalAmount += newItem.item_price;
         },
-        removeFromCart(state, action) {
+        decreaseItem(state, action) {
             const id = action.payload;
             const existingItem = state.cartItems.find((item) => item.item_id === id);
             if (existingItem) {
@@ -43,8 +43,36 @@ const cartSlice = createSlice({
                 state.totalQuantity--;
             }
         },
+        addToCart(state, action) {
+            const newItem = action.payload;
+            const existingItem = state.cartItems.find((item) => item.item_id === newItem.item_id);
+
+            if (!existingItem) {
+                state.cartItems.push({
+                    item_id: newItem.item_id,
+                    imgSrc: newItem.imgSrc,
+                    item_name: newItem.item_name,
+                    item_price: newItem.item_price,
+                    quantity: 1,
+                    totalPrice: newItem.item_price,
+                });
+                state.totalQuantity++;
+                state.totalAmount += newItem.item_price;
+            }
+        },
+        removeFromCart(state, action) {
+            const id = action.payload;
+            const existingItem = state.cartItems.find((item) => item.item_id === id);
+
+            if (existingItem) {
+                state.cartItems = state.cartItems.filter((item) => item.item_id !== id);
+                state.totalQuantity--;
+                state.totalAmount -= existingItem.totalPrice;
+            }
+        },
+
     },
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { increaseItem, decreaseItem, addToCart, removeFromCart } = cartSlice.actions;
 export default cartSlice.reducer;

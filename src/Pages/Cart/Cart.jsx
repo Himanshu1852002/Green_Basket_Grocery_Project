@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { removeFromCart, addToCart } from '../../Store/cartSlice';
+import { increaseItem,decreaseItem, removeFromCart } from '../../Store/cartSlice';
 import './Cart.css'; // You can add some custom CSS if needed
 import { FaRegTrashAlt } from "react-icons/fa";
 
@@ -14,11 +14,11 @@ const Cart = () => {
     };
 
     const handleIncreaseQuantity = (item) => {
-        dispatch(addToCart(item));
+        dispatch(increaseItem(item));
     };
 
     const handleDecreaseQuantity = (item_id) => {
-        dispatch(removeFromCart(item_id));
+        dispatch(decreaseItem(item_id));
     };
 
     return (

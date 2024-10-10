@@ -8,14 +8,14 @@ const Card = ({ item_id, title, price, imageSrc }) => {
 
     const dispatch = useDispatch();
 
-    const wishlist = useSelector((state)=>state.wishlist.items);
+    const wishlist = useSelector((state) => state.wishlist.items);
     const isWishlisted = wishlist.find((item) => item.item_id === item_id);
 
     const toggleWishlist = () => {
-        if(isWishlisted){
-            dispatch(removeFromWishlist({item_id}));
+        if (isWishlisted) {
+            dispatch(removeFromWishlist({ item_id }));
         }
-        else{
+        else {
             dispatch(addToWishlist({
                 item_id,
                 title,
@@ -26,9 +26,8 @@ const Card = ({ item_id, title, price, imageSrc }) => {
     };
 
     const handleAddToCart = () => {
-        // Dispatch the addToCart action with the item details
         dispatch(addToCart({
-            item_id,       // Unique ID of the product
+            item_id,
             item_name: title,
             item_price: price,
             imgSrc: imageSrc,
@@ -41,9 +40,9 @@ const Card = ({ item_id, title, price, imageSrc }) => {
                 <img src={imageSrc} className="card-img-top" alt={title} />
                 <span className="wishlist-icon position-absolute top-0 end-0 p-2" onClick={toggleWishlist}>
                     {isWishlisted ? (
-                        <FaHeart className="text-danger" />  // Filled red heart when wishlisted
+                        <FaHeart className="text-danger" />
                     ) : (
-                        <FaRegHeart className="text-dark" />  // Empty heart when not wishlisted
+                        <FaRegHeart className="text-dark" />
                     )}
                 </span>
                 <div className="card-body product_card_body">
