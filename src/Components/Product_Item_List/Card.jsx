@@ -3,8 +3,14 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../Store/cartSlice';
 import { addToWishlist, removeFromWishlist } from "../../Store/wishlistSlice";
+import { useState } from "react";
+import PopupModal from '../../Components/PopupModel/PopupModal'
 
 const Card = ({ item_id, title, price, imageSrc }) => {
+
+    const [showPopup, setShowPopup] = useState(false);
+
+
 
     const dispatch = useDispatch();
 
@@ -32,6 +38,11 @@ const Card = ({ item_id, title, price, imageSrc }) => {
             item_price: price,
             imgSrc: imageSrc,
         }));
+        setShowPopup(true);
+    };
+
+    const handleClosePopup = () => {
+        setShowPopup(false);
     };
 
     return (
@@ -52,6 +63,12 @@ const Card = ({ item_id, title, price, imageSrc }) => {
                     >Add to cart</button>
                 </div>
             </div>
+
+            <PopupModal
+                show={showPopup}
+                message="Product Added Successfully!"
+                handleClose={handleClosePopup}
+            />
         </div>
     );
 }

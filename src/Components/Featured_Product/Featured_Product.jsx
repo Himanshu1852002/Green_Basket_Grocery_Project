@@ -9,21 +9,28 @@ import coca_cola_img from '../../assets/Images/Images/coca-cola.png';
 import termaric_img from '../../assets/Images/Images/termaric.png';
 import rice_img from '../../assets/Images/Images/rice.png';
 
+
 const Cards = ({ imgSrc, title, description }) => {
+
+
+
     return (
-        <div className="col">
-            <div className="card h-100 position-relative">
-                <img src={imgSrc} className="card-img-top" alt={`${title} Image`} />
-                <span className="badge position-absolute top-0 start-0 m-2">
-                    Featured
-                </span>
-                <div className="card-body">
-                    <h5 className="card-title">{title}</h5>
-                    <p className="card-text">{description}</p>
-                    <a href="#" className="btn">See more</a>
+        <>
+            <div className="col">
+                <div className="card h-100 position-relative">
+                    <img src={imgSrc} className="card-img-top" alt={`${title} Image`} />
+                    <span className="badge position-absolute top-0 start-0 m-2">
+                        Featured
+                    </span>
+                    <div className="card-body">
+                        <h5 className="card-title">{title}</h5>
+                        <p className="card-text">{description}</p>
+                        <button className="btn"> See more</button>
+                    </div>
                 </div>
             </div>
-        </div>
+
+        </>
     );
 };
 
