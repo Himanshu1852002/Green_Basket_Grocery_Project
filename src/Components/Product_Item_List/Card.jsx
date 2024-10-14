@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../Store/cartSlice';
 import { addToWishlist, removeFromWishlist } from "../../Store/wishlistSlice";
 import { useState } from "react";
-import PopupModal from '../../Components/PopupModel/PopupModal'
+import SuccessPopup from '../SuccessPopup/SuccessPopup'
 
 const Card = ({ item_id, title, price, imageSrc }) => {
 
@@ -64,7 +64,7 @@ const Card = ({ item_id, title, price, imageSrc }) => {
                 </div>
             </div>
 
-            <PopupModal
+            <SuccessPopup
                 show={showPopup}
                 message="Product Added Successfully!"
                 handleClose={handleClosePopup}
