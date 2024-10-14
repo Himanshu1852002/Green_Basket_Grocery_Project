@@ -16,7 +16,7 @@
  .banner_text .second_text {
      font-size: 3.8rem;
      font-family: "Lilita One", sans-serif;
-     font-weight: 700;
+     font-weight: 600;
      color: black;
      font-style: normal;
      margin-top: 0;
@@ -32,11 +32,17 @@
      border-radius: 25px;
      font-size: 1rem;
      font-weight: 700;
-     background-color:transparent;
-     color: #000;
+     background-color:black;
+     color: #fff;
      height: 40px;
      width: 120px;
+     border:2px solid black;
  }
+  .banner_text button:active{
+    background-color: transparent;
+    color: black;
+  }
+
 
  .banner_img {
      display: flex;

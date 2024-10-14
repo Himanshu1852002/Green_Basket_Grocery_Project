@@ -45,6 +45,8 @@ const Card = ({ item_id, title, price, imageSrc }) => {
         setShowPopup(false);
     };
 
+    
+
     return (
         <div className="col-lg-3 col-md-6 col-sm-6 col-12 mb-3">
             <div className="card product_card position-relative">
@@ -53,7 +55,7 @@ const Card = ({ item_id, title, price, imageSrc }) => {
                     {isWishlisted ? (
                         <FaHeart className="text-danger" />
                     ) : (
-                        <FaRegHeart className="text-dark" />
+                            <FaRegHeart className="text-dark" />
                     )}
                 </span>
                 <div className="card-body product_card_body">

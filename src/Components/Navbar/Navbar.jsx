@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 const Navbar = ({ setShowLogin }) => {
 
     const totalItems = useSelector((state) => state.cart.totalQuantity);
+    const wishlist = useSelector((state) => state.wishlist.items);
 
     return (
         <div>
@@ -62,8 +63,26 @@ const Navbar = ({ setShowLogin }) => {
                             </button>
                         </form>
                         <ul className="navbar-nav ms-3">
-                            <li className="nav-item">
-                                <Link to={'/wishlist'} className="nav-link"><FaHeart size={22} /></Link>
+                            <li className="nav-item" style={{ position: 'relative' }}>
+                                <Link to={'/wishlist'} className="nav-link"><FaHeart size={22} />
+                                    {wishlist.length > 0 && (
+                                        <span
+                                            className="badge rounded-circle bg-danger"
+                                            style={{
+                                                position: 'absolute',
+                                                top: '-5px',
+                                                right: '-5px',
+                                                fontSize: '0.8rem',
+                                                width: '5px',
+                                                display: 'flex',
+                                                justifyContent: "center"
+
+
+                                            }}
+                                        >
+                                            {wishlist.length}
+                                        </span>)}
+                                </Link>
                             </li>
                             <li className="nav-item" style={{ position: 'relative' }}>
                                 <Link to={'/cart'} className="nav-link"><FaShoppingCart size={22} />

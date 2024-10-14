@@ -11,9 +11,6 @@ import rice_img from '../../assets/Images/Images/rice.png';
 
 
 const Cards = ({ imgSrc, title, description }) => {
-
-
-
     return (
         <>
             <div className="col">
