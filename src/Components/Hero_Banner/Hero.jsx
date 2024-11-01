@@ -2,12 +2,17 @@
 import React from "react";
 import './Hero.css';
 import man_img from '../../assets/Images/Images/Boy.png';
+
 const Hero = () => {
     return (
         <>
             <div className="container-fluid py-0 banner">
                 <div className="row banner-content">
-                    <div className="col-md-6 py-5 first-col">
+                    <div
+
+
+
+                        className="col-md-6 py-5 first-col">
                         <h1 className="display-4">Make Healthy life</h1>
                         <h1>with <span>Fresh</span></h1>
                         <h1> grocery</h1>
@@ -16,7 +21,8 @@ const Hero = () => {
                         </p>
                         <button className="btn  btn-lg">Shop now</button>
                     </div>
-                    <div className="col-md-6 second-col">
+                    <div
+                        className="col-md-6 second-col">
                         <img
                             src={man_img}
                             alt="Hero"

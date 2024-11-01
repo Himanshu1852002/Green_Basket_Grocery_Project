@@ -18,7 +18,6 @@
 .first-col {
     display: flex;
     flex-direction: column;
-    animation: animate 2s;
 }
 
 .first-col h1 {

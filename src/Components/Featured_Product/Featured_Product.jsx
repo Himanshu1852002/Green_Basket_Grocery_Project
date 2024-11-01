@@ -54,7 +54,7 @@ const Featured_Product = () => {
         <div className="feature_product container my-5">
             <h1>Featured <span>Products</span></h1>
             {/* First row of cards */}
-            <div className="row row-cols-1 row-cols-s-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4">
+            <div className="row row-cols-1 row-cols-s-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4 mt-3">
                 {cards.slice(0, 4).map((card, index) => (
                     <Cards key={index} imgSrc={card.imgSrc} title={card.title} description={card.description} />
                 ))}

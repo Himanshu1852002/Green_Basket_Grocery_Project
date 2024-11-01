@@ -5,6 +5,7 @@ import { IoIosTime } from "react-icons/io";
 import { AiOutlineSafetyCertificate } from "react-icons/ai";
 import PropTypes from 'prop-types';
 
+
 const supportItems = [
     {
         icon: <FaTruck />,
@@ -32,7 +33,13 @@ const supportItems = [
 
 // eslint-disable-next-line react-refresh/only-export-components
 const SupportBannerItem = ({ icon, title, description }) => (
-    <div className="col-lg-3 col-md-6 col-sm-6 cards">
+
+    
+    <div 
+        
+    
+    className="col-lg-3 col-md-6 col-sm-6 cards">
+        
         <div className="card card-create">
             <a className='card-ico' href="#">{icon}</a>
             <div className="card-body body-card">
@@ -52,6 +59,7 @@ SupportBannerItem.propTypes = {
 const Support_Banner = () => {
     return (
         <div className="card-box">
+            <h1>Customer <span>Support</span></h1>
             <div className="container">
                 <div className="row">
                     {supportItems.map((item, index) => (

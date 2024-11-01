@@ -18,8 +18,6 @@
     background-color: #fff;
     z-index: 1000;
     box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
-
-
 }
 
 .navbar-brand img {
@@ -47,12 +45,6 @@
         color: var(--green-color);
     }
 
-    .navbar-collapse ul li{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
     
 }
 
@@ -91,6 +83,34 @@
     background-color: var(--green-color);
 
 }
+
+/* for small screen search */
+/* Search overlay styling */
+.search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+}
+
+.search-overlay-form {
+    width: 80%;
+    max-width: 500px;
+}
+
+/* Hide the full search bar below 992px */
+@media (max-width: 992px) {
+    .d-lg-flex {
+        display: none !important;
+    }
+}
+
 
 .navbar-toggler span {
     color: #059212;
