@@ -1,5 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import React from "react";
 import './Hero.css';
 import man_img from '../../assets/Images/Images/Boy.png';
 
@@ -7,11 +5,8 @@ const Hero = () => {
     return (
         <>
             <div className="container-fluid py-0 banner">
-                <div className="row banner-content">
+                <div className="row banner-content ">
                     <div
-
-
-
                         className="col-md-6 py-5 first-col">
                         <h1 className="display-4">Make Healthy life</h1>
                         <h1>with <span>Fresh</span></h1>

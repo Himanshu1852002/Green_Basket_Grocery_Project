@@ -1,6 +1,5 @@
 import './Navbar.css';
-import logo_img from '../../assets/Images/Images/basketgreen.png';
-import logo_text from '../../assets/Images/Images/greenbaket.png';
+import logo from '../../assets/Images/Images/logo_ai.png'
 import { FaUser, FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import PropTypes from 'prop-types';
@@ -33,8 +32,7 @@ const Navbar = ({ setShowLogin }) => {
                 <div className="container-fluid nav-container">
                     {/* Logo */}
                     <Link to="/" className="navbar-brand d-flex align-items-center" onClick={() => handleNavLinkClick('/')}>
-                        <img src={logo_img} alt="Logo" className="logo-image" style={{ height: '40px'}} />
-                        <img src={logo_text} alt="Green Basket" className="logo-text" />
+                        <img src={logo} />
                     </Link>
 
                     <button className="navbar-toggler" type="button" onClick={handleNavToggle}>
