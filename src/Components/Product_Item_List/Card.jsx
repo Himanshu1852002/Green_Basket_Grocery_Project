@@ -9,17 +9,14 @@ import SuccessPopup from '../SuccessPopup/SuccessPopup'
 const Card = ({ item_id, title, price, imageSrc }) => {
 
     const [showPopup, setShowPopup] = useState(false);
-
-
-
     const dispatch = useDispatch();
 
     const wishlist = useSelector((state) => state.wishlist.items);
-    const isWishlisted = wishlist.find((item) => item.item_id === item_id);
+    const isWishlisted = wishlist.some((item) => item.item_id === item_id);
 
     const toggleWishlist = () => {
         if (isWishlisted) {
-            dispatch(removeFromWishlist({ item_id }));
+            dispatch(removeFromWishlist( item_id ));
         }
         else {
             dispatch(addToWishlist({
@@ -44,8 +41,6 @@ const Card = ({ item_id, title, price, imageSrc }) => {
     const handleClosePopup = () => {
         setShowPopup(false);
     };
-
-    
 
     return (
         <div className="col-lg-3 col-md-6 col-sm-6 col-12 mb-3">
@@ -81,7 +76,5 @@ Card.propTypes = {
     price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     imageSrc: PropTypes.string.isRequired,
 };
-
-
 
 export default Card

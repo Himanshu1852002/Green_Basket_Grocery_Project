@@ -22,7 +22,7 @@ const Cards = ({ imgSrc, title, description }) => {
                     <div className="card-body">
                         <h5 className="card-title">{title}</h5>
                         <p className="card-text">{description}</p>
-                        <button className="btn"> See more</button>
+                        <button className="btn">See more</button>
                     </div>
                 </div>
             </div>

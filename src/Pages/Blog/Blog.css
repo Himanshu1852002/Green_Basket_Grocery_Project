@@ -3,6 +3,23 @@
 }
 
 .blog_row {
-    height: 200px;
-    background-color: #61b72c;
+    height: 230px;
+    background-color: #37852a;
+}
+
+.blog_container img {
+    filter: drop-shadow(-4px 31px 19px #000000);
+}
+
+@media (max-width: 575px) {
+    .blog_container img {
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+    
+}
+@media (max-width:767px){
+    .blog_text {
+            font-size: 0.8rem;
+        }
 }

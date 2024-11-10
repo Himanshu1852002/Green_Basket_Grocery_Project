@@ -25,12 +25,10 @@
     font-weight: bold;
     color: var(--green-color);
     margin-left: 100px;
-
 }
 
 .first-col h1 span {
     color: #EB5B00;
-
 }
 
 .first-col p {
@@ -38,7 +36,6 @@
     font-weight: 500;
     color: #1E201E;
     margin-left: 100px;
-
 }
 
 .first-col button {
@@ -51,7 +48,6 @@
     border: none;
     border-radius: 25px;
     margin-left: 100px;
-
 }
 
 .first-col button:hover,

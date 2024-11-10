@@ -28,9 +28,8 @@ const Hero = () => {
                 </div>
                 <hr />
             </div>
-
         </>
     )
 }
 
-export default Hero
+export default Hero;

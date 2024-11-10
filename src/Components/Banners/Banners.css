@@ -3,6 +3,9 @@
 
  .banner_row {
      margin-top: 70px;
+     margin-bottom: 45px;
+     height: 390px;
+     
  }
 
  .banner_text .first_text {
@@ -32,16 +35,17 @@
      border-radius: 25px;
      font-size: 1rem;
      font-weight: 700;
-     background-color:black;
+     background-color: black;
      color: #fff;
      height: 40px;
      width: 120px;
-     border:2px solid black;
+     border: 2px solid black;
  }
-  .banner_text button:active{
-    background-color: transparent;
-    color: black;
-  }
+
+ .banner_text button:active {
+     background-color: transparent;
+     color: black;
+ }
 
 
  .banner_img {
@@ -58,6 +62,11 @@
  }
 
  @media (max-width:1200px) {
+     .banner_row {
+         margin-top: 70px;
+         height: 350px;
+     }
+
      .banner_img img {
          height: 270px;
          width: 270px;
@@ -111,6 +120,12 @@
  }
 
  @media (max-width:767px) {
+     .banner_row {
+         margin-top: 70px;
+         height: 300px;
+         padding-top: 20px;
+     }
+
      .banner_img img {
          height: 250px;
          width: 250px;
@@ -141,6 +156,12 @@
  }
 
  @media (max-width:576px) {
+     .banner_row {
+         margin-top: 70px;
+         height: 540px;
+         padding-top: 20px;
+     }
+
      .banner_text .first_text {
          margin-top: 20px;
          font-size: 2.7rem;

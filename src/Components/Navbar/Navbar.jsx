@@ -68,8 +68,6 @@ const Navbar = ({ setShowLogin }) => {
                                 </ul>
                             </li>
                         </ul>
-
-
                         {/* Search Icon for Mobile */}
                         <div className="d-lg-none ms-3 mb-2">
                             <button onClick={toggleSearchOverlay} className="btn-link nav-link">

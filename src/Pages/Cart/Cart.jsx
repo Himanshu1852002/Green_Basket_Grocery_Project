@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { increaseItem,decreaseItem, removeFromCart } from '../../Store/cartSlice';
+import { increaseItem, decreaseItem, removeFromCart } from '../../Store/cartSlice';
 import './Cart.css'; // You can add some custom CSS if needed
 import { FaRegTrashAlt } from "react-icons/fa";
-
+import shopping_bag from '../../assets/Images/Images/shopping_bag.png'
 const Cart = () => {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart.cartItems);
@@ -23,14 +23,19 @@ const Cart = () => {
 
     return (
         <div className="container-fluid cart_container">
-           <div className="row cart_top_row d-flex justify-content-center align-items-center ">
-            <div className="col-12">
+            <div className="row cart_top_row d-flex justify-content-center align-items-center ">
+                <div className="col-12">
                     <h2 className="text-center mb-4 fw-bold">SHOPPING CART</h2>
+                </div>
             </div>
-           </div>
 
             {cartItems.length === 0 ? (
-                <p className="text-center fw-bold fs-3 my-5">Your cart is empty.</p>
+                <>
+                    <div className='d-flex justify-content-center align-items-center flex-column'>
+                        <img className='bag' src={shopping_bag} alt="/" />
+                        <p className="text-center fw-bold fs-3">I am Empty! </p>
+                    </div>
+                </>
             ) : (
                 <>
                     <div className="row">
@@ -40,7 +45,7 @@ const Cart = () => {
                                 <div className="card mb-3" key={item.item_id}>
                                     <div className="row g-0">
                                         <div className="col-md-4 col-sm-4 cart_item_img d-flex justify-content-center align-items-center">
-                                            <img src={item.imgSrc} className="img-fluid rounded-start"   />
+                                            <img src={item.imgSrc} className="img-fluid rounded-start" />
                                         </div>
                                         <div className="col-md-8 col-sm-8">
                                             <div className="card-body cart_card_body">

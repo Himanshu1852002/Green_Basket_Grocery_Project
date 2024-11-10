@@ -43,7 +43,7 @@ const Wishlist = () => {
                             <div className="card-body">
                                 <h5 className="card-title">{item.title}</h5>
                                 <p className="card-text">{item.price} - rs</p>
-                                <button className='btn' onClick={()=>{removeWish(item.item_id)}}>Remove</button>
+                                <button className='btn' onClick={() => removeWish(item.item_id)}>Remove</button>
                             </div>
                         </div>
                     </div>

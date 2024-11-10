@@ -45,7 +45,6 @@
         color: var(--green-color);
     }
 
-    
 }
 
 .search-box {
@@ -131,5 +130,4 @@
 .dropdown-menu .dropdown-item:hover {
     background-color: green;
     color: var(--white-color);
-
 }
