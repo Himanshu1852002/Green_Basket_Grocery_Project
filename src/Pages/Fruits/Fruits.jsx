@@ -14,7 +14,7 @@ const Fruits = () => {
                 title2='Juicy Fruits'
                 heading='CHOOSE FROM OUR BEST ITEMS'
                 item_img={fruits_img}
-                backgroundColor='#FF8911'
+                backgroundColor='linear-gradient(to left,#FFC800, #FF8F00,#FF7200,#FF5500,#FF0000'
 
             />
             <ExploreMenu category={category} setCategory={setCategory} />

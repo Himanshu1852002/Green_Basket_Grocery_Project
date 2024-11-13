@@ -13,7 +13,7 @@ const Vegetables = () => {
                 title2="Fresh Vegetables"
                 heading="CHOOSE FRESH AND GREEN VEGETABLES FOR HEALTH"
                 item_img={veges_img}
-                backgroundColor="#059212"
+                backgroundColor="linear-gradient(to left,#9CD4A4,#78B97B,#5D9F59,#49843E,#396929,#2A4E17,#1D340B)"
             />
             <ExploreMenu category={category} setCategory={setCategory} />
             <Product_Item_List

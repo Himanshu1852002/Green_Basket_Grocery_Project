@@ -14,7 +14,7 @@ const Chocolate = () => {
                 title2="Yummy Chocolates"
                 heading="EAT TESTY CHOCOLATES HERE"
                 item_img={choco}
-                backgroundColor="#603F26"
+                backgroundColor="linear-gradient(to left,#F6B165,#D58D57,#B36C49,#914F3B,#6F362D,#4E211F,#2C1112)"
             />
             <Explore_Menu category={category} setCategory={setCategory} />
             <Product_Item_List

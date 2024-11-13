@@ -3,8 +3,8 @@
 }
 
 .blog_row {
-    height: 230px;
-    background-color: #37852a;
+    height: 190px;
+    background-image: linear-gradient(to top, #1A5319, #508D4E, #80AF81, #D6EFD8);
 }
 
 .blog_container img {
@@ -16,10 +16,11 @@
         margin-bottom: 10px;
         margin-top: 10px;
     }
-    
+
 }
-@media (max-width:767px){
+
+@media (max-width:767px) {
     .blog_text {
-            font-size: 0.8rem;
-        }
+        font-size: 0.8rem;
+    }
 }

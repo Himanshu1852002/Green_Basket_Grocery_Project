@@ -3,13 +3,9 @@ import PropTypes from 'prop-types';
 
 const Banners = ({ title1, title2, heading, item_img, backgroundColor }) => {
 
-    const bannerStyle = {
-        backgroundColor, // Dynamically set background color
-    };
-
     return (
         <div className="container-fluid">
-            <div className="row banner_row" style={bannerStyle}>
+            <div className="row banner_row" style={{background:backgroundColor}}>
                 <div className="col-lg-6 col-md-6 col-sm-6 d-flex justify-content-center align-items-start flex-column banner_text">
                     <h1 className="first_text ms-3">{title1}</h1>
                     <h1 className="second_text ms-3">{title2}</h1>
