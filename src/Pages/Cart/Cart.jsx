@@ -1,8 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { increaseItem, decreaseItem, removeFromCart } from '../../Store/cartSlice';
-import './Cart.css'; // You can add some custom CSS if needed
 import { FaRegTrashAlt } from "react-icons/fa";
 import shopping_bag from '../../assets/Images/Images/shopping_bag.png'
+import './Cart.css'; // Optional: for additional styling
+import { Link } from 'react-router-dom';
+
 const Cart = () => {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart.cartItems);
@@ -21,83 +23,57 @@ const Cart = () => {
         dispatch(decreaseItem(item_id));
     };
 
+
+
     return (
-        <div className="container-fluid cart_container">
-            <div className="row cart_top_row d-flex justify-content-center align-items-center ">
-                <div className="col-12">
-                    <h2 className="text-center mb-4 fw-bold">SHOPPING CART</h2>
-                </div>
-            </div>
+        <div className="container mt-5">
+            <h3 className="heading_text">My Cart</h3>
+
+            <hr />
 
             {cartItems.length === 0 ? (
                 <>
                     <div className='d-flex justify-content-center align-items-center flex-column'>
                         <img className='bag' src={shopping_bag} alt="/" />
                         <p className="text-center fw-bold fs-3">I am Empty! </p>
+                        <Link to="/" className="btn mt-2">
+                            Continue Shopping
+                        </Link>
                     </div>
                 </>
             ) : (
-                <>
-                    <div className="row">
-                        {/* Cart Items */}
-                        <div className="col-lg-8">
-                            {cartItems.map((item) => (
-                                <div className="card mb-3" key={item.item_id}>
-                                    <div className="row g-0">
-                                        <div className="col-md-4 col-sm-4 cart_item_img d-flex justify-content-center align-items-center">
-                                            <img src={item.imgSrc} className="img-fluid rounded-start" />
-                                        </div>
-                                        <div className="col-md-8 col-sm-8">
-                                            <div className="card-body cart_card_body">
-                                                <h5 className="card-title">Name: {item.item_name}</h5>
-                                                <p className="card-text">Price: {item.item_price} rs</p>
-                                                <div className="d-flex justify-content-between align-items-center cart_add_remove">
-                                                    <div className="d-flex justify-content-between align-items-center cart_inc_dec">
-                                                        <button
-                                                            className="btn btn-sm me-3"
-                                                            onClick={() => handleDecreaseQuantity(item.item_id)}
-                                                        >
-                                                            -
-                                                        </button>
-                                                        <span className='fw-bold'>{item.quantity}</span>
-                                                        <button
-                                                            className="btn btn-sm  ms-3"
-                                                            onClick={() => handleIncreaseQuantity(item)}
-                                                        >
-                                                            +
-                                                        </button>
-                                                    </div>
-                                                    <p className="card-text mt-3 fw-bolder">
-                                                        Total :  {item.totalPrice} rs
-                                                    </p>
-                                                    <button
-                                                        className="btn cart_remove_btn btn-sm"
-                                                        onClick={() => handleRemoveFromCart(item.item_id)}
-                                                    >
-                                                        <FaRegTrashAlt />
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                <div className="row">
+                    {cartItems.map((item) => (
+                        <div key={item.id} className="col-12 mb-3">
+                            <div className="card p-3 d-flex flex-md-row flex-column align-items-center shadow-sm cart-item-card">
+                                <img src={item.imgSrc} alt={item.name} className="img-fluid mb-3 mb-md-0 rounded" style={{ width: '80px', height: '80px' }} />
+                                <div className="ms-md-3 text-center text-md-start flex-grow-1">
+                                    <h5 className="mb-1">{item.item_name}</h5>
+                                    <p className="text-muted mb-2">Price: ₹{item.totalPrice}</p>
                                 </div>
-                            ))}
-                        </div>
-
-                        {/* Cart Summary */}
-                        <div className="col-lg-4">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h5 className="card-title">Cart Summary</h5>
-                                    <p>Total Items: {totalQuantity}</p>
-                                    <p>Total Amount: {totalAmount} rs</p>
-                                    <button className="btn btn-success w-100">Proceed to Checkout</button>
+                                <div className="d-flex align-items-center quantity-controls">
+                                    <button className="btn btn-outline-secondary btn-sm" onClick={() => handleDecreaseQuantity(item.item_id)}>-</button>
+                                    <span className="mx-2">{item.quantity}</span>
+                                    <button className="btn btn-outline-secondary btn-sm" onClick={() => handleIncreaseQuantity(item)}>+</button>
                                 </div>
+                                <button
+                                    className="btn btn-danger ms-md-3 mt-2 mt-md-0"
+                                    onClick={() => handleRemoveFromCart(item.item_id)}
+                                    title="Remove Item"
+                                >
+                                    <FaRegTrashAlt />
+                                </button>
                             </div>
                         </div>
-                    </div>
-                </>
+                    ))}
+                </div>
             )}
+
+            <div className="cart-summary mt-4 d-flex justify-content-between align-items-center border-top pt-3">
+                <h4 className='mb-0'>Total Items: {totalQuantity}</h4>
+                <h4 className="mb-0">Total: ₹{totalAmount}</h4>
+                <button>Proceed to Checkout</button>
+            </div>
         </div>
     );
 };

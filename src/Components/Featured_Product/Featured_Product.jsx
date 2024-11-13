@@ -4,7 +4,7 @@ import apple_img from '../../assets/Images/Images/apple.png';
 import strawberry from '../../assets/Images/Images/Strawberry.png';
 import chocolate_img from '../../assets/Images/Images/Chocolate.png';
 import popcorn_img from '../../assets/Images/Images/popcorn,png.png';
-import tomato_img from '../../assets/Images/Images/tomato.png';
+import tomato_img from '../../assets/Images/Vegetables_Images/Tomato.png';
 import coca_cola_img from '../../assets/Images/Images/coca-cola.png';
 import termaric_img from '../../assets/Images/Images/termaric.png';
 import rice_img from '../../assets/Images/Images/rice.png';

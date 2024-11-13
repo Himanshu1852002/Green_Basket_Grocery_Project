@@ -43,7 +43,7 @@ const Card = ({ item_id, title, price, imageSrc }) => {
     };
 
     return (
-        <div className="col-lg-3 col-md-6 col-sm-6 col-12 mb-3">
+        <div className="col-lg-3 col-md-6 col-sm-6 col-12 cards_top_div mb-3">
             <div className="card product_card position-relative">
                 <img src={imageSrc} className="card-img-top" alt={title} />
                 <span className="wishlist-icon position-absolute top-0 end-0 p-2" onClick={toggleWishlist}>

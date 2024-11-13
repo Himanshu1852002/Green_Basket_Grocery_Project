@@ -1,6 +1,8 @@
 .login-popup {
     position: absolute;
     z-index: 1;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background-color: #00000090;
@@ -18,6 +20,7 @@
     padding: 25px 30px;
     border-radius: 8px;
     font-size: 14px;
+    position: fixed;
 }
 
 .login-popup-title {

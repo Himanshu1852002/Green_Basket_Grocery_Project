@@ -33,6 +33,7 @@
 
 .nav-link:focus,
 .nav-link:active,
+.nav-link:hover,
 .dropdown .dropdown-toggle:active,
 .dropdown .dropdown-toggle:focus {
     color: orangered;
