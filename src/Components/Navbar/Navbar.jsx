@@ -56,13 +56,13 @@ const Navbar = ({ setShowLogin }) => {
                                     <li><button className="dropdown-item btn-link" onClick={() => handleNavLinkClick('/grocery')}>Grocery</button></li>
                                 </ul>
                             </li>
-                            <li><button className="nav-link btn-link" onClick={() => handleNavLinkClick('/offers')}>Offers</button></li>
+                            <li><button className="nav-link btn-link" onClick={() => handleNavLinkClick('/about')}>About</button></li>
                             <li className="nav-item dropdown">
                                 <button className="nav-link btn-link dropdown-toggle" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     More
                                 </button>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown2">
-                                    <li><button className="dropdown-item btn-link" onClick={() => handleNavLinkClick('/about')}>About</button></li>
+                                   
                                     <li><button className="dropdown-item btn-link" onClick={() => handleNavLinkClick('/blog')}>Blogs</button></li>
                                     <li><button className="dropdown-item btn-link" onClick={() => handleNavLinkClick('/contact')}>Contact</button></li>
                                 </ul>

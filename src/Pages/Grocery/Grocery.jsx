@@ -14,7 +14,7 @@ const Grocery = () => {
                 title2='Make Healthy'
                 heading='CHOOSE FRESH AND HEALTHY ITEMS'
                 item_img={Grocery_img}
-                backgroundColor='linear-gradient(to left,#95C4B4, #8EBCB1,#549895,#387271,#245254'
+                backgroundColor='linear-gradient(to top,#95C4B4, #8EBCB1,#549895,#387271,#245254'
             />
             <ExploreMenu category={category} setCategory={setCategory} />
             <Product_Item_List

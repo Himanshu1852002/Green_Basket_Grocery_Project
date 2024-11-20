@@ -35,7 +35,7 @@
 }
 
 .explore_card {
-    /* background-color: #F5EDED; */
+   
     border-radius: 0;
     border: none;
 
@@ -45,8 +45,8 @@
     text-align: center;
     color: rgb(46, 46, 46);
     font-weight: bold;
-    margin-top: 20px;
     margin-bottom: 50px;
+    padding-top: 20px;
 }
 
 .explore_card h1 span {
