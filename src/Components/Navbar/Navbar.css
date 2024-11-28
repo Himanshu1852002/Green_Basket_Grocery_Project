@@ -65,7 +65,7 @@
     box-shadow: none;
 }
 
-.search-box button {
+.search-box .search_btn {
     position: absolute;
     right: 0;
     top: 0;
@@ -78,8 +78,8 @@
     cursor: pointer;
 }
 
-.search-box button:hover,
-.search-box button:active {
+.search-box .search_btn:hover,
+.search-box .search_btn:active {
     background-color: var(--green-color);
 
 }
@@ -110,7 +110,6 @@
         display: none !important;
     }
 }
-
 
 .navbar-toggler span {
     color: #059212;

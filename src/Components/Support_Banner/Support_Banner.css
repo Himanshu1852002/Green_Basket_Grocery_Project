@@ -59,6 +59,13 @@
      .card-create {
          width: 230px;
      }
+
+     .card-create .card-ico {
+         font-size: 3rem;
+     }
+     .body-card h2{
+        font-size: 1.2rem;
+     }
  }
 
 

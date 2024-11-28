@@ -13,7 +13,7 @@ const Footer = () => {
 
 
         <div>
-            <div className="outer-container">
+            <div className="outer-container py-5">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-3 col-md-6 col-sm-6 mb-md-3 mb-sm-3 colm">
@@ -50,10 +50,10 @@ const Footer = () => {
                         <div className="col-lg-3 col-md-6 col-sm-6 colm">
                             <h3>About Store</h3>
                             <ul className="list-group">
-                                <li className="list-group-item"><a href="#"><IoCall /> +91 6266059961</a></li>
-                                <li className="list-group-item"><a href="#"><MdEmail />
+                                <li className="list-group-item"><a href="#"><IoCall className='me-3' /> +91 6266059961</a></li>
+                                <li className="list-group-item"><a href="#"><MdEmail className='me-3'/>
                                     GreenBasket@gmail.com</a></li>
-                                <li className="list-group-item"><a href="#"><FaAddressCard /> 18, Khategaon
+                                <li className="list-group-item"><a href="#"><FaAddressCard className='me-3'/> 18, Khategaon
                                     M.P.</a></li>
                                 <li className="list-group-item icon-s">
                                     <a href="#"><FaLinkedin /></a>

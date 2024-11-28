@@ -14,7 +14,7 @@ const Hero = () => {
                         <p className="lead">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum ea facere nam libero corrupti aut.
                         </p>
-                        <button className="btn  btn-lg">Shop now</button>
+                        <button className='hero_btn'>Shop now</button>
                     </div>
                     <div
                         className="col-md-6 second-col">

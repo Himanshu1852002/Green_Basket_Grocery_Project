@@ -72,7 +72,7 @@ const Cart = () => {
             <div className="cart-summary mt-4 d-flex justify-content-between align-items-center border-top pt-3">
                 <h4 className='mb-0'>Total Items: {totalQuantity}</h4>
                 <h4 className="mb-0">Total: ₹{totalAmount}</h4>
-                <button>Proceed to Checkout</button>
+                <button className='btn'>Proceed to Checkout</button>
             </div>
         </div>
     );

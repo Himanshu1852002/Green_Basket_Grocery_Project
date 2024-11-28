@@ -1,11 +1,17 @@
 .wish_row {
-    margin-top: 78px;
-    height: 200px;
-    background-color: #F1D3CE;
+   margin-top: 89px;
 }
 
 .empty_wish_row {
-    margin-top: 78px;
-    height: 340px;
-
+    margin-top: 90px;
+}
+.empty_wish_row img{
+    height: auto;
+    width:350px;
+}
+@media (max-width:576px){
+    .empty_wish_row img {
+            height: auto;
+            width: 310px;
+        }
 }

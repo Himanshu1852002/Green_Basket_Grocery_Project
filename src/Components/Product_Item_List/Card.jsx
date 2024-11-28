@@ -56,7 +56,7 @@ const Card = ({ item_id, title, price, imageSrc }) => {
                 <div className="card-body product_card_body">
                     <h5 className="card-title">{title}</h5>
                     <p className="card-text">{price} - rs</p>
-                    <button className="btn " onClick={handleAddToCart}
+                    <button className="btn" onClick={handleAddToCart}
                     >Add to cart</button>
                 </div>
             </div>

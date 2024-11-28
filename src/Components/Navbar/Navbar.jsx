@@ -29,7 +29,7 @@ const Navbar = ({ setShowLogin }) => {
     return (
         <div>
             <nav className="navbar navbar-expand-lg">
-                <div className="container-fluid nav-container">
+                <div className="container-fluid px-5">
                     {/* Logo */}
                     <Link to="/" className="navbar-brand d-flex align-items-center" onClick={() => handleNavLinkClick('/')}>
                         <img src={logo} />
@@ -78,7 +78,7 @@ const Navbar = ({ setShowLogin }) => {
                         {/* Full Search Bar for Larger Screens */}
                         <form className="d-none d-lg-flex mx-3 search-box" role="search">
                             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                            <button className="btn btn-outline-success" type="submit">Search</button>
+                            <button className="btn search_btn" type="submit">Search</button>
                         </form>
 
                         <ul className="navbar-nav ms-3">

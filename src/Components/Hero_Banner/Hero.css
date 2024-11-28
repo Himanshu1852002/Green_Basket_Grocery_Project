@@ -50,8 +50,8 @@
     margin-left: 100px;
 }
 
-.first-col button:hover,
-active {
+.first-col .hero_btn:hover,
+.hero_btn:active {
     background-color: #EB5B00;
     color: #fff;
     border: none;

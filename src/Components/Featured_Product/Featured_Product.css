@@ -31,55 +31,6 @@
     background-color: orangered;
 }
 
-@media (min-width: 576px) {
-    .card img {
-        max-width: 120px;
-    }
-
-}
-
-@media (min-width: 768px) {
-    .card img {
-        max-width: 180px;
-    }
-
-    .card-title {
-        font-size: 0.8rem;
-    }
-}
-
-@media (min-width: 992px) {
-    .card img {
-        max-width: 200px;
-    }
-
-    .card-title {
-        font-size: 0.8rem;
-    }
-}
-
-/* Adjust card size for col-1 */
-@media (max-width: 575px) {
-    .col-1 .card {
-        max-width: 100px;
-        max-height: 180px;
-    }
-
-    .col-1 .card img {
-        max-width: 50px;
-    }
-
-    .card {
-
-        margin-left: 35px;
-        margin-right: 35px;
-    }
-
-    .card-title {
-        font-size: 0.5rem;
-    }
-
-}
 
 /* Card styling */
 .card {
@@ -99,15 +50,15 @@
 .btn {
     background-color: green;
     border-radius: 25px;
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 500;
     color: #fff;
     cursor: pointer;
 }
 
 /* Card title styling */
 .card-title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: bold;
     color: #000;
 }
@@ -122,4 +73,74 @@
     font-size: 1.1rem;
     font-weight: 600;
     color: #000;
+}
+
+@media (max-width:1200px) {
+
+    .card img {
+        max-width: 170px;
+    }
+
+    .card-title {
+        font-size: 1rem;
+    }
+
+    .card-text {
+        font-size: 0.9rem;
+    }
+}
+
+
+
+@media (max-width: 992px) {
+    .card img {
+        max-width: 200px;
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+    }
+
+    .card-text {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .card img {
+        max-width: 180px;
+    }
+
+    .card-title {
+        font-size: 1rem;
+    }
+        .card-text {
+            font-size: 0.8rem;
+        }
+}
+
+/* Adjust card size for col-1 */
+@media (max-width: 576px) {
+    .col {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .card {
+        height: 370px;
+        width: 310px;
+
+    }
+
+    .card img {
+        height: auto;
+        width: 200px;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+    }
+
 }

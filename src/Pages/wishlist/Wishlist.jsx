@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './Wishlist.css'
 import { removeFromWishlist } from '../../Store/wishlistSlice';
+import empty_img from '../../assets/Images/Images/Empty Cart Icon.png'
 
 const Wishlist = () => {
     // Access the wishlist items from the Redux store
@@ -18,8 +19,9 @@ const Wishlist = () => {
             <div className="container text-center mt-5">
                 <div className="row empty_wish_row d-flex justify-content-center align-items-center">
                     <div className="col-12">
+                        <img src={empty_img} />
                         <h3 className='fw-bold'>Your wishlist is empty</h3>
-                        <Link to="/" className="btn mt-3">
+                        <Link to="/" className="btn mt-3 mb-5">
                             Continue Shopping
                         </Link>
                     </div>
@@ -29,15 +31,16 @@ const Wishlist = () => {
     }
 
     return (
-        <div className="container-fluid">
+        <div className="container">
             <div className="row d-flex justify-content-center align-items-center wish_row">
                 <div className="col-12">
-                    <h2 className="text-center fw-bold mb-4">YOUR WISHES</h2>
+                    <h2 className="fw-bold ms-4 mt-5">YOUR WISHES</h2>
+                    <hr />
                 </div>
             </div>
             <div className="row">
                 {wishlistItems.map((item) => (
-                    <div key={item.item_id} className="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                    <div key={item.item_id} className="col-lg-3 col-md-4 col-sm-6 col-12 mt-3 mb-4">
                         <div className="card product_card">
                             <img src={item.imageSrc} className="card-img-top" alt={item.title} />
                             <div className="card-body">

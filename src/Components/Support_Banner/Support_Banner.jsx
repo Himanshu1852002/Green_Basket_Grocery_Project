@@ -35,11 +35,7 @@ const supportItems = [
 const SupportBannerItem = ({ icon, title, description }) => (
 
     
-    <div 
-        
-    
-    className="col-lg-3 col-md-6 col-sm-6 cards">
-        
+    <div className="col-lg-3 col-md-6 col-sm-6 cards">  
         <div className="card card-create">
             <a className='card-ico' href="#">{icon}</a>
             <div className="card-body body-card">
