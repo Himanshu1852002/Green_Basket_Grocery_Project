@@ -19,6 +19,8 @@ const Wishlist = () => {
             <div className="container text-center mt-5">
                 <div className="row empty_wish_row d-flex justify-content-center align-items-center">
                     <div className="col-12">
+                        <h2 className="fw-bold text-start ms-4 mt-5">YOUR WISHES</h2>
+                        <hr />
                         <img src={empty_img} />
                         <h3 className='fw-bold'>Your wishlist is empty</h3>
                         <Link to="/" className="btn mt-3 mb-5">

@@ -11,7 +11,7 @@ const Fruits = () => {
         <>
             <Banners
                 title1='Fresh &'
-                title2='Juicy Fruits'
+                title2='The Juicy Fruits'
                 heading='CHOOSE FROM OUR BEST ITEMS'
                 item_img={fruits_img}
                 backgroundColor='linear-gradient(to top,#FFC800, #FF8F00,#FF7200,#FF5500,#FF0000'

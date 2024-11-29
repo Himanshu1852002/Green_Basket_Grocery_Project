@@ -1,4 +1,4 @@
-import chips_img from '../../assets/Images/Images/Chipss.png'
+import chips_img from '../../assets/Images/Images/snacks_banner.png'
 import Banners from '../../Components/Banners/Banners'
 import Product_Item_List from '../../Components/Product_Item_List/Product_Item_List'
 import { snacks_list } from '../../assets/Images/assets'
@@ -14,8 +14,7 @@ const Snacks = () => {
                 title2='Crunchy Snacks'
                 heading='CHOOSE CRUNCHINES FOR MORNING MOOD'
                 item_img={chips_img}
-                // backgroundColor='linear-gradient(to bottom,#D2042D, #A8092D,#7D0D2C,#450C1C'
-                backgroundColor='linear-gradient(to bottom,#690d0b, #e91815,#dad0d0)'
+                backgroundColor='linear-gradient(to bottom, #920004,#d92200,#f3500a,#f37100)'
             />
             <ExploreMenu category={category} setCategory={setCategory} />
             <Product_Item_List

@@ -1,4 +1,4 @@
-import Grocery_img from '../../assets/Images/Images/grocery_items.png'
+import Grocery_img from '../../assets/Images/Images/grocery.png'
 import Banners from '../../Components/Banners/Banners'
 import ExploreMenu from '../../Components/Explore_Menu/Explore_Menu'
 import { useState } from 'react'

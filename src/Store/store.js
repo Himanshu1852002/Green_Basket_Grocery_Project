@@ -5,7 +5,7 @@ import navbarReducer from './navbarSlice';
 
 const store = configureStore({
     reducer: {
-        navbar:navbarReducer,
+        navbar: navbarReducer,
         cart: cartReducer,
         wishlist: wishlistSlice,
     }
