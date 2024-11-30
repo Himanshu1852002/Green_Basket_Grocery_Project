@@ -18,9 +18,6 @@ import Grocery from './Pages/Grocery/Grocery';
 import LoginPopup from './Components/Login_PopUp/LoginPopup';
 import Wishlist from './Pages/Wishlist/Wishlist';
 
-
-
-
 function App() {
 
   const [showLogin, setShowLogin] = useState(false);
