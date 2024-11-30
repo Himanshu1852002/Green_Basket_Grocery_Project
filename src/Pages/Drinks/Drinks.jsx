@@ -13,9 +13,9 @@ const Drinks = () => {
                 title2="Fresh Drinks"
                 heading="DRINK FRESH AND MOOD FRESH"
                 item_img={coldrinks_img}
-                // backgroundColor='linear-gradient(to left,#06141B, #11212D,#253745,#4A5C6A'
-                backgroundColor='linear-gradient(to bottom,#06141b, #11212d,#253745,#4a5c6a,#9ba8ab,#ccd0cf)'
+                backgroundColor="linear-gradient( to top,  rgba(126,184,253,1) 5.6%, rgba(2,71,157,1) 95.3% )"
             />
+            
             <ExploreMenu category={category} setCategory={setCategory} />
             <Product_Item_List
                 items={coldrinks_list}

@@ -14,7 +14,8 @@ const Snacks = () => {
                 title2='Crunchy Snacks'
                 heading='CHOOSE CRUNCHINES FOR MORNING MOOD'
                 item_img={chips_img}
-                backgroundColor='linear-gradient(to bottom, #920004,#d92200,#f3500a,#f37100)'
+                // backgroundColor='linear-gradient(to bottom, #920004,#d92200,#f3500a,#f37100)'
+                backgroundColor=' linear-gradient( 179deg,  rgba(0,0,0,1) 9.2%, rgba(127,16,16,1) 103.9% )'
             />
             <ExploreMenu category={category} setCategory={setCategory} />
             <Product_Item_List
