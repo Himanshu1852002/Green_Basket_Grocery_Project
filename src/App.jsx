@@ -14,7 +14,7 @@ import About from './Pages/About/About';
 import Blog from './Pages/Blog/Blog';
 import Contact from './Pages/Contact/Contact';
 import Grocery from './Pages/Grocery/Grocery';
-import Wishlist from './Pages/Wishlist/Wishlist'
+import Wishlist from './Pages/Wishlist//Wishlist.jsx'
 import { useState } from 'react';
 import LoginPopup from './Components/Login_Popup/LoginPopup';
 
