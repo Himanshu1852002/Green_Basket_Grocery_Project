@@ -31,7 +31,7 @@ const ExploreMenu = ({ category, setCategory }) => {
 
 
     return (
-        <div className="container-fluid pt-3">
+        <div className="container pt-3">
             <div className="explore_card">
                 <h1>Explore <span>Menu</span></h1>
                 <div className="card-body">

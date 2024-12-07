@@ -29,3 +29,25 @@
     margin-right: 5px;
     margin-left: 5px;
 }
+
+.img_div{
+    position: relative;
+}
+.outer_img_div::after{
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+.outer_img_div img{
+    height: auto;
+    width: 60px;
+    margin-left: 80px;
+    padding-bottom: 30px;
+}
