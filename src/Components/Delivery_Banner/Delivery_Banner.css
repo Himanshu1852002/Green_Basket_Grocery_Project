@@ -4,13 +4,11 @@
     color: green;
     font-size: 3rem;
     font-weight: 800;
-    font-family: "Permanent Marker", cursive;
     margin-left: 25px;
 }
 
 .delivery_banner h1 span {
     color: orangered;
-    font-family: "Permanent Marker", cursive;
     margin-left: 25px;
 
 }
@@ -30,10 +28,11 @@
     margin-left: 5px;
 }
 
-.img_div{
+.img_div {
     position: relative;
 }
-.outer_img_div::after{
+
+.outer_img_div::after {
     content: "";
     position: absolute;
     height: 100%;
@@ -45,9 +44,48 @@
     align-items: center;
     z-index: 2;
 }
-.outer_img_div img{
+
+.outer_img_div img {
     height: auto;
     width: 60px;
     margin-left: 80px;
     padding-bottom: 30px;
+}
+
+@media (max-width:992px) {
+    .delivery_banner h1 {
+        font-size: 2.7rem;
+    }
+
+    .delivery_banner p {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width:767px) {
+    .delivery_banner {
+        padding-top: 20px;
+    }
+
+    .delivery_banner h1 {
+        font-size: 2.8rem;
+    }
+
+    .delivery_banner p {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width:576px) {
+    .delivery_banner {
+        padding-top: 20px;
+    }
+
+    .delivery_banner h1 {
+        font-size: 2.8rem;
+    }
+
+    .delivery_banner p {
+        font-size: 1.2rem;
+    }
 }

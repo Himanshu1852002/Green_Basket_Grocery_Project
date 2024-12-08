@@ -9,7 +9,6 @@
      font-weight: bold;
      color: rgb(46, 46, 46);
      margin-bottom: 20px;
-
  }
 
  .card-box h1 span {
@@ -33,26 +32,28 @@
      display: flex;
      justify-content: center;
      align-items: center;
-     background-color: #2f353d;
+     /* background-color: #2f353d; */
+     /* background-color: #EEEEEE; */
+     color: #2f353d;
      background-size: cover;
      position: relative;
  }
 
  .body-card h2 {
      text-align: center;
-     color: #EEEEEE;
+    color: #2f353d;
      font-size: 1.5rem;
      font-weight: 700;
      padding: 0;
  }
 
  .body-card p {
-     color: #EEEEEE;
+    color: #2f353d;
  }
 
  .card-ico {
-     font-size: 4rem;
-     color: #EEEEEE;
+     font-size: 3.8rem;
+    color: #2f353d;
  }
 
  @media (max-width:1200px) {

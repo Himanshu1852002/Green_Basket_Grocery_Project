@@ -1,111 +1,79 @@
-// eslint-disable-next-line no-unused-vars
-import React from 'react'
-import './Testimonial.css';
-import person1 from '../../assets/Images/Images/1.png';
-import person2 from '../../assets/Images/Images/2.png';
-import person3 from '../../assets/Images/Images/3.png';
-import person4 from '../../assets/Images/Images/4.png';
-import person5 from '../../assets/Images/Images/5.png';
-import person6 from '../../assets/Images/Images/6.png';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import "./Testimonial.css";
 
-const Testimonial = () => {
-    return (
-        <div>
-            <div className="testimonials py-5">
-                <div className="container">
-                    <h1>Testimonials</h1>
-                    <p className="text-center mb-4">Please Give Your Feedback for Green Basket</p>
-                    <div id="testimonialCarousel" className="carousel slide" data-bs-ride="carousel">
-                        <div className="carousel-inner">
-                            <div className="carousel-item active">
-                                <div className="row">
-                                    <div className="col-md-4 mt-5">
-                                        <div className="profile text-center">
-                                            <img src={person1} className="user" alt="person" />
-                                            <blockquote className="blockquote">
-                                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima natus eius,
-                                                    atque sed inventore nulla! Cupiditate soluta porro obcaecati id iusto amet
-                                                    facere totam voluptas.</p>
-                                            </blockquote>
-                                            <h3>Kuldeep Mangrola <br /><span>Customer of GB</span></h3>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-4 mt-5">
-                                        <div className="profile text-center">
-                                            <img src={person2} className="user" alt="person" />
-                                            <blockquote className="blockquote">
-                                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima natus eius,
-                                                    atque sed inventore nulla! Cupiditate soluta porro obcaecati id iusto amet
-                                                    facere totam voluptas.</p>
-                                            </blockquote>
-                                            <h3>Arpit Vishwakarma <br /><span>Customer of GB</span></h3>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-4 mt-5">
-                                        <div className="profile text-center">
-                                            <img src={person3} className="user" alt="person" />
-                                            <blockquote className="blockquote">
-                                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima natus eius,
-                                                    atque sed inventore nulla! Cupiditate soluta porro obcaecati id iusto amet
-                                                    facere totam voluptas.</p>
-                                            </blockquote>
-                                            <h3>Anikesh Chouhan <br /><span>Customer of GB</span></h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="carousel-item">
-                                <div className="row">
-                                    <div className="col-md-4 mt-5">
-                                        <div className="profile text-center">
-                                            <img src={person4} className="user" alt="person" />
-                                            <blockquote className="blockquote">
-                                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima natus eius,
-                                                    atque sed inventore nulla! Cupiditate soluta porro obcaecati id iusto amet
-                                                    facere totam voluptas.</p>
-                                            </blockquote>
-                                            <h3>Rahul Sharma <br /><span>Customer of GB</span></h3>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-4 mt-5">
-                                        <div className="profile text-center">
-                                            <img src={person5} className="user" alt="person" />
-                                            <blockquote className="blockquote">
-                                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima natus eius,
-                                                    atque sed inventore nulla! Cupiditate soluta porro obcaecati id iusto amet
-                                                    facere totam voluptas.</p>
-                                            </blockquote>
-                                            <h3>Priya Singh <br /><span>Customer of GB</span></h3>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-4 mt-5">
-                                        <div className="profile text-center">
-                                            <img src={person6} className="user" alt="person" />
-                                            <blockquote className="blockquote">
-                                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima natus eius,
-                                                    atque sed inventore nulla! Cupiditate soluta porro obcaecati id iusto amet
-                                                    facere totam voluptas.</p>
-                                            </blockquote>
-                                            <h3>Sneha Patel <br /><span>Customer of GB</span></h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button className="carousel-control-prev cc-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
-                            <span className="carousel-control-prev-icon cc-prev-icon" aria-hidden="true" />
-                            <span className="visually-hidden">Previous</span>
-                        </button>
-                        <button className="carousel-control-next cc-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
-                            <span className="carousel-control-next-icon cc-next-icon" aria-hidden="true" />
-                            <span className="visually-hidden">Next</span>
-                        </button>
+const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    responsive: [
+        {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 2,
+            },
+        },
+        {
+            breakpoint: 768,
+            settings: {
+                slidesToShow: 1,
+            },
+        },
+    ],
+};
+
+const testimonials = [
+    {
+        name: "Anikesh Chouhan",
+        image: "http://themes.audemedia.com/html/goodgrowth/images/testimonial3.jpg",
+        text: "Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource-taxing relationships via premier niche markets.",
+    },
+    {
+        name: "Arpit Vishwakarma",
+        image: "http://themes.audemedia.com/html/goodgrowth/images/testimonial3.jpg",
+        text: "Completely synergize resource-taxing relationships via premier niche markets. Professionally cultivate customer service with robust innovation.",
+    },
+    {
+        name: "Aman Rathod",
+        image: "http://themes.audemedia.com/html/goodgrowth/images/testimonial3.jpg",
+        text: "Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource-taxing relationships.",
+    },
+    {
+        name: "Kuldeep Mangrola",
+        image: "http://themes.audemedia.com/html/goodgrowth/images/testimonial3.jpg",
+        text: "Professionally cultivate customer service with robust ideas. Completely synergize resource-taxing relationships via premier niche markets.",
+    },
+    {
+        name: "Rohit",
+        image: "http://themes.audemedia.com/html/goodgrowth/images/testimonial3.jpg",
+        text: "Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource-taxing relationships via premier niche markets.",
+    },
+];
+
+const Testimonial = () => (
+    <div className="testimonial-container container">
+        <h1 className="testimonial-title">The Happy <span>Client</span></h1>
+        <Slider {...settings}>
+            {testimonials.map((testimonial, index) => (
+                <div className="item" key={index}>
+                    <div className="shadow-effect">
+                        <img
+                            src={testimonial.image}
+                            alt={testimonial.name}
+                            className="rounded-circle"
+                        />
+                        <p>{testimonial.text}</p>
                     </div>
+                    <div className="testimonial-name">{testimonial.name}</div>
                 </div>
-            </div>
+            ))}
+        </Slider>
+    </div>
+);
 
-        </div>
-    )
-}
-
-export default Testimonial
+export default Testimonial;

@@ -4,7 +4,7 @@ import man_img from '../../assets/Images/Images/Boy.png';
 const Hero = () => {
     return (
         <>
-            <div className="container-fluid  banner">
+            <div className="container  banner">
                 <div className="row banner-content ">
                     <div
                         className="col-md-6 py-5 first-col">

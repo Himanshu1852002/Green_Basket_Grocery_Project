@@ -44,8 +44,8 @@ const Cart = () => {
             ) : (
                 <div className="row">
                     {cartItems.map((item) => (
-                        <div key={item.id} className="col-12 mb-3">
-                            <div className="card p-3 d-flex flex-md-row flex-column align-items-center shadow-sm cart-item-card">
+                        <div key={item.id} className="col-12 mb-3 cart_column">
+                            <div key={item.id} className="card p-3 d-flex flex-md-row flex-sm-row flex-column align-items-center shadow-sm cart-item-card">
                                 <img src={item.imgSrc} alt={item.name} className="img-fluid mb-3 mb-md-0 rounded" style={{ width: '80px', height: '80px' }} />
                                 <div className="ms-md-3 text-center text-md-start flex-grow-1">
                                     <h5 className="mb-1">{item.item_name}</h5>
@@ -57,7 +57,7 @@ const Cart = () => {
                                     <button className="btn btn-outline-secondary btn-sm" onClick={() => handleIncreaseQuantity(item)}>+</button>
                                 </div>
                                 <button
-                                    className="btn btn-danger ms-md-3 mt-2 mt-md-0"
+                                    className="btn btn-danger ms-md-3 mt-2 mb-sm-2 mb-md-0 mt-md-0 remove_btn "
                                     onClick={() => handleRemoveFromCart(item.item_id)}
                                     title="Remove Item"
                                 >
@@ -71,7 +71,7 @@ const Cart = () => {
 
             <div className="cart-summary mt-4 d-flex justify-content-between align-items-center border-top pt-3">
                 <h4 className='mb-0'>Total Items: {totalQuantity}</h4>
-                <h4 className="mb-0">Total: ₹{totalAmount}</h4>
+                <h4 className="mb-0">Total: {totalAmount}</h4>
                 <button className='btn'>Proceed to Checkout</button>
             </div>
         </div>

@@ -54,13 +54,14 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
     .success-popup {
-        top: 5px;
-        left: 10px;
+        top: 15px;
+        left: 40px;
         right: 10px;
         transform: none;
-        max-width: 100%;
+        max-width: 80%;
+        
         /* Take up the full width on smaller screens */
     }
 
