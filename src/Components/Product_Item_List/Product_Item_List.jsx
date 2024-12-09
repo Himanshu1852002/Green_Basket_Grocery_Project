@@ -17,7 +17,8 @@ const Product_Item_List = ({ items }) => {
                             item_id={item.item_id}
                             title={item.item_name}
                             price={item.item_price}
-                            imageSrc={item.imgSrc} />
+                            imageSrc={item.imgSrc}
+                            unit={item.unit} />
                     ))}
                 </div>
             ))}

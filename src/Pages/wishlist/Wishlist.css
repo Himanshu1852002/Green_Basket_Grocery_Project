@@ -1,17 +1,32 @@
 .wish_row {
-   margin-top: 89px;
+    margin-top: 89px;
 }
 
 .empty_wish_row {
     margin-top: 90px;
 }
-.empty_wish_row img{
+
+.empty_wish_row img {
     height: auto;
-    width:350px;
+    width: 350px;
 }
-@media (max-width:576px){
+
+@media (max-width:992px) {
+    .product_card {
+        height: auto;
+        width: 220px;
+    }
+}
+
+@media (max-width:576px) {
     .empty_wish_row img {
-            height: auto;
-            width: 310px;
-        }
+        height: auto;
+        width: 310px;
+    }
+
+    .wishlist_columns {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

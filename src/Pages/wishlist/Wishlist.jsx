@@ -40,14 +40,14 @@ const Wishlist = () => {
                     <hr />
                 </div>
             </div>
-            <div className="row">
+            <div className="row wishlist_row">
                 {wishlistItems.map((item) => (
-                    <div key={item.item_id} className="col-lg-3 col-md-4 col-sm-6 col-12 mt-3 mb-4">
+                    <div key={item.item_id} className="col-lg-3 col-md-4 col-sm-6 col-12 mt-3 mb-4 wishlist_columns">
                         <div className="card product_card">
                             <img src={item.imageSrc} className="card-img-top" alt={item.title} />
-                            <div className="card-body">
+                            <div className="card-body d-flex flex-column justify-content-center align-items-center">
                                 <h5 className="card-title">{item.title}</h5>
-                                <p className="card-text">{item.price} - rs</p>
+                                <p className="card-text">{item.price} - {item.unit}</p>
                                 <button className='btn' onClick={() => removeWish(item.item_id)}>Remove</button>
                             </div>
                         </div>

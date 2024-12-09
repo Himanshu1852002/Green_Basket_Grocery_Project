@@ -30,27 +30,27 @@ const settings = {
 const testimonials = [
     {
         name: "Anikesh Chouhan",
-        image: "http://themes.audemedia.com/html/goodgrowth/images/testimonial3.jpg",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOuxrvcNMfGLh73uKP1QqYpKoCB0JLXiBMvA&s",
         text: "Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource-taxing relationships via premier niche markets.",
     },
     {
         name: "Arpit Vishwakarma",
-        image: "http://themes.audemedia.com/html/goodgrowth/images/testimonial3.jpg",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOuxrvcNMfGLh73uKP1QqYpKoCB0JLXiBMvA&s",
         text: "Completely synergize resource-taxing relationships via premier niche markets. Professionally cultivate customer service with robust innovation.",
     },
     {
         name: "Aman Rathod",
-        image: "http://themes.audemedia.com/html/goodgrowth/images/testimonial3.jpg",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOuxrvcNMfGLh73uKP1QqYpKoCB0JLXiBMvA&s",
         text: "Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource-taxing relationships.",
     },
     {
         name: "Kuldeep Mangrola",
-        image: "http://themes.audemedia.com/html/goodgrowth/images/testimonial3.jpg",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOuxrvcNMfGLh73uKP1QqYpKoCB0JLXiBMvA&s",
         text: "Professionally cultivate customer service with robust ideas. Completely synergize resource-taxing relationships via premier niche markets.",
     },
     {
         name: "Rohit",
-        image: "http://themes.audemedia.com/html/goodgrowth/images/testimonial3.jpg",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOuxrvcNMfGLh73uKP1QqYpKoCB0JLXiBMvA&s",
         text: "Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource-taxing relationships via premier niche markets.",
     },
 ];

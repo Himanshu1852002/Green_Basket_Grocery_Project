@@ -6,7 +6,7 @@ import { addToWishlist, removeFromWishlist } from "../../Store/wishlistSlice";
 import { useState } from "react";
 import SuccessPopup from '../SuccessPopup/SuccessPopup'
 
-const Card = ({ item_id, title, price, imageSrc }) => {
+const Card = ({ item_id, title, price, imageSrc, unit }) => {
 
     const [showPopup, setShowPopup] = useState(false);
     const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const Card = ({ item_id, title, price, imageSrc }) => {
 
     const toggleWishlist = () => {
         if (isWishlisted) {
-            dispatch(removeFromWishlist( item_id ));
+            dispatch(removeFromWishlist(item_id));
         }
         else {
             dispatch(addToWishlist({
@@ -24,6 +24,7 @@ const Card = ({ item_id, title, price, imageSrc }) => {
                 title,
                 price,
                 imageSrc,
+                unit,
             }))
         }
     };
@@ -34,6 +35,7 @@ const Card = ({ item_id, title, price, imageSrc }) => {
             item_name: title,
             item_price: price,
             imgSrc: imageSrc,
+            unit,
         }));
         setShowPopup(true);
     };
@@ -50,12 +52,12 @@ const Card = ({ item_id, title, price, imageSrc }) => {
                     {isWishlisted ? (
                         <FaHeart className="text-danger" />
                     ) : (
-                            <FaRegHeart className="text-dark" />
+                        <FaRegHeart className="text-dark" />
                     )}
                 </span>
                 <div className="card-body product_card_body">
                     <h5 className="card-title">{title}</h5>
-                    <p className="card-text">{price} - rs</p>
+                    <p className="card-text">&#8377;{price} - {unit}</p>
                     <button className="btn" onClick={handleAddToCart}
                     >Add to cart</button>
                 </div>
@@ -75,6 +77,7 @@ Card.propTypes = {
     title: PropTypes.string.isRequired,
     price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     imageSrc: PropTypes.string.isRequired,
+    unit: PropTypes.string.isRequired,
 };
 
 export default Card

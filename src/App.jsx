@@ -17,6 +17,7 @@ import Contact from './Pages/Contact/Contact';
 import Grocery from './Pages/Grocery/Grocery';
 import LoginPopup from './Components/Login_PopUp/LoginPopup';
 import Wishlist from '../src/Pages/Wishlist/Wishlist';
+import ScrollToTop from './Pages/ScrollToTop/ScrollToTop';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
     <>
       {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
       <div>
+        <ScrollToTop />
         <Navbar setShowLogin={setShowLogin} />
         <Routes>
           <Route path='/' element={<Home />} />
