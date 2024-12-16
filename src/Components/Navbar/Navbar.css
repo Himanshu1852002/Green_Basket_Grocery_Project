@@ -39,6 +39,16 @@
     color: orangered;
 }
 
+.login_btn{
+    border: 2px solid green;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: green;
+    height: 30px;
+    width: 70px;
+    margin-top: 6px;
+}
 
 
 @media (max-width:992px) {
@@ -130,4 +140,65 @@
 .dropdown-menu .dropdown-item:hover {
     background-color: green;
     color: var(--white-color);
+}
+
+
+/* After the lohgin the process */
+
+.navbar-profile {
+    position: relative;
+    border: 2px solid green;
+    border-radius: 50%;
+    background-color: transparent;
+    margin-top: 5px;
+    width: 35px;
+    height: 33px;
+}
+
+.nav-profile-dropdown {
+    position: absolute;
+    display: none;
+    right: 0;
+    z-index: 1;
+}
+
+.navbar-profile:hover .nav-profile-dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #fff2ef;
+    padding: 12px 25px;
+    border-radius: 4px;
+    border: 1px solid green;
+    outline: 2px solid white;
+    list-style: none;
+}
+
+.nav-profile-dropdown li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    
+}
+.nav-profile-dropdown p{
+    margin-top: 15px;
+    font-weight: 500;
+}
+.nav-profile-dropdown p:hover{
+    color: green;
+}
+
+.navbar-profile .user_icons{
+    width: 30px;
+    height: 22px;
+    color: green;
+    border-radius: 50%;
+    border: none;
+}
+
+.nav-profile-dropdown .login_icons {
+    width: 30px;
+    height: 24px;
+    align-items: center;
 }

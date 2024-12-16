@@ -4,6 +4,7 @@ const initialState = {
     cartItems: [],
     totalQuantity: 0,
     totalAmount: 0,
+    url : "http://localhost:3000"
 };
 
 const cartSlice = createSlice({

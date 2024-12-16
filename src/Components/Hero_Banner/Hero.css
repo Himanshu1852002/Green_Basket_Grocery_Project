@@ -8,16 +8,18 @@
     margin-top: 90px;
 }
 
-.banner hr {
+/* .banner hr {
     height: 2px;
     color: black;
     padding: 0;
     margin: 0;
-}
+    
+} */
 
 .first-col {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .first-col h1 {
@@ -32,7 +34,7 @@
 }
 
 .first-col p {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 500;
     color: #1E201E;
     /* //margin-left: 100px; */
@@ -64,7 +66,7 @@
 }
 
 .second-col img {
-    margin-top: 30px;
+    margin-top: 40px;
     height: 350px;
     width: 350px;
 }
@@ -89,7 +91,7 @@
     }
 
     .second-col img {
-        margin-top: 40px;
+        margin-top: 30px;
         height: 300px;
         width: 300px;
     }

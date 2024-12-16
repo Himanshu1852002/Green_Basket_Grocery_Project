@@ -1,12 +1,13 @@
 import './Navbar.css';
 import logo from '../../assets/Images/Images/logo_ai.png'
-import { FaUser, FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
+import { FaSignOutAlt, FaShoppingBag, FaUser, FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import PropTypes from 'prop-types';
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleNav, closeNav } from '../../store/navbarSlice';
 import { useState } from 'react';
+import { clearToken } from '../../Store/tokenSlice'
 
 const Navbar = ({ setShowLogin }) => {
 
@@ -14,6 +15,7 @@ const Navbar = ({ setShowLogin }) => {
     const isNavOpen = useSelector((state) => state.navbar.isNavOpen);
     const totalItems = useSelector((state) => state.cart.totalQuantity);
     const wishlist = useSelector((state) => state.wishlist.items);
+    const token = useSelector((state) => state.auth.token)
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -23,13 +25,17 @@ const Navbar = ({ setShowLogin }) => {
         dispatch(closeNav());
         navigate(path);
     };
+    const handleLogOut = () => {
+        dispatch(clearToken());
+        localStorage.removeItem("token");
+    }
 
     const toggleSearchOverlay = () => setShowSearchOverlay(!showSearchOverlay);
 
     return (
         <div>
             <nav className="navbar navbar-expand-lg">
-                <div className="container-fluid px-5">
+                <div className="container-fluid  px-5">
                     {/* Logo */}
                     <Link to="/" className="navbar-brand d-flex align-items-center" onClick={() => handleNavLinkClick('/')}>
                         <img src={logo} />
@@ -38,6 +44,7 @@ const Navbar = ({ setShowLogin }) => {
                     <button className="navbar-toggler" type="button" onClick={handleNavToggle}>
                         <span><IoMenu /></span>
                     </button>
+
                     <div className={`collapse navbar-collapse ${isNavOpen ? 'show' : ''}`} id="navbarNav">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
@@ -62,7 +69,7 @@ const Navbar = ({ setShowLogin }) => {
                                     More
                                 </button>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown2">
-                                   
+
                                     <li><button className="dropdown-item btn-link" onClick={() => handleNavLinkClick('/blog')}>Blogs</button></li>
                                     <li><button className="dropdown-item btn-link" onClick={() => handleNavLinkClick('/contact')}>Contact</button></li>
                                 </ul>
@@ -71,7 +78,7 @@ const Navbar = ({ setShowLogin }) => {
                         {/* Search Icon for Mobile */}
                         <div className="d-lg-none ms-3 mb-2">
                             <button onClick={toggleSearchOverlay} className="btn-link nav-link">
-                                <FaSearch size={22} style={{color:'green'}}/>
+                                <FaSearch size={22} style={{ color: 'green' }} />
                             </button>
                         </div>
 
@@ -115,7 +122,19 @@ const Navbar = ({ setShowLogin }) => {
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <button onClick={() => setShowLogin(true)} className="nav-link btn-link"><FaUser size={22} /></button>
+
+                                {!token ? <button onClick={() => setShowLogin(true)} className="login_btn">Login</button> :
+                                    <button className='navbar-profile'>
+                                        <FaUser  className='user_icons'/>
+                                        <ul className='nav-profile-dropdown'>
+                                            <li><FaShoppingBag className='login_icons' />
+                                                <p>Orders</p>
+                                            </li>
+                                            <hr />
+                                            <li onClick={handleLogOut}><FaSignOutAlt className='login_icons' />
+                                                <p>LogOut</p></li>
+                                        </ul>
+                                    </button>}
                             </li>
                         </ul>
                     </div>
@@ -130,3 +149,4 @@ Navbar.propTypes = {
 };
 
 export default Navbar;
+

@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Navbar from './Components/Navbar/Navbar';
@@ -22,6 +22,20 @@ import ScrollToTop from './Pages/ScrollToTop/ScrollToTop';
 function App() {
 
   const [showLogin, setShowLogin] = useState(false);
+
+
+  // Stop the scrolling when you open the login popup
+  useEffect(() => {
+    if (showLogin) {
+      document.body.style.overflow = 'hidden';
+    }
+    else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    }
+  }, [showLogin]);
 
   return (
     <>

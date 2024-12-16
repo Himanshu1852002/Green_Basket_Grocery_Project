@@ -12,7 +12,7 @@ const Hero = () => {
                         <h1>with <span>Fresh</span></h1>
                         <h1> grocery</h1>
                         <p className="lead">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum ea facere nam libero corrupti aut.
+                            Embrace a healthier lifestyle with Green Basket! We bring you the freshest groceries, straight from farms to your doorstep, ensuring quality, convenience, and sustainability in every bite.
                         </p>
                         <button className='hero_btn'>Shop now</button>
                     </div>
@@ -26,7 +26,7 @@ const Hero = () => {
                         />
                     </div>
                 </div>
-                <hr />
+                
             </div>
         </>
     )
