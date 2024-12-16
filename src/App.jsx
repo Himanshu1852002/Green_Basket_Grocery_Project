@@ -18,6 +18,7 @@ import Grocery from './Pages/Grocery/Grocery';
 import LoginPopup from './Components/Login_PopUp/LoginPopup';
 import Wishlist from '../src/Pages/Wishlist/Wishlist';
 import ScrollToTop from './Pages/ScrollToTop/ScrollToTop';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 
@@ -41,6 +42,7 @@ function App() {
     <>
       {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
       <div>
+        <ToastContainer position='top-center' autoClose={3000}/>
         <ScrollToTop />
         <Navbar setShowLogin={setShowLogin} />
         <Routes>

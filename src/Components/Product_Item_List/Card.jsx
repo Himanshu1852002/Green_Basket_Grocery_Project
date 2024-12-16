@@ -3,12 +3,13 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../Store/cartSlice';
 import { addToWishlist, removeFromWishlist } from "../../Store/wishlistSlice";
-import { useState } from "react";
-import SuccessPopup from '../SuccessPopup/SuccessPopup'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 const Card = ({ item_id, title, price, imageSrc, unit }) => {
 
-    const [showPopup, setShowPopup] = useState(false);
     const dispatch = useDispatch();
 
     const wishlist = useSelector((state) => state.wishlist.items);
@@ -17,6 +18,7 @@ const Card = ({ item_id, title, price, imageSrc, unit }) => {
     const toggleWishlist = () => {
         if (isWishlisted) {
             dispatch(removeFromWishlist(item_id));
+            toast.info('Removed from Wishlist', { autoClose: 2000 });
         }
         else {
             dispatch(addToWishlist({
@@ -25,7 +27,8 @@ const Card = ({ item_id, title, price, imageSrc, unit }) => {
                 price,
                 imageSrc,
                 unit,
-            }))
+            }));
+            toast.success('Added to Wishlist', { autoClose: 2000 });
         }
     };
 
@@ -37,13 +40,19 @@ const Card = ({ item_id, title, price, imageSrc, unit }) => {
             imgSrc: imageSrc,
             unit,
         }));
-        setShowPopup(true);
-    };
 
-    const handleClosePopup = () => {
-        setShowPopup(false);
+        toast.success('Product Added Successfully!', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+        
     };
-
     return (
         <div className="col-lg-3 col-md-6 col-sm-6 col-12 cards_top_div mb-3">
             <div className="card product_card position-relative">
@@ -62,12 +71,6 @@ const Card = ({ item_id, title, price, imageSrc, unit }) => {
                     >Add to cart</button>
                 </div>
             </div>
-
-            <SuccessPopup
-                show={showPopup}
-                message="Product Added Successfully!"
-                handleClose={handleClosePopup}
-            />
         </div>
     );
 }

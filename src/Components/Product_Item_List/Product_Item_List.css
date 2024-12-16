@@ -65,6 +65,12 @@
      .product_card_body .card-title {
          font-size: 1.4rem;
      }
+         .cards_top_div {
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             flex-direction: column;
+         }
  }
 
  @media (max-width: 767px) {
