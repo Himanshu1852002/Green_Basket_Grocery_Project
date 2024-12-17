@@ -20,7 +20,12 @@ const loginUser = async (req, res) => {
         }
 
         const token = createToken(user._id);
-        res.json({ success: true, token });
+        res.json({
+            success: true, token, user: {
+                name: user.name,
+                email: user.email,
+            }
+        });
 
     } catch (error) {
         console.log(error)
@@ -30,7 +35,7 @@ const loginUser = async (req, res) => {
 
 const createToken = (id) => {
     // eslint-disable-next-line no-undef
-    return jwt.sign({ id }, process.env.JWT_SECRET)
+    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1h' })
 }
 
 // register user
@@ -66,7 +71,14 @@ const registerUser = async (req, res) => {
         const user = await newUser.save();
         // generate token
         const token = createToken(user._id)//_id in automatic generat by monodb
-        res.json({ success: true, token })
+        res.json({
+            success: true, 
+            token,
+            user: {
+                name: user.name,
+                email: user.email,
+            },
+        })
 
     } catch (error) {
         console.log(error)

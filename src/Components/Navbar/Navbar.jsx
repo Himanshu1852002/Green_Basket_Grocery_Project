@@ -1,13 +1,13 @@
 import './Navbar.css';
 import logo from '../../assets/Images/Images/logo_ai.png'
-import { FaSignOutAlt, FaShoppingBag, FaUser, FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
+import { FaUser, FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import PropTypes from 'prop-types';
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleNav, closeNav } from '../../store/navbarSlice';
 import { useState } from 'react';
-import { clearToken } from '../../Store/tokenSlice'
+
 
 const Navbar = ({ setShowLogin }) => {
 
@@ -15,7 +15,7 @@ const Navbar = ({ setShowLogin }) => {
     const isNavOpen = useSelector((state) => state.navbar.isNavOpen);
     const totalItems = useSelector((state) => state.cart.totalQuantity);
     const wishlist = useSelector((state) => state.wishlist.items);
-    const token = useSelector((state) => state.auth.token)
+    const token = localStorage.getItem("token")
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -25,10 +25,7 @@ const Navbar = ({ setShowLogin }) => {
         dispatch(closeNav());
         navigate(path);
     };
-    const handleLogOut = () => {
-        dispatch(clearToken());
-        localStorage.removeItem("token");
-    }
+
 
     const toggleSearchOverlay = () => setShowSearchOverlay(!showSearchOverlay);
 
@@ -124,17 +121,9 @@ const Navbar = ({ setShowLogin }) => {
                             <li className="nav-item">
 
                                 {!token ? <button onClick={() => setShowLogin(true)} className="login_btn">Login</button> :
-                                    <button className='navbar-profile'>
-                                        <FaUser  className='user_icons'/>
-                                        <ul className='nav-profile-dropdown'>
-                                            <li><FaShoppingBag className='login_icons' />
-                                                <p>Orders</p>
-                                            </li>
-                                            <hr />
-                                            <li onClick={handleLogOut}><FaSignOutAlt className='login_icons' />
-                                                <p>LogOut</p></li>
-                                        </ul>
-                                    </button>}
+                                    <Link to={'/userAccount'}  className='navbar-profile'>
+                                        <FaUser className='user_icon' />
+                                    </Link>}
                             </li>
                         </ul>
                     </div>

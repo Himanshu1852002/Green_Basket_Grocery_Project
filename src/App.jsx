@@ -19,6 +19,7 @@ import LoginPopup from './Components/Login_PopUp/LoginPopup';
 import Wishlist from '../src/Pages/Wishlist/Wishlist';
 import ScrollToTop from './Pages/ScrollToTop/ScrollToTop';
 import { ToastContainer } from 'react-toastify';
+import User_Profile from './Pages/User_Profile/User_Profile';
 
 function App() {
 
@@ -42,7 +43,7 @@ function App() {
     <>
       {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
       <div>
-        <ToastContainer position='top-center' autoClose={3000}/>
+        <ToastContainer position='top-center' autoClose={3000} />
         <ScrollToTop />
         <Navbar setShowLogin={setShowLogin} />
         <Routes>
@@ -58,6 +59,7 @@ function App() {
           <Route path='/blog' element={<Blog />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/wishlist' element={<Wishlist />} />
+          <Route path='/userAccount' element={<User_Profile />} />
         </Routes>
       </div>
       <Footer />

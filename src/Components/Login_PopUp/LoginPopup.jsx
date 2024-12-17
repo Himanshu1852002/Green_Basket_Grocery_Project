@@ -3,7 +3,7 @@ import './LoginPopup.css'
 import cross_icon from '../../assets/Images/Images/cross_icon.png'
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { setToken} from '../../Store/tokenSlice';
+import { setToken } from '../../Store/tokenSlice';
 import axios from 'axios';
 
 const LoginPopup = ({ setShowLogin }) => {
@@ -11,7 +11,7 @@ const LoginPopup = ({ setShowLogin }) => {
     const dispatch = useDispatch();
     const [currState, setCurrState] = useState("Login");
     const url = useSelector((state) => state.cart.url);
-   
+
     const [data, setData] = useState({
         name: "",
         email: "",
@@ -40,6 +40,7 @@ const LoginPopup = ({ setShowLogin }) => {
         if (response.data.success) {
             dispatch(setToken(response.data.token));
             localStorage.setItem("token", response.data.token)
+            localStorage.setItem('userName', response.data.user.name);
             setShowLogin(false);
         }
         else {
