@@ -1,5 +1,6 @@
 import './Hero.css';
 import man_img from '../../assets/Images/Images/Boy.png';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
     return (
@@ -14,7 +15,7 @@ const Hero = () => {
                         <p className="lead">
                             Embrace a healthier lifestyle with Green Basket! We bring you the freshest groceries, straight from farms to your doorstep, ensuring quality, convenience, and sustainability in every bite.
                         </p>
-                        <button className='hero_btn'>Shop now</button>
+                        <Link to={'/fruits'} className='hero_btn'>Shop now</Link>
                     </div>
                     <div
                         className="col-md-6 second-col">
@@ -26,7 +27,7 @@ const Hero = () => {
                         />
                     </div>
                 </div>
-                
+
             </div>
         </>
     )

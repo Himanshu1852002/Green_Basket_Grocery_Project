@@ -139,22 +139,22 @@ import drink_15 from '../Images/Coldrinks_Images/Maaza.png';
 import drink_16 from '../Images/Coldrinks_Images/7_UP.png';
 
 export const coldrinks_list = [
-    { item_id: "cd1", imgSrc: drink_1, item_name: "Crush", item_price: 40, unit: "/ltr" },
-    { item_id: "cd2", imgSrc: drink_2, item_name: "Fanta Grapsh", item_price: 40, unit: "/ltr" },
-    { item_id: "cd3", imgSrc: drink_3, item_name: "Sprite", item_price: 40, unit: "/ltr" },
-    { item_id: "cd4", imgSrc: drink_4, item_name: "Coca Cola", item_price: 40, unit: "/ltr" },
-    { item_id: "cd5", imgSrc: drink_5, item_name: "DR Pepper", item_price: 40, unit: "/ltr" },
-    { item_id: "cd6", imgSrc: drink_6, item_name: "Fanta Orange", item_price: 40, unit: "/ltr" },
-    { item_id: "cd7", imgSrc: drink_7, item_name: "Fresh Juice", item_price: 40, unit: "/ltr" },
-    { item_id: "cd8", imgSrc: drink_8, item_name: "Mirinda Orange", item_price: 40, unit: "/ltr" },
-    { item_id: "cd9", imgSrc: drink_9, item_name: "Fanta Rashberry", item_price: 40, unit: "/ltr" },
-    { item_id: "cd10", imgSrc: drink_10, item_name: "Pepsi", item_price: 40, unit: "/ltr" },
-    { item_id: "cd11", imgSrc: drink_11, item_name: "Monster", item_price: 40, unit: "/ltr" },
-    { item_id: "cd12", imgSrc: drink_12, item_name: "Sting", item_price: 40, unit: "/ltr" },
-    { item_id: "cd13", imgSrc: drink_13, item_name: "Strawberry Juice", item_price: 40, unit: "/ltr" },
-    { item_id: "cd14", imgSrc: drink_14, item_name: "Appy Fizz", item_price: 40, unit: "/ltr" },
-    { item_id: "cd15", imgSrc: drink_15, item_name: "Maaza", item_price: 40, unit: "/ltr" },
-    { item_id: "cd16", imgSrc: drink_16, item_name: "7 UP", item_price: 40, unit: "/ltr" },
+    { item_id: "cd1", imgSrc: drink_1, item_name: "Crush", item_price: 40, unit: "/ml" },
+    { item_id: "cd2", imgSrc: drink_2, item_name: "Fanta Grapsh", item_price: 40, unit: "/ml" },
+    { item_id: "cd3", imgSrc: drink_3, item_name: "Sprite", item_price: 40, unit: "/ml" },
+    { item_id: "cd4", imgSrc: drink_4, item_name: "Coca Cola", item_price: 40, unit: "/ml" },
+    { item_id: "cd5", imgSrc: drink_5, item_name: "DR Pepper", item_price: 40, unit: "/ml" },
+    { item_id: "cd6", imgSrc: drink_6, item_name: "Fanta Orange", item_price: 40, unit: "/ml" },
+    { item_id: "cd7", imgSrc: drink_7, item_name: "Fresh Juice", item_price: 40, unit: "/ml" },
+    { item_id: "cd8", imgSrc: drink_8, item_name: "Mirinda Orange", item_price: 40, unit: "/ml" },
+    { item_id: "cd9", imgSrc: drink_9, item_name: "Fanta Rashberry", item_price: 40, unit: "/ml" },
+    { item_id: "cd10", imgSrc: drink_10, item_name: "Pepsi", item_price: 40, unit: "/ml" },
+    { item_id: "cd11", imgSrc: drink_11, item_name: "Monster", item_price: 40, unit: "/ml" },
+    { item_id: "cd12", imgSrc: drink_12, item_name: "Sting", item_price: 40, unit: "/ml" },
+    { item_id: "cd13", imgSrc: drink_13, item_name: "Strawberry Juice", item_price: 40, unit: "/ml" },
+    { item_id: "cd14", imgSrc: drink_14, item_name: "Appy Fizz", item_price: 40, unit: "/ml" },
+    { item_id: "cd15", imgSrc: drink_15, item_name: "Maaza", item_price: 40, unit: "/ml" },
+    { item_id: "cd16", imgSrc: drink_16, item_name: "7 UP", item_price: 40, unit: "/ml" },
 ];
 
 import snacks_1 from '../Images/Snacks_Images/Bingo.png';

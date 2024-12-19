@@ -35,11 +35,11 @@ const User_Profile = () => {
 
 
     // for the image
-    const handleImageChnage = (event) => {
+    const handleImageChnage = async (event) => {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = () => {
+            reader.onload = async () => {
                 setProfileImage(reader.result);
             }
             reader.readAsDataURL(file);

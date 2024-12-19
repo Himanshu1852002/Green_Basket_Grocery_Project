@@ -35,7 +35,7 @@ const loginUser = async (req, res) => {
 
 const createToken = (id) => {
     // eslint-disable-next-line no-undef
-    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1h' })
+    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 }
 
 // register user
@@ -72,7 +72,7 @@ const registerUser = async (req, res) => {
         // generate token
         const token = createToken(user._id)//_id in automatic generat by monodb
         res.json({
-            success: true, 
+            success: true,
             token,
             user: {
                 name: user.name,
@@ -85,5 +85,6 @@ const registerUser = async (req, res) => {
         res.json({ success: false, message: "Error" })
     }
 }
+
 
 export { loginUser, registerUser }
