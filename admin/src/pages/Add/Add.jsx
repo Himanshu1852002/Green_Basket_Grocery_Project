@@ -11,9 +11,10 @@ const Add = ({ url }) => {
     const [image, setImage] = useState(false);
     const [data, setData] = useState({
         name: "",
+        unit: "",
         description: "",
         price: "",
-        category: "Fruit"
+        category: "Fruits"
     });
 
     const onChangeHandler = async (event) => {
@@ -27,6 +28,7 @@ const Add = ({ url }) => {
 
         const formData = new FormData();
         formData.append("name", data.name);
+        formData.append("unit", data.unit);
         formData.append("description", data.description);
         formData.append("price", Number(data.price));
         formData.append("category", data.category);
@@ -36,9 +38,10 @@ const Add = ({ url }) => {
         if (response.data.success) {
             setData({
                 name: "",
+                unit: "",
                 description: "",
                 price: "",
-                category: "Fruit"
+                category: "Fruits"
             })
             setImage(false);
             toast.success(response.data.message);
@@ -57,10 +60,22 @@ const Add = ({ url }) => {
                     </label>
                     <input onChange={(e) => setImage(e.target.files[0])} type="file" id="image" hidden required />
                 </div>
-
-                <div className="add-product-name flex-col">
-                    <p>Product Name</p>
-                    <input onChange={onChangeHandler} value={data.name} type="text" name="name" placeholder="Type here" />
+                <div className='d-flex gap-4 h-100'>
+                    <div className="add-product-name flex-col">
+                        <p>Product Name</p>
+                        <input onChange={onChangeHandler} value={data.name} type="text" name="name" placeholder="Type here" />
+                    </div>
+                    <div className="flex-col">
+                        <p>Product Unit</p>
+                        <select className='add-product-unit' onChange={onChangeHandler} value={data.unit} name="unit">
+                            <option value="">--Select unit--</option>
+                            <option value="kg">kg</option>
+                            <option value="g">g</option>
+                            <option value="liters">liters</option>
+                            <option value="ml">ml</option>
+                            <option value="pieces">pieces</option>
+                        </select>
+                    </div>
                 </div>
                 <div className="add-product-description flex-col">
                     <p>Product Description</p>
@@ -70,18 +85,19 @@ const Add = ({ url }) => {
                     <div className="add-category flex-col">
                         <p>Product Category</p>
                         <select onChange={onChangeHandler} name="category">
-                            <option value="Fruit">Fruit</option>
-                            <option value="Vegetable">Vegetable</option>
-                            <option value="Chocolate">Chocolate</option>
+                            <option value="Fruits">Fruits</option>
+                            <option value="Vegetables">Vegetables</option>
+                            <option value="Chocolates">Chocolates</option>
                             <option value="Snacks">Snacks</option>
-                            <option value="Coldrink">Coldrink</option>
+                            <option value="Coldrinks">Coldrinks</option>
                             <option value="Grocery">Grocery</option>
                         </select>
                     </div>
-                </div>
-                <div className="add-price flex-col">
-                    <p>Product Price</p>
-                    <input onChange={onChangeHandler} value={data.price} type="Number" name="price" className='w-25 ps-1' placeholder="₹10" />
+
+                    <div className="add-price flex-col">
+                        <p>Product Price</p>
+                        <input onChange={onChangeHandler} value={data.price} type="Number" name="price" placeholder="₹10" />
+                    </div>
                 </div>
                 <button type="submit" className='add-btn'>Add</button>
             </form>

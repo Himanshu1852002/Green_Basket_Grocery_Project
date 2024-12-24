@@ -10,10 +10,10 @@ const List = ({ url }) => {
 
 
     const [list, setList] = useState([]);
-    console.log(list)
+    const [selectedCategory, setSelectedCategory] = useState('');
 
     const fetchList = async () => {
-        const response = await axios.get(`${url}/api/product/list`);
+        const response = await axios.get(`${url}/api/product/list?category=${selectedCategory}`);
         if (response.data.success) {
             setList(response.data.data);
         }
@@ -35,11 +35,26 @@ const List = ({ url }) => {
 
     useEffect(() => {
         fetchList();
-    }, []);
+    }, [selectedCategory]);
 
     return (
         <div className='list add flex-col'>
             <p>All Products List</p>
+            <div>
+                <select
+                    className="show-product"
+                    name="category"
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}>
+                    <option value="">Select category</option>
+                    <option value="Fruits">Fruits</option>
+                    <option value="Vegetables">Vegetables</option>
+                    <option value="Chocolates">Chocolates</option>
+                    <option value="Snacks">Snacks</option>
+                    <option value="Coldrinks">Coldrinks</option>
+                    <option value="Grocery">Grocery</option>
+                </select>
+            </div>
             <div className='list-table'>
                 <div className="list-table-format title">
                     <b>Image</b>

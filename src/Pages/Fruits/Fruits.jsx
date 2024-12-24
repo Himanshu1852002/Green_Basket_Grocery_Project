@@ -1,12 +1,24 @@
 import fruits_img from '../../assets/Images/Images/fruits.jpg';
 import Banners from "../../Components/Banners/Banners"
 import Product_Item_List from '../../Components/Product_Item_List/Product_Item_List';
-import { fruits_list } from '../../assets/Images/assets'
 import ExploreMenu from '../../Components/Explore_Menu/Explore_Menu';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProductsByCategory, getProductsError, getProductsStatus, selectAllProducts } from '../../Store/productsSlice';
+
 
 const Fruits = () => {
-    const [category, setCategory] = useState("Fruits")
+    const [category, setCategory] = useState("Fruits");
+    const dispatch = useDispatch();
+
+    const products = useSelector(selectAllProducts);
+    const status = useSelector(getProductsStatus);
+    const error = useSelector(getProductsError);
+
+    useEffect(() => {
+        dispatch(fetchProductsByCategory(category));
+    }, [dispatch, category])
+
     return (
         <>
             <Banners
@@ -18,9 +30,11 @@ const Fruits = () => {
 
             />
             <ExploreMenu category={category} setCategory={setCategory} />
-            <Product_Item_List
-                items={fruits_list}
-            />
+            {status === 'loading' && <p>Loading products...</p>}
+            {status === 'failed' && <p>Error: {error}</p>}
+            {status === 'succeeded' && (
+                <Product_Item_List items={products} />
+            )}
         </>
     )
 }

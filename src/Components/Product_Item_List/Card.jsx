@@ -8,24 +8,24 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 
-const Card = ({ item_id, title, price, imageSrc, unit }) => {
+const Card = ({ _id, name, price, image, unit }) => {
 
     const dispatch = useDispatch();
 
     const wishlist = useSelector((state) => state.wishlist.items);
-    const isWishlisted = wishlist.some((item) => item.item_id === item_id);
+    const isWishlisted = wishlist.some((item) => item._id === _id);
 
     const toggleWishlist = () => {
         if (isWishlisted) {
-            dispatch(removeFromWishlist(item_id));
+            dispatch(removeFromWishlist(_id));
             toast.info('Removed from Wishlist', { autoClose: 2000 });
         }
         else {
             dispatch(addToWishlist({
-                item_id,
-                title,
+                _id,
+                name,
                 price,
-                imageSrc,
+                image,
                 unit,
             }));
             toast.success('Added to Wishlist', { autoClose: 2000 });
@@ -34,16 +34,16 @@ const Card = ({ item_id, title, price, imageSrc, unit }) => {
 
     const handleAddToCart = () => {
         dispatch(addToCart({
-            item_id,
-            item_name: title,
-            item_price: price,
-            imgSrc: imageSrc,
-            unit,
+            _id: _id,
+            name: name,
+            price: price,
+            image: image,
+            unit: unit,
         }));
 
         toast.success('Product Added Successfully!', {
             position: "top-center",
-            autoClose: 3000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -51,12 +51,12 @@ const Card = ({ item_id, title, price, imageSrc, unit }) => {
             progress: undefined,
             theme: "light",
         });
-        
+
     };
     return (
         <div className="col-lg-3 col-md-6 col-sm-6 col-12 cards_top_div mb-3">
             <div className="card product_card position-relative">
-                <img src={imageSrc} className="card-img-top" alt={title} />
+                <img src={image} className="card-img-top" alt={name} />
                 <span className="wishlist-icon position-absolute top-0 end-0 p-2" onClick={toggleWishlist}>
                     {isWishlisted ? (
                         <FaHeart className="text-danger" />
@@ -65,8 +65,8 @@ const Card = ({ item_id, title, price, imageSrc, unit }) => {
                     )}
                 </span>
                 <div className="card-body product_card_body">
-                    <h5 className="card-title">{title}</h5>
-                    <p className="card-text">&#8377;{price} - {unit}</p>
+                    <h5 className="card-title">{name}</h5>
+                    <p className="card-text">&#8377;{price} /{unit}</p>
                     <button className="btn" onClick={handleAddToCart}
                     >Add to cart</button>
                 </div>
@@ -76,10 +76,10 @@ const Card = ({ item_id, title, price, imageSrc, unit }) => {
 }
 
 Card.propTypes = {
-    item_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    title: PropTypes.string.isRequired,
+    _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    name: PropTypes.string.isRequired,
     price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    imageSrc: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
     unit: PropTypes.string.isRequired,
 };
 

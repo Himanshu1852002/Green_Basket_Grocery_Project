@@ -8,6 +8,11 @@
     font-size: 13px;
 }
 
+.show-product {
+    width: max(40%, 280px);
+    height: 47px;
+}
+
 .list-table-format .title {
     background-color: #f9f9f9;
 }

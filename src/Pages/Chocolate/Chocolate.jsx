@@ -1,12 +1,24 @@
 import Banners from "../../Components/Banners/Banners";
 import Product_Item_List from "../../Components/Product_Item_List/Product_Item_List";
 import chocolate from '../../assets/Images/Images/Chocoo.png';
-import { chocolates_list } from '../../assets/Images/assets';
 import Explore_Menu from '../../Components/Explore_Menu/Explore_Menu'
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProductsByCategory, getProductsError, getProductsStatus, selectAllProducts } from '../../Store/productsSlice';
 
 const Chocolate = () => {
-    const [category, setCategory] = useState("Chocolate")
+    const [category, setCategory] = useState("Chocolates");
+    const dispatch = useDispatch();
+
+    const products = useSelector(selectAllProducts);
+    const status = useSelector(getProductsStatus);
+    const error = useSelector(getProductsError);
+
+    useEffect(() => {
+        dispatch(fetchProductsByCategory(category));
+    }, [dispatch, category])
+
+
     return (
         <>
             <Banners
@@ -18,9 +30,12 @@ const Chocolate = () => {
                 backgroundColor="linear-gradient(to bottom,#291c0e,#6e473b,#beb5a9,#e1d4c2)"
             />
             <Explore_Menu category={category} setCategory={setCategory} />
-            <Product_Item_List
-                items={chocolates_list}
-            />
+            {status === 'loading' && <p>Loading products...</p>}
+            {status === 'failed' && <p>Error: {error}</p>}
+            {status === 'succeeded' && (
+                <Product_Item_List items={products} />
+            )}
+
         </>
     )
 }

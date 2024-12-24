@@ -5,7 +5,7 @@ import profile_img from '../../assets/profile_image.png'
 const Navbar = () => {
     return (
         <>
-            <div className='navbar'>
+            <div className='navbar px-5'>
                 <img className='logo' src={logo} alt="" />
                 <img className='profile' src={profile_img} alt="" />
             </div>

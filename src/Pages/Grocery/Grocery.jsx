@@ -1,12 +1,23 @@
 import Grocery_img from '../../assets/Images/Images/grocery.png'
 import Banners from '../../Components/Banners/Banners'
 import ExploreMenu from '../../Components/Explore_Menu/Explore_Menu'
-import { useState } from 'react'
 import Product_Item_List from '../../Components/Product_Item_List/Product_Item_List';
-import { grocerys_list } from '../../assets/Images/assets';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProductsByCategory, getProductsError, getProductsStatus, selectAllProducts } from '../../Store/productsSlice';
 
 const Grocery = () => {
-    const [category, setCategory] = useState("Grocery")
+    const [category, setCategory] = useState("Grocery");
+    const dispatch = useDispatch();
+
+    const products = useSelector(selectAllProducts);
+    const status = useSelector(getProductsStatus);
+    const error = useSelector(getProductsError);
+
+    useEffect(() => {
+        dispatch(fetchProductsByCategory(category));
+    }, [dispatch, category])
+
     return (
         <>
             <Banners
@@ -17,9 +28,11 @@ const Grocery = () => {
                 backgroundColor='linear-gradient(to top,#95C4B4, #8EBCB1,#549895,#387271,#245254'
             />
             <ExploreMenu category={category} setCategory={setCategory} />
-            <Product_Item_List
-                items={grocerys_list}
-            />
+            {status === 'loading' && <p>Loading products...</p>}
+            {status === 'failed' && <p>Error: {error}</p>}
+            {status === 'succeeded' && (
+                <Product_Item_List items={products} />
+            )}
         </>
     )
 }

@@ -9,6 +9,7 @@ const addProduct = async (req, res) => {
 
     const product = new productModel({
         name: req.body.name,
+        unit: req.body.unit,
         description: req.body.description,
         price: req.body.price,
         category: req.body.category,
@@ -24,12 +25,19 @@ const addProduct = async (req, res) => {
     }
 }
 
-
 // All product list show
 
 const listProduct = async (req, res) => {
+    const { category } = req.query;
     try {
-        const products = await productModel.find({});
+        let products;
+        if (category) {
+            products = await productModel.find({ category });
+        }
+        else {
+            products = await productModel.find({});
+
+        }
         res.json({ success: true, data: products });
     } catch (error) {
         console.log(error);

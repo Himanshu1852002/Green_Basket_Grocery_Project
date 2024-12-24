@@ -10,7 +10,7 @@ const Delivery_Banner = () => {
                     <p>Get farm fresh &amp; Hygenic Fruits and vegetables.</p>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-12 d-flex justify-content-center align-items-center img_div">
-                    <img src={delivery_boy_img} />
+                    <img className='delivery-boy-img' src={delivery_boy_img} />
                 </div>
             </div>
         </div>
