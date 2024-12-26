@@ -5,7 +5,7 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdProductionQuantityLimits } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
-import { clearToken } from '../../Store/tokenSlice'
+import { clearCartData, clearToken } from '../../Store/cartSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -22,6 +22,7 @@ const User_Profile = () => {
 
     const handleLogOut = () => {
         dispatch(clearToken());
+        dispatch(clearCartData())
         localStorage.removeItem("token");
         navigate('/');
     }

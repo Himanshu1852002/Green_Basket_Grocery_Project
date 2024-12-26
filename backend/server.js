@@ -7,6 +7,7 @@ import path from 'path';
 import cors from 'cors'
 import 'dotenv/config';
 import productRouter from './routes/productRoute.js';
+import cartRouter from './routes/cartRoute.js';
 
 
 
@@ -32,6 +33,8 @@ const __dirname = dirname(__filename);
 app.use('/api/user', userRouter);
 app.use('/api/product', productRouter);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/api/cart', cartRouter);
+
 
 app.get("/", (req, res) => {
     res.send("API Working");

@@ -64,7 +64,7 @@ const Add = ({ url }) => {
                     <div className="add-product-name flex-col">
                         <p>Product Name</p>
                         <input onChange={onChangeHandler} value={data.name} type="text" name="name" placeholder="Type here" />
-                    </div>
+                    </div>-
                     <div className="flex-col">
                         <p>Product Unit</p>
                         <select className='add-product-unit' onChange={onChangeHandler} value={data.unit} name="unit">

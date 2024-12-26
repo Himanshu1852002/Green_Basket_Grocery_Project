@@ -5,20 +5,19 @@ import { IoMenu } from "react-icons/io5";
 import PropTypes from 'prop-types';
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleNav, closeNav } from '../../store/navbarSlice';
+import { toggleNav, closeNav } from '../../Store/navbarSlice';
 import { useState } from 'react';
+
 
 
 const Navbar = ({ setShowLogin }) => {
 
     const [showSearchOverlay, setShowSearchOverlay] = useState(false);
     const isNavOpen = useSelector((state) => state.navbar.isNavOpen);
-    const totalItems = useSelector((state) => state.cart.totalQuantity);
     const wishlist = useSelector((state) => state.wishlist.items);
     const token = localStorage.getItem("token")
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const handleNavToggle = () => dispatch(toggleNav());
 
     const handleNavLinkClick = (path) => {
@@ -26,7 +25,7 @@ const Navbar = ({ setShowLogin }) => {
         navigate(path);
     };
 
-
+    const { cartItems } = useSelector((state) => state.cart);
     const toggleSearchOverlay = () => setShowSearchOverlay(!showSearchOverlay);
 
     return (
@@ -104,7 +103,7 @@ const Navbar = ({ setShowLogin }) => {
                             </li>
                             <li className="nav-item" style={{ position: 'relative' }}>
                                 <Link to={'/cart'} className="nav-link" onClick={() => handleNavLinkClick('/cart')}><FaShoppingCart size={22} />
-                                    {totalItems > 0 && (
+                                    {cartItems > 0 && (
                                         <span className="badge rounded-circle bg-danger" style={{
                                             position: 'absolute',
                                             top: '-5px',
@@ -114,14 +113,14 @@ const Navbar = ({ setShowLogin }) => {
                                             display: 'flex',
                                             justifyContent: "center"
                                         }}>
-                                            {totalItems}
+                                            {cartItems}
                                         </span>)}
                                 </Link>
                             </li>
                             <li className="nav-item">
 
                                 {!token ? <button onClick={() => setShowLogin(true)} className="login_btn">Login</button> :
-                                    <Link to={'/userAccount'}  className='navbar-profile'>
+                                    <Link to={'/userAccount'} className='navbar-profile'>
                                         <FaUser className='user_icon' />
                                     </Link>}
                             </li>

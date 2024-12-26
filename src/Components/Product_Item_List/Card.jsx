@@ -1,17 +1,15 @@
 import PropTypes from "prop-types";
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../../Store/cartSlice';
 import { addToWishlist, removeFromWishlist } from "../../Store/wishlistSlice";
+import { addToCartAPI } from "../../Store/cartSlice";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
 
 const Card = ({ _id, name, price, image, unit }) => {
 
     const dispatch = useDispatch();
-
+    const token = useSelector((state) => state.cart.token);
     const wishlist = useSelector((state) => state.wishlist.items);
     const isWishlisted = wishlist.some((item) => item._id === _id);
 
@@ -33,26 +31,14 @@ const Card = ({ _id, name, price, image, unit }) => {
     };
 
     const handleAddToCart = () => {
-        dispatch(addToCart({
-            _id: _id,
-            name: name,
-            price: price,
-            image: image,
-            unit: unit,
-        }));
-
-        toast.success('Product Added Successfully!', {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-
+        if (token) {
+            dispatch(addToCartAPI({ itemId: _id, token }));
+            toast.success('Product added to cart!', { autoClose: 2000 });
+        } else {
+            toast.error('Please login to add items to the cart.', { autoClose: 2000 });
+        }
     };
+
     return (
         <div className="col-lg-3 col-md-6 col-sm-6 col-12 cards_top_div mb-3">
             <div className="card product_card position-relative">
@@ -67,8 +53,9 @@ const Card = ({ _id, name, price, image, unit }) => {
                 <div className="card-body product_card_body">
                     <h5 className="card-title">{name}</h5>
                     <p className="card-text">&#8377;{price} /{unit}</p>
-                    <button className="btn" onClick={handleAddToCart}
-                    >Add to cart</button>
+                    <button className="btn" onClick={handleAddToCart}>
+                        Add to cart
+                    </button>
                 </div>
             </div>
         </div>
@@ -83,4 +70,4 @@ Card.propTypes = {
     unit: PropTypes.string.isRequired,
 };
 
-export default Card
+export default Card;

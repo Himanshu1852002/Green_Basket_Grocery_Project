@@ -15,7 +15,6 @@ export const fetchProductsByCategory = createAsyncThunk(
 
     async (category) => {
         const resonse = await axios.get(`${url}/api/product/list?category=${category}`);
-        console.log("response data", resonse.data)
         return resonse.data.data;
     }
 )
@@ -30,7 +29,6 @@ const productsSlice = createSlice({
                 state.status = 'loading';
             })
             .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
-                console.log("Succese fetch data", action.payload)
                 state.status = 'succeeded',
                     state.products = action.payload;
             })

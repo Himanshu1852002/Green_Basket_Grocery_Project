@@ -1,79 +1,98 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-const initialState = {
-    cartItems: [],
-    totalQuantity: 0,
-    totalAmount: 0,
-    url : "http://localhost:3000"
+const url = "http://localhost:3000";
+
+// Async thunks
+export const fetchProductList = createAsyncThunk('cart/fetchProductList', async () => {
+    const response = await axios.get(`${url}/api/product/list`);
+    return response.data.data;
+});
+
+export const loadCartData = createAsyncThunk('cart/loadCartData', async (token) => {
+    const response = await axios.post(`${url}/api/cart/get`, {}, { headers: { token } });
+    if (response.data.success) {
+        return response.data.cartdata; // Ensure this matches the response structure
+    }
+    throw new Error('Failed to load cart data');
+});
+
+export const addToCartAPI = createAsyncThunk('cart/addToCartAPI', async ({ itemId, quantity = 1, token }) => {
+    await axios.post(`${url}/api/cart/add`, { itemId, quantity }, { headers: { token } });
+    return { itemId, quantity };
+});
+
+export const removeFromCartAPI = createAsyncThunk('cart/removeFromCartAPI', async ({ itemId, token }) => {
+    const response = await axios.post(`${url}/api/cart/remove`, { itemId }, { headers: { token } });
+    if (response.data.success) {
+        return { itemId };
+    }
+    throw new Error('Failed to remove item from cart');
+});
+
+const calculateTotalAmount = (state) => {
+    return Object.entries(state.cartItems).reduce((total, [itemId, quantity]) => {
+        const product = state.product_list.find((item) => item._id === itemId);
+        return product ? total + product.price * quantity : total;
+    }, 0);
 };
 
+// Cart slice
 const cartSlice = createSlice({
     name: 'cart',
-    initialState,
+    initialState: {
+        product_list: [],
+        cartItems: {},
+        token: localStorage.getItem('token') || '',
+        status: 'idle',
+        error: null,
+        totalCartAmount: 0,
+    },
     reducers: {
-        increaseItem(state, action) {
-            const newItem = action.payload;
-            const existingItem = state.cartItems.find((item) => item.item_id === newItem.item_id);
-            if (existingItem) {
-                existingItem.quantity++;
-                existingItem.totalPrice += newItem.item_price;
-            } else {
-                state.cartItems.push({
-                    item_id: newItem.item_id,
-                    imgSrc: newItem.imgSrc,
-                    item_name: newItem.item_name,
-                    item_price: newItem.item_price,
-                    quantity: 1,
-                    totalPrice: newItem.item_price,
-                });
-                state.totalQuantity++;
-            }
-            state.totalAmount += newItem.item_price;
+        setToken: (state, action) => {
+            state.token = action.payload;
+            localStorage.setItem('token', action.payload);
         },
-        decreaseItem(state, action) {
-            const id = action.payload;
-            const existingItem = state.cartItems.find((item) => item.item_id === id);
-            if (existingItem) {
-                state.totalAmount -= existingItem.item_price;
-                if (existingItem.quantity === 1) {
-                    state.cartItems = state.cartItems.filter((item) => item.item_id !== id);
+        clearToken: (state) => {
+            state.token = null;
+            localStorage.removeItem('token');
+        },
+        clearCartData: (state) => {
+            state.cartItems = {};
+        },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchProductList.fulfilled, (state, action) => {
+                state.product_list = action.payload || [];
+                state.totalCartAmount = calculateTotalAmount(state);
+            })
+            .addCase(loadCartData.fulfilled, (state, action) => {
+                state.cartItems = action.payload || {};
+                state.totalCartAmount = calculateTotalAmount(state);
+            })
+            .addCase(addToCartAPI.fulfilled, (state, action) => {
+                const { itemId, quantity } = action.payload;
+                if (!state.cartItems[itemId]) {
+                    state.cartItems[itemId] = quantity;
                 } else {
-                    existingItem.quantity--;
-                    existingItem.totalPrice -= existingItem.item_price;
+                    state.cartItems[itemId] += quantity;
                 }
-                state.totalQuantity--;
-            }
-        },
-        addToCart(state, action) {
-            const newItem = action.payload;
-            const existingItem = state.cartItems.find((item) => item.item_id === newItem.item_id);
-
-            if (!existingItem) {
-                state.cartItems.push({
-                    item_id: newItem.item_id,
-                    imgSrc: newItem.imgSrc,
-                    item_name: newItem.item_name,
-                    item_price: newItem.item_price,
-                    quantity: 1,
-                    totalPrice: newItem.item_price,
-                });
-                state.totalQuantity++;
-                state.totalAmount += newItem.item_price;
-            }
-        },
-        removeFromCart(state, action) {
-            const id = action.payload;
-            const existingItem = state.cartItems.find((item) => item.item_id === id);
-
-            if (existingItem) {
-                state.cartItems = state.cartItems.filter((item) => item.item_id !== id);
-                state.totalQuantity--;
-                state.totalAmount -= existingItem.totalPrice;
-            }
-        },
-
+                state.totalCartAmount = calculateTotalAmount(state);
+            })
+            .addCase(removeFromCartAPI.fulfilled, (state, action) => {
+                const { itemId } = action.payload;
+                if (state.cartItems[itemId]) {
+                    if (state.cartItems[itemId] > 1) {
+                        state.cartItems[itemId] -= 1;
+                    } else {
+                        delete state.cartItems[itemId];
+                    }
+                }
+                state.totalCartAmount = calculateTotalAmount(state);
+            });
     },
 });
 
-export const { increaseItem, decreaseItem, addToCart, removeFromCart } = cartSlice.actions;
+export const { setToken, clearCartData, clearToken } = cartSlice.actions;
 export default cartSlice.reducer;
