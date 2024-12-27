@@ -14,7 +14,8 @@ const Navbar = ({ setShowLogin }) => {
 
     const [showSearchOverlay, setShowSearchOverlay] = useState(false);
     const isNavOpen = useSelector((state) => state.navbar.isNavOpen);
-    const wishlist = useSelector((state) => state.wishlist.items);
+    const wishlist = useSelector((state) => state.wishlist.items); // Assuming `items` is an object or array
+    const cartItems = useSelector((state) => state.cart.cartItems);
     const token = localStorage.getItem("token")
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -25,8 +26,12 @@ const Navbar = ({ setShowLogin }) => {
         navigate(path);
     };
 
-    const { cartItems } = useSelector((state) => state.cart);
     const toggleSearchOverlay = () => setShowSearchOverlay(!showSearchOverlay);
+
+    const wishlistCount = Array.isArray(wishlist) ? wishlist.length : Object.keys(wishlist).length;
+    const cartItemCount = Array.isArray(cartItems)
+        ? cartItems.length
+        : Object.values(cartItems).reduce((total, qty) => total + qty, 0);
 
     return (
         <div>
@@ -41,7 +46,7 @@ const Navbar = ({ setShowLogin }) => {
                         <span><IoMenu /></span>
                     </button>
 
-                    <div className={`collapse navbar-collapse ${isNavOpen ? 'show' : ''}`} id="navbarNav">
+                    <div className={`collapse navbar-collapse  ${isNavOpen ? 'show' : ''}`} id="navbarNav">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
                                 <button className="nav-link btn-link" onClick={() => handleNavLinkClick('/')}>Home</button>
@@ -87,47 +92,66 @@ const Navbar = ({ setShowLogin }) => {
                         <ul className="navbar-nav ms-3">
                             <li className="nav-item" style={{ position: 'relative' }}>
                                 <Link to={'/wishlist'} className="nav-link" onClick={() => handleNavLinkClick('/wishlist')}><FaHeart size={22} />
-                                    {wishlist.length > 0 && (
+                                    {wishlistCount > 0 && (
                                         <span className="badge rounded-circle bg-danger" style={{
                                             position: 'absolute',
                                             top: '-5px',
                                             right: '-5px',
-                                            fontSize: '0.8rem',
-                                            width: '5px',
+                                            fontSize: '0.7rem',
+                                            width: '3px',
                                             display: 'flex',
                                             justifyContent: "center"
                                         }}>
-                                            {wishlist.length}
+                                            {wishlistCount}
                                         </span>)}
                                 </Link>
                             </li>
                             <li className="nav-item" style={{ position: 'relative' }}>
                                 <Link to={'/cart'} className="nav-link" onClick={() => handleNavLinkClick('/cart')}><FaShoppingCart size={22} />
-                                    {cartItems > 0 && (
+                                    {cartItemCount > 0 && (
                                         <span className="badge rounded-circle bg-danger" style={{
                                             position: 'absolute',
                                             top: '-5px',
                                             right: '-5px',
-                                            fontSize: '0.8rem',
-                                            width: '5px',
+                                            fontSize: '0.7rem',
+                                            width: '3px',
                                             display: 'flex',
                                             justifyContent: "center"
                                         }}>
-                                            {cartItems}
+                                            {cartItemCount}
                                         </span>)}
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                {!token ? <button onClick={() => setShowLogin(true)} className="login_btn">Login</button> :
-                                    <Link to={'/userAccount'} className='navbar-profile'>
-                                        <FaUser className='user_icon' />
-                                    </Link>}
+                                {!token ? (
+                                    <button
+                                        onClick={() => {
+                                            setShowLogin(true);
+                                            dispatch(closeNav()); // Close the dropdown
+                                        }}
+                                        className="login_btn"
+                                    >
+                                        Login
+                                    </button>
+                                ) : (
+                                    <Link
+                                        to={'/userAccount'}
+                                        className="navbar-profile"
+                                        onClick={() => dispatch(closeNav())} // Close the dropdown
+                                    >
+                                        <FaUser className="user_icon" />
+                                    </Link>
+                                )}
                             </li>
+
                         </ul>
                     </div>
                 </div>
             </nav>
         </div>
+
+
+
     );
 };
 
