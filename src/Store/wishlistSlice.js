@@ -1,21 +1,111 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
+const url = "http://localhost:3000";
+
+// Async actions
+export const fetchProductList = createAsyncThunk('cart/fetchProductList', async () => {
+    const response = await axios.get(`${url}/api/product/list`);
+    return response.data.data;
+});
+
+
+
+export const fetchWishlist = createAsyncThunk(
+    'wishlist/fetchWishlist',
+    async (token) => {
+        try {
+            const response = await axios.post(`${url}/api/wishlist/get`, {}, { headers: { token } });
+            return response.data.wishlistData;
+        } catch (error) {
+            return error("Failed to fetch wishlist");
+        }
+    }
+);
+
+export const addToWishlistAPI = createAsyncThunk(
+    'wishlist/addToWishlistAPI',
+    async ({ token, itemId }, { rejectWithValue }) => {
+        try {
+            const response = await axios.post(`${url}/api/wishlist/add`, { itemId }, { headers: { token } });
+            if (response.data.success) {
+                return { itemId, quantity: 1 };
+            }
+        } catch (error) {
+            return rejectWithValue(error.response?.data?.message || "Failed to add item to wishlist");
+        }
+    }
+);
+
+export const removeFromWishlistAPI = createAsyncThunk(
+    'wishlist/removeFromWishlistAPI',
+    async ({ token, itemId }, { rejectWithValue }) => {
+        try {
+            const response = await axios.post(`${url}/api/wishlist/remove`, { itemId }, { headers: { token } });
+            if (response.data.success) {
+                return { itemId, success: true };
+            }
+        } catch (error) {
+            return rejectWithValue(error.response?.data?.message || "Failed to remove item from wishlist");
+        }
+    }
+);
+
+// Wishlist slice
 const wishlistSlice = createSlice({
     name: 'wishlist',
     initialState: {
-        items: [],
+        items: {},
+        product_list: [],
+        status: 'idle',
+        error: null,
+        token: localStorage.getItem('token') || ''
     },
     reducers: {
-        addToWishlist: (state, action) => {
-            if (!state.items.find(item => item.item_id === action.payload.item_id)) {
-                state.items.push(action.payload); // add item if not already in the wishlist
-            }
+        setWishToken: (state, action) => {
+            state.token = action.payload;
+            localStorage.setItem('token', action.payload);
         },
-        removeFromWishlist: (state, action) => {
-            state.items = state.items.filter(item => item.item_id !== action.payload); // remove item
+        clearWishToken: (state) => {
+            state.token = null;
+            localStorage.removeItem('token');
         },
+        clearWishlistData: (state) => {
+            state.items = {};
+        },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchProductList.fulfilled, (state, action) => {
+                state.product_list = action.payload || [];
+            })
+            .addCase(fetchWishlist.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.items = action.payload || {};
+            })
+            .addCase(addToWishlistAPI.fulfilled, (state, action) => {
+                const { itemId } = action.payload;
+                if (!state.items[itemId]) {
+                    state.items[itemId] = 1;
+                } else {
+                    state.items[itemId] += 1;
+                }
+            })
+            .addCase(removeFromWishlistAPI.fulfilled, (state, action) => {
+                const { itemId } = action.payload;
+                if (state.items[itemId]) {
+                    if (state.items[itemId] > 1) {
+                        state.items[itemId] -= 1;
+                    } else {
+                        delete state.items[itemId];
+                    }
+                }
+            })
+            .addCase(removeFromWishlistAPI.rejected, (state, action) => {
+                state.error = action.payload;
+            });
     },
 });
 
-export const { addToWishlist, removeFromWishlist } = wishlistSlice.actions;
+export const { setWishToken, clearWishToken, clearWishlistData } = wishlistSlice.actions;
 export default wishlistSlice.reducer;

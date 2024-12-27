@@ -9,6 +9,7 @@ import { clearCartData, clearToken } from '../../Store/cartSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { clearWishlistData, clearWishToken } from '../../Store/wishlistSlice';
 
 
 const User_Profile = () => {
@@ -22,7 +23,9 @@ const User_Profile = () => {
 
     const handleLogOut = () => {
         dispatch(clearToken());
-        dispatch(clearCartData())
+        dispatch(clearCartData());
+        dispatch(clearWishToken())
+        dispatch(clearWishlistData());
         localStorage.removeItem("token");
         navigate('/');
     }

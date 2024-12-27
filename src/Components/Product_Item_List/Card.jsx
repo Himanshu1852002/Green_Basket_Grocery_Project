@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToWishlist, removeFromWishlist } from "../../Store/wishlistSlice";
+import { addToWishlistAPI, removeFromWishlistAPI } from "../../Store/wishlistSlice";
 import { addToCartAPI } from "../../Store/cartSlice";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,21 +11,19 @@ const Card = ({ _id, name, price, image, unit }) => {
     const dispatch = useDispatch();
     const token = useSelector((state) => state.cart.token);
     const wishlist = useSelector((state) => state.wishlist.items);
-    const isWishlisted = wishlist.some((item) => item._id === _id);
+    const isWishlisted = wishlist[_id] !== undefined;
 
     const toggleWishlist = () => {
-        if (isWishlisted) {
-            dispatch(removeFromWishlist(_id));
-            toast.info('Removed from Wishlist', { autoClose: 2000 });
+        if (!token) {
+            toast.error('Please log in to manage your wishlist.', { autoClose: 2000 });
+            return;
         }
-        else {
-            dispatch(addToWishlist({
-                _id,
-                name,
-                price,
-                image,
-                unit,
-            }));
+
+        if (isWishlisted) {
+            dispatch(removeFromWishlistAPI({ token, itemId: _id }));
+            toast.info('Removed from Wishlist', { autoClose: 2000 });
+        } else {
+            dispatch(addToWishlistAPI({ token, itemId: _id }));
             toast.success('Added to Wishlist', { autoClose: 2000 });
         }
     };
@@ -35,7 +33,7 @@ const Card = ({ _id, name, price, image, unit }) => {
             dispatch(addToCartAPI({ itemId: _id, token }));
             toast.success('Product added to cart!', { autoClose: 2000 });
         } else {
-            toast.error('Please login to add items to the cart.', { autoClose: 2000 });
+            toast.error('Please log in to add items to the cart.', { autoClose: 2000 });
         }
     };
 

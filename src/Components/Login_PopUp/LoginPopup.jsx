@@ -4,6 +4,7 @@ import cross_icon from '../../assets/Images/Images/cross_icon.png'
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { setToken, loadCartData } from '../../Store/cartSlice';
+import { setWishToken,fetchWishlist } from '../../Store/wishlistSlice';
 import axios from 'axios';
 
 const LoginPopup = ({ setShowLogin }) => {
@@ -45,7 +46,8 @@ const LoginPopup = ({ setShowLogin }) => {
                 localStorage.setItem('token', token);
                 localStorage.setItem('userName', response.data.user.name);
                 dispatch(loadCartData(token));
-                console.log(dispatch(loadCartData(token)));
+                dispatch(setWishToken(token))
+                dispatch(fetchWishlist(token))
                 setShowLogin(false);
             }
             else {

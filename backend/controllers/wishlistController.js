@@ -1,20 +1,18 @@
 import userModel from '../models/userModel.js';
-// add to cart function
 
-const addToCart = async (req, res) => {
 
+const addToWishlist = async (req, res) => {
     try {
-        let userData = await userModel.findById(req.body.userId)
-        let cartData = await userData.cartData || {};
-        if (!cartData[req.body.itemId]) {
-            cartData[req.body.itemId] = 1;
+        let userData = await userModel.findById(req.body.userId);
+        const wishlistData = await userData.wishlistData || {};
+
+        if (!wishlistData[req.body.itemId]) {
+            wishlistData[req.body.itemId] = 1;
         }
         else {
-            cartData[req.body.itemId] += 1;
-        }
-
-        await userModel.findByIdAndUpdate(req.body.userId, { cartData });
-        res.json({ success: true, message: "Added To Cart" });
+            wishlistData[req.body.itemId] += 1;
+        } await userModel.findByIdAndUpdate(req.body.userId, { wishlistData });
+        res.json({ success: true, message: "Added To Wishlist" });
 
     } catch (error) {
         console.log(error);
@@ -22,22 +20,20 @@ const addToCart = async (req, res) => {
     }
 }
 
-
-// remove items from userCart
-const removeFromCart = async (req, res) => {
+const removeFromWishlist = async (req, res) => {
     try {
         const userData = await userModel.findById(req.body.userId);
         if (!userData) {
             return res.status(404).json({ success: false, message: "User not found" });
         }
 
-        let cartData = userData.cartData || {};
+        let wishlistData = userData.wishlistData || {};
 
-        if (cartData[req.body.itemId]) {
-            if (cartData[req.body.itemId] > 1) {
-                cartData[req.body.itemId] -= 1;
+        if (wishlistData[req.body.itemId]) {
+            if (wishlistData[req.body.itemId] > 1) {
+                wishlistData[req.body.itemId] -= 1;
             } else {
-                delete cartData[req.body.itemId];
+                delete wishlistData[req.body.itemId];
             }
         } else {
             return res.status(400).json({ success: false, message: "Item not found in cart" });
@@ -45,12 +41,12 @@ const removeFromCart = async (req, res) => {
 
         const updatedUser = await userModel.findByIdAndUpdate(
             req.body.userId,
-            { cartData },
+            { wishlistData },
             { new: true }
         );
 
         if (updatedUser) {
-            res.json({ success: true, message: "Removed from cart", cartdata: updatedUser.cartData });
+            res.json({ success: true, message: "Removed from cart", wishlistData: updatedUser.wishlistData });
         } else {
             throw new Error("Failed to update user cart");
         }
@@ -58,16 +54,13 @@ const removeFromCart = async (req, res) => {
         console.error(error);
         res.status(500).json({ success: false, message: "Internal Server Error" });
     }
-};
+}
 
-
-// fetch user cart data
-
-const getCart = async (req, res) => {
+const getWishlist = async (req, res) => {
     try {
         let userData = await userModel.findById(req.body.userId);
-        let cartdata = await userData.cartData || {};
-        res.json({ success: true, cartdata })
+        let wishlistData = await userData.wishlistData || {};
+        res.json({ success: true, wishlistData })
 
     } catch (error) {
         console.log(error);
@@ -75,4 +68,4 @@ const getCart = async (req, res) => {
     }
 }
 
-export { addToCart, removeFromCart, getCart }
+export { addToWishlist, removeFromWishlist, getWishlist }

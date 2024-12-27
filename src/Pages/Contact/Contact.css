@@ -3,83 +3,247 @@
 }
 
 .contact_row_1 {
-    height: 190px;
+    height: 180px;
     background-image: linear-gradient(to top, #1A5319, #508D4E, #80AF81, #D6EFD8);
+}
+
+.contact_row_2 {
     margin-bottom: 15px;
+    margin-top: 20px;
+}
+
+.contact_content {
+    border-radius: 10px;
+    bottom: 0;
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 80%;
+}
+
+.shop-img-box {
+    height: 400px;
+    width: 50%;
+    border-radius: 10px;
+}
+
+.shop-img-box img {
+    height: 400px;
+    width: 90%;
+    border-radius: 10px;
 }
 
 .map_image {
-    height: 450px;
+    height: 350px;
+    width: 100%;
     border-radius: 25px;
 }
 
-.map_image img {
-    height: 420px;
-    width: 530px;
+.map-iframe {
+    height: 350px;
+    border: 2px solid black;
+    width: 100%;
     border-radius: 25px;
 }
 
 .contact_icons {
-    font-size: 2rem;
+    font-size: 1rem;
     margin-right: 20px;
     margin-bottom: 10px;
 }
 
 .contact_content h2 {
-    font-size: 1.4rem;
+    font-size: 1rem;
     font-weight: 700;
 }
 
 .contact_content p {
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: 500;
 }
 
+.contact-form-col{
+    height: 400px;
+}
+
+.contact-form input {
+    width: 450px;
+    height: 45px;
+    border-radius: 10px;
+    padding-left: 10px;
+    outline: none;
+}
+
+.contact-form textarea {
+    border-radius: 10px;
+    padding: 10px;
+    width: 450px;
+}
+.contact-form button{
+    cursor: pointer;
+    height: 35px;
+    border-radius:20px;
+    background-color: green;
+    color: #fff;
+}
+
 @media (max-width:1200px) {
-    .map_image img {
-        height: 380px;
-        width: 480px;
+    .map-iframe {
+        height: 320px;
+    }
+
+    .shop-img-box {
+        height: 400px;
+        width: 50%;
+        border-radius: 10px;
+    }
+
+    .shop-img-box img {
+        height: 400px;
+        width: 100%;
+        border-radius: 10px;
     }
 }
 
 @media (max-width:992px) {
-    .map_image img {
+    .map-iframe {
         height: 320px;
-        width: 400px;
     }
 
-    .contact_icons {
-        font-size: 1.5rem;
-        margin-right: 20px;
+    .shop-img-box {
+        height: 360px;
+    }
+
+    .contact-form-col {
+        height: 360px;
+    }
+
+    .contact-form {
+        height: 360px;
+    }
+
+    .shop-img-box img {
+        height: 360px;
     }
 
     .contact_content h2 {
-        font-size: 1rem;
-        font-weight: 700;
+        font-size: 0.8rem;
+    }
+
+    .contact_content p {
+        font-size: 0.6rem;
+    }
+
+    .contact_icons {
+        font-size: 0.8rem;
+    }
+
+    .contact-form input {
+        width: 370px;
+        height: 40px;
+    }
+
+    .contact-form textarea {
+        width: 370px;
+        height: 120px;
     }
 }
 
 @media (max-width:767px) {
-    .map_image img {
-        height: 320px;
-        width: 450px;
+    .map-iframe {
+        height: 300px;
+    }
 
+    .shop-img-box {
+        height: 350px;
+        width: 500px;
+    }
+
+    .shop-img-box img {
+        height: 350px;
+        width: 500px;
     }
 
     .map_image {
-        margin-bottom: 20px;
-        height: 320px;
+        height: 300px;
     }
+
+    .contact_row_2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .contact-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .contact-form-col {
+        width: 500px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .contact-form input {
+        width: 450px;
+    }
+
+    .contact-form textarea {
+        width: 450px;
+    }
+
 }
 
 @media (max-width:575px) {
+    .contact_row_1 {
+        height: 140px
+    }
+
     .map_image {
-        margin-bottom: 20px;
+        height: 280px;
+    }
+
+    .map-iframe {
+        height: 280px;
+    }
+
+    .shop-img-box {
+        height: 300px;
+        margin-bottom: 10px;
+    }
+
+    .shop-img-box img {
         height: 300px;
     }
 
-    .map_image img {
-        height: 300px;
-        width: 320px;
+    .contact-form input {
+        width: 300px;
+    }
+
+    .contact-form textarea {
+        width: 300px;
+    }
+
+    .contact_content h2 {
+        font-size: 0.8rem;
+    }
+
+    .contact_content p {
+        font-size: 0.6rem;
+    }
+
+    .contact_icons {
+        font-size: 0.8rem;
+    }
+
+    .contact-form-col {
+        width: 300px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }

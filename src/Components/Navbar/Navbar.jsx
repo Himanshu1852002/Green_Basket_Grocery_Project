@@ -118,7 +118,6 @@ const Navbar = ({ setShowLogin }) => {
                                 </Link>
                             </li>
                             <li className="nav-item">
-
                                 {!token ? <button onClick={() => setShowLogin(true)} className="login_btn">Login</button> :
                                     <Link to={'/userAccount'} className='navbar-profile'>
                                         <FaUser className='user_icon' />

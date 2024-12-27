@@ -33,7 +33,7 @@ const Cart = () => {
             alert('Please log in to add items to your cart.');
         }
     };
-    
+
     const handleRemoveFromCart = (itemId) => {
         if (cartItems[itemId] > 1) {
             dispatch(removeFromCartAPI({ itemId, token }));
