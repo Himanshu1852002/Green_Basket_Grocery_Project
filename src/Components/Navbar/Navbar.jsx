@@ -1,32 +1,19 @@
-import './Navbar.css';
-import logo from '../../assets/Images/Images/logo_ai.png'
-import { FaUser, FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
-import { IoMenu } from "react-icons/io5";
+import { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { FaSearch, FaShoppingCart, FaHeart, FaUser } from "react-icons/fa";
+import { useSelector} from 'react-redux';
+import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
-import { toggleNav, closeNav } from '../../Store/navbarSlice';
-import { useState } from 'react';
-
-
+import logo from '../../assets/Images/Images/logo_ai.png'
+import './Navbar.css'
 
 const Navbar = ({ setShowLogin }) => {
+    const [showSearch, setShowSearch] = useState(false);
+    const wishlist = useSelector((state) => state.wishlist.items);
 
-    const [showSearchOverlay, setShowSearchOverlay] = useState(false);
-    const isNavOpen = useSelector((state) => state.navbar.isNavOpen);
-    const wishlist = useSelector((state) => state.wishlist.items); // Assuming `items` is an object or array
     const cartItems = useSelector((state) => state.cart.cartItems);
     const token = localStorage.getItem("token")
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const handleNavToggle = () => dispatch(toggleNav());
 
-    const handleNavLinkClick = (path) => {
-        dispatch(closeNav());
-        navigate(path);
-    };
-
-    const toggleSearchOverlay = () => setShowSearchOverlay(!showSearchOverlay);
 
     const wishlistCount = Array.isArray(wishlist) ? wishlist.length : Object.keys(wishlist).length;
     const cartItemCount = Array.isArray(cartItems)
@@ -34,130 +21,107 @@ const Navbar = ({ setShowLogin }) => {
         : Object.values(cartItems).reduce((total, qty) => total + qty, 0);
 
     return (
-        <div>
-            <nav className="navbar navbar-expand-lg">
-                <div className="container-fluid  px-5">
-                    {/* Logo */}
-                    <Link to="/" className="navbar-brand d-flex align-items-center" onClick={() => handleNavLinkClick('/')}>
-                        <img src={logo} />
-                    </Link>
+        <nav className="navbar navbar-box navbar-light bg-light">
+            <div className="container d-flex justify-content-between align-items-center">
+                {/* Logo */}
+                <Link to="/">
+                    <img className="nav-logo" src={logo} alt="" />
+                </Link>
 
-                    <button className="navbar-toggler" type="button" onClick={handleNavToggle}>
-                        <span><IoMenu /></span>
-                    </button>
 
-                    <div className={`collapse navbar-collapse  ${isNavOpen ? 'show' : ''}`} id="navbarNav">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
-                                <button className="nav-link btn-link" onClick={() => handleNavLinkClick('/')}>Home</button>
-                            </li>
-                            <li className="nav-item dropdown">
-                                <button className="nav-link btn-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Product
-                                </button>
-                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><button className="dropdown-item btn-link" onClick={() => handleNavLinkClick('/fruits')}>Fruits</button></li>
-                                    <li><button className="dropdown-item btn-link" onClick={() => handleNavLinkClick('/vegetables')}>Vegetables</button></li>
-                                    <li><button className="dropdown-item btn-link" onClick={() => handleNavLinkClick('/drinks')}>Drinks</button></li>
-                                    <li><button className="dropdown-item btn-link" onClick={() => handleNavLinkClick('/snacks')}>Snacks</button></li>
-                                    <li><button className="dropdown-item btn-link" onClick={() => handleNavLinkClick('/chocolates')}>Chocolates</button></li>
-                                    <li><button className="dropdown-item btn-link" onClick={() => handleNavLinkClick('/grocery')}>Grocery</button></li>
-                                </ul>
-                            </li>
-                            <li><button className="nav-link btn-link" onClick={() => handleNavLinkClick('/about')}>About</button></li>
-                            <li className="nav-item dropdown">
-                                <button className="nav-link btn-link dropdown-toggle" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    More
-                                </button>
-                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown2">
+                {/* Search Bar */}
+                <div className="d-none d-md-flex w-50">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search for products..."
+                    />
+                </div>
+                <div className="d-flex justify-content-center align-items-center gap-2">
+                    <div className="d-flex d-md-none align-items-center">
+                        <FaSearch
+                            className="icon me-2" size={23}
+                            style={{ cursor: "pointer" }}
+                            onClick={() => setShowSearch(!showSearch)}
+                        />
+                    </div>
 
-                                    <li><button className="dropdown-item btn-link" onClick={() => handleNavLinkClick('/blog')}>Blogs</button></li>
-                                    <li><button className="dropdown-item btn-link" onClick={() => handleNavLinkClick('/contact')}>Contact</button></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        {/* Search Icon for Mobile */}
-                        <div className="d-lg-none ms-3 mb-2">
-                            <button onClick={toggleSearchOverlay} className="btn-link nav-link">
-                                <FaSearch size={22} style={{ color: 'green' }} />
-                            </button>
+                    {/* Right Icons */}
+                    <div className="d-flex align-items-center gap-4">
+                        <div className="position-relative">
+                            <Link to={'/wishlist'}>
+                                <FaHeart className="icon" size={23} style={{ cursor: "pointer" }} />
+                            </Link>
+                            {wishlistCount > 0 && (
+                                <span
+                                    className="badge  h-100  w-100 rounded-circle bg-danger"
+                                    style={{
+                                        position: 'absolute',
+                                        top: '-10px',
+                                        right: '-20px',
+                                        fontSize: '0.7rem',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}>
+                                    {wishlistCount}
+                                </span>
+                            )}
                         </div>
 
-                        {/* Full Search Bar for Larger Screens */}
-                        <form className="d-none d-lg-flex mx-3 search-box" role="search">
-                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                            <button className="btn search_btn" type="submit">Search</button>
-                        </form>
+                        <div className="position-relative">
+                            <Link to={'/cart'}>
+                                <FaShoppingCart className="icon" size={23} style={{ cursor: "pointer" }} />
+                            </Link>
+                            {cartItemCount > 0 && (
+                                <span
+                                    className="badge h-100  w-100 rounded-circle bg-danger"
+                                    style={{
+                                        position: 'absolute',
+                                        top: '-10px',
+                                        right: '-20px',
+                                        fontSize: '0.8rem',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}>
+                                    {cartItemCount}
+                                </span>
+                            )}
+                        </div>
 
-                        <ul className="navbar-nav ms-3">
-                            <li className="nav-item" style={{ position: 'relative' }}>
-                                <Link to={'/wishlist'} className="nav-link" onClick={() => handleNavLinkClick('/wishlist')}><FaHeart size={22} />
-                                    {wishlistCount > 0 && (
-                                        <span className="badge rounded-circle bg-danger" style={{
-                                            position: 'absolute',
-                                            top: '-5px',
-                                            right: '-5px',
-                                            fontSize: '0.7rem',
-                                            width: '3px',
-                                            display: 'flex',
-                                            justifyContent: "center"
-                                        }}>
-                                            {wishlistCount}
-                                        </span>)}
-                                </Link>
-                            </li>
-                            <li className="nav-item" style={{ position: 'relative' }}>
-                                <Link to={'/cart'} className="nav-link" onClick={() => handleNavLinkClick('/cart')}><FaShoppingCart size={22} />
-                                    {cartItemCount > 0 && (
-                                        <span className="badge rounded-circle bg-danger" style={{
-                                            position: 'absolute',
-                                            top: '-5px',
-                                            right: '-5px',
-                                            fontSize: '0.7rem',
-                                            width: '3px',
-                                            display: 'flex',
-                                            justifyContent: "center"
-                                        }}>
-                                            {cartItemCount}
-                                        </span>)}
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                {!token ? (
-                                    <button
-                                        onClick={() => {
-                                            setShowLogin(true);
-                                            dispatch(closeNav()); // Close the dropdown
-                                        }}
-                                        className="login_btn"
-                                    >
-                                        Login
-                                    </button>
-                                ) : (
-                                    <Link
-                                        to={'/userAccount'}
-                                        className="navbar-profile"
-                                        onClick={() => dispatch(closeNav())} // Close the dropdown
-                                    >
-                                        <FaUser className="user_icon" />
-                                    </Link>
-                                )}
-                            </li>
+                        {!token ? (
 
-                        </ul>
+                            <button onClick={() => setShowLogin(true)} className="login-btn">Login</button>
+                        ) : (
+                            <Link
+                                to={'/userAccount'}
+                                className="navbar-profile"
+                            >
+                                <FaUser className="icon" size={23} />
+                            </Link>
+                        )}
+
+
                     </div>
                 </div>
-            </nav>
-        </div>
 
-
-
+            </div>
+            {showSearch && (
+                <div className="container mt-2 d-md-none">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search for products..."
+                    />
+                </div>
+            )}
+        </nav>
     );
 };
 
 Navbar.propTypes = {
-    setShowLogin: PropTypes.func.isRequired,
-};
+   setShowLogin: PropTypes.func.isRequired,
+ };
 
 export default Navbar;
-

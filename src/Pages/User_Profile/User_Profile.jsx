@@ -30,6 +30,10 @@ const User_Profile = () => {
         navigate('/');
     }
 
+    const onBack =  () => {
+        navigate('/');
+    }
+
     useEffect(() => {
         const storeUsername = localStorage.getItem('userName');
         if (storeUsername) {
@@ -52,59 +56,61 @@ const User_Profile = () => {
 
     return (
         <>
+            <div className='container profile-container'>
+                <button onClick={onBack} className='back-btn'>&lt;</button>
+                <div className="user_profile d-flex flex-column justify-content-center align-items-center">
+                    <h1 className='fw-bold mb-4'>User Profile</h1>
+                    <div className="user-img">
+                        <div className="file-input-container gap-3">
+                            <div className="image-preview">
+                                <img src={profileImage} alt="Profile" />
+                                <MdEdit className='pen-icon' />
+                            </div>
+                            <input type="file" id="fileInput" accept="image/*" hidden onChange={handleImageChnage} />
+                            <label htmlFor="fileInput" className="file-label">
+                                <MdEdit className="pen-icon" /> Choose File
+                            </label>
+                        </div>
+                        {userName ? <h2 className='mt-3 text-center'>{userName}</h2> : <h2 className='mt-3 text-center'>Himanshu Vishwakarma</h2>}
+                    </div>
+                    <div className='d-flex gap-2 flex-md-row flex-column'>
+                        <div className="user-info d-flex justify-content-between align-items-center">
+                            <div className="d-flex justify-content-center align-items-center">
+                                <FaUserEdit size={20} />
+                                <p className='ms-2 mt-3'>Edit Profile</p>
+                            </div>
+                            <FaHandPointRight size={20} />
+                        </div>
+                        <div className="user-info d-flex justify-content-between align-items-center">
+                            <div className="d-flex justify-content-center align-items-center">
+                                <MdProductionQuantityLimits size={20} />
+                                <p className='ms-2 mt-3'>Orders</p>
+                            </div>
+                            <FaHandPointRight size={20} />
+                        </div>
+                    </div>
+                    <div className='d-flex gap-2 flex-md-row flex-column'>
+                        <div className="user-info d-flex justify-content-between align-items-center">
+                            <div className="d-flex justify-content-center align-items-center">
+                                <FaLocationDot size={20} />
+                                <p className='ms-2 mt-3'>Shipping Address</p>
+                            </div>
+                            <FaHandPointRight size={20} />
+                        </div>
+                        <div className="user-info d-flex justify-content-between align-items-center">
+                            <div className="d-flex justify-content-center align-items-center">
+                                <RiLockPasswordFill size={20} />
+                                <p className='ms-2 mt-3'>Change Password</p>
+                            </div>
+                            <FaHandPointRight size={20} />
+                        </div>
+                    </div>
 
-            <div className="user_profile d-flex flex-column justify-content-center align-items-center">
-                <h1 className='fw-bold mb-4'>User Profile</h1>
-                <div className="user-img">
-                    <div className="file-input-container gap-3">
-                        <div className="image-preview">
-                            <img src={profileImage} alt="Profile" />
-                            <MdEdit className='pen-icon' />
-                        </div>
-                        <input type="file" id="fileInput" accept="image/*" hidden onChange={handleImageChnage} />
-                        <label htmlFor="fileInput" className="file-label">
-                            <MdEdit className="pen-icon" /> Choose File
-                        </label>
-                    </div>
-                    {userName ? <h2 className='mt-3 text-center'>{userName}</h2> : <h2 className='mt-3 text-center'>Himanshu Vishwakarma</h2>}
+                    <button className='sign_out_btn' onClick={handleLogOut}>
+                        <FaArrowRightFromBracket size={20} />
+                        <p>Sign Out</p>
+                    </button>
                 </div>
-                <div className='d-flex gap-2 flex-md-row flex-column'>
-                    <div className="user-info d-flex justify-content-between align-items-center">
-                        <div className="d-flex justify-content-center align-items-center">
-                            <FaUserEdit size={20} />
-                            <p className='ms-2 mt-3'>Edit Profile</p>
-                        </div>
-                        <FaHandPointRight size={20} />
-                    </div>
-                    <div className="user-info d-flex justify-content-between align-items-center">
-                        <div className="d-flex justify-content-center align-items-center">
-                            <MdProductionQuantityLimits size={20} />
-                            <p className='ms-2 mt-3'>Orders</p>
-                        </div>
-                        <FaHandPointRight size={20} />
-                    </div>
-                </div>
-                <div className='d-flex gap-2 flex-md-row flex-column'>
-                    <div className="user-info d-flex justify-content-between align-items-center">
-                        <div className="d-flex justify-content-center align-items-center">
-                            <FaLocationDot size={20} />
-                            <p className='ms-2 mt-3'>Shipping Address</p>
-                        </div>
-                        <FaHandPointRight size={20} />
-                    </div>
-                    <div className="user-info d-flex justify-content-between align-items-center">
-                        <div className="d-flex justify-content-center align-items-center">
-                            <RiLockPasswordFill size={20} />
-                            <p className='ms-2 mt-3'>Change Password</p>
-                        </div>
-                        <FaHandPointRight size={20} />
-                    </div>
-                </div>
-
-                <button className='sign_out_btn' onClick={handleLogOut}>
-                    <FaArrowRightFromBracket size={20} />
-                    <p>Sign Out</p>
-                </button>
             </div>
 
         </>

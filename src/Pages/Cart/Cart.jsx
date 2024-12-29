@@ -110,10 +110,11 @@ const Cart = () => {
                 <div className="cart-summary mt-4 d-flex justify-content-between align-items-center border-top pt-3">
                     <h4 className="mb-0">Total: ₹{totalCartAmount}</h4>
                     <h4 className="mb-0">Items in Cart: {calculateTotalQuantity()}</h4>
-                    <button className='btn'>Proceed to Checkout</button>
+                    <Link to={'/checkout'} className='btn'>Proceed to Checkout</Link>
                 </div>
             )}
         </div>
+       
     );
 };
 
