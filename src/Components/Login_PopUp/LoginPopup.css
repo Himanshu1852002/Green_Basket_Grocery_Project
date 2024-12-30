@@ -9,6 +9,10 @@
     display: grid;
 }
 
+.forgot-password {
+    cursor: pointer;
+}
+
 .login-popup-container {
     place-self: center;
     width: max(23vw, 330px);
@@ -79,3 +83,35 @@
     font-weight: 500;
     cursor: pointer;
 }
+
+@media (max-width:576px) {
+    .login-popup{
+        margin-top: 20px;
+    }
+}
+
+@media (max-width:767px) {
+    .login-popup {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width:992px) {
+    .login-popup {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width:1200px) {
+    .login-popup {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width:1400px) {
+    .login-popup {
+        margin-top: 40px;
+    }
+}
+
+    

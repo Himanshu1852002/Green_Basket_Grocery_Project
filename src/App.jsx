@@ -19,7 +19,6 @@ import LoginPopup from './Components/Login_PopUp/LoginPopup';
 import Wishlist from '../src/Pages/Wishlist/Wishlist';
 import ScrollToTop from './Pages/ScrollToTop/ScrollToTop';
 import { ToastContainer } from 'react-toastify';
-import User_Profile from './Pages/User_Profile/User_Profile';
 import Checkout from './Pages/Checkout/Checkout';
 
 function App() {
@@ -60,7 +59,6 @@ function App() {
           <Route path='/blog' element={<Blog />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/wishlist' element={<Wishlist />} />
-          <Route path='/userAccount' element={<User_Profile />} />
           <Route path='/checkout' element={<Checkout />} />
         </Routes>
       </div>
