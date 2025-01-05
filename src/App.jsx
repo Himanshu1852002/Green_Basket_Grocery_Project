@@ -20,6 +20,8 @@ import Wishlist from '../src/Pages/Wishlist/Wishlist';
 import ScrollToTop from './Pages/ScrollToTop/ScrollToTop';
 import { ToastContainer } from 'react-toastify';
 import Checkout from './Pages/Checkout/Checkout';
+import Verify from './Pages/Verify/Verify';
+import SearchResults from './Pages/SearchResults/SearchResults';
 
 function App() {
 
@@ -59,7 +61,9 @@ function App() {
           <Route path='/blog' element={<Blog />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/wishlist' element={<Wishlist />} />
+          <Route path='/search' element={<SearchResults />} />
           <Route path='/checkout' element={<Checkout />} />
+          <Route path='/verify' element={<Verify />} />
         </Routes>
       </div>
       <Footer />

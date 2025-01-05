@@ -1,92 +1,247 @@
-import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Checkout.css';
-import { useEffect, useState } from 'react';
-
-
+import { useSelector } from 'react-redux';
 
 const Checkout = () => {
+    const { product_list, cartItems, totalCartAmount } = useSelector((state) => state.cart)
+    const [deliveryFee, setDeliveryFee] = useState(25);
+    const [orderDetails, setOrderDetails] = useState(null);
+    const [data, setData] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        street: "",
+        city: "",
+        state: "",
+        pincode: "",
+        country: "",
+        phone: "",
+    });
+    const url = "http://localhost:3000"
+    const navigate = useNavigate();
 
-    const { totalCartAmount } = useSelector((state) => state.cart);
-    const [deliverFee, setDeleveryFee] = useState(10);
+    const onChangeHandler = (event) => {
+        const { name, value } = event.target;
+        setData((prevData) => ({ ...prevData, [name]: value }));
+    };
 
-    const CalculateDeleveryFee = () => {
-        if (totalCartAmount > 200) {
-            setDeleveryFee(20)
+    const handlePlaceOrder = async () => {
+        const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('token');
+
+        const itemsWithDetails = Object.entries(cartItems).map(([id, quantity]) => {
+            const item = product_list.find(product => product._id === id);
+            return {
+                name: item?.name || "Unknown",
+                price: item?.price || 0,
+                quantity
+            };
+        });
+
+        const totalAmount = totalCartAmount + deliveryFee;
+
+        try {
+            const response = await fetch(`${url}/api/orders/createOrder`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    userId,
+                    items: itemsWithDetails,
+                    amount: totalAmount,
+                    address: data,
+                }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                setOrderDetails(result.data);
+                handlePayment(result.data);
+            } else {
+                alert(result.message || 'Failed to place order');
+            }
+        } catch (error) {
+            console.error('Error placing order:', error);
+            alert('Something went wrong. Please try again.');
         }
-        else if (totalCartAmount > 500) {
-            setDeleveryFee(40)
-        }
-        else if (totalCartAmount > 1000) {
-            setDeleveryFee(80)
-        }
-        else if (totalCartAmount > 2000) {
-            setDeleveryFee(120)
-        }
-        else if (totalCartAmount > 4000) {
-            setDeleveryFee(160)
-        }
-        else {
-            setDeleveryFee(10)
-        }
-    }
+    };
+
+    const handlePayment = (order) => {
+        const options = {
+            key: 'rzp_test_8gC9zCCVpPxjF1',
+            amount: order.amount * 100, // Amount in paisa
+            currency: 'INR',
+            name: 'Green Basket',
+            description: 'Order Payment',
+            order_id: order.id,
+            handler: async (response) => {
+                console.log(response)
+                try {
+                    const verificationResponse = await fetch(`${url}/api/orders/verifyOrder`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${localStorage.getItem('token')}`,
+                        },
+                        body: JSON.stringify(
+                           {
+                                order_id: order.id,
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_signature: response.razorpay_signature,
+                           }
+                        ),
+                    });
+
+                    const result = await verificationResponse.json();
+
+                    if (verificationResponse.ok) {
+                        navigate('/verify');
+                        console.log(orderDetails)
+                    } else {
+                        alert(result.message || 'Payment verification failed.');
+                    }
+                } catch (error) {
+                    console.error('Error verifying payment:', error);
+                    alert('Something went wrong. Please try again.');
+                }
+            },
+            prefill: {
+                name: `${data.firstName} ${data.lastName}`,
+                email: data.email,
+                contact: data.phone,
+            },
+        };
+
+        const razorpay = new window.Razorpay(options);
+        razorpay.on('payment.failed', (response) => {
+            console.error('Payment failed:', response);
+            alert('Payment failed! Please try again.');
+        });
+        razorpay.open();
+    };
 
     useEffect(() => {
-        CalculateDeleveryFee();
-    }, [totalCartAmount])
+        if (totalCartAmount > 200) {
+            setDeliveryFee(0);
+        } else {
+            setDeliveryFee(25);
+        }
+    }, [totalCartAmount]);
 
     return (
-        <>
-            <div className='container checkout-cotainer'>
-                <div className='row'>
-                    <div className='col-lg-6 address-col'>
-                        <div>
-                            <h2 className='fw-bold mb-3'>Delivery Information</h2>
+        <div className="container checkout-container">
+            <div className="row">
+                <div className="col-lg-6 address-col">
+                    <h2 className="fw-bold mb-3">Delivery Information</h2>
+                    <div className="d-flex flex-column gap-2">
+                        <div className="d-flex gap-2">
+                            <input
+                                name="firstName"
+                                onChange={onChangeHandler}
+                                value={data.firstName}
+                                className="w-50 p-2"
+                                type="text"
+                                placeholder="First name"
+                            />
+                            <input
+                                name="lastName"
+                                onChange={onChangeHandler}
+                                value={data.lastName}
+                                className="w-50 p-2"
+                                type="text"
+                                placeholder="Last name"
+                            />
                         </div>
-                        <div className='d-flex flex-column gap-2'>
-                            <div className='d-flex gap-2'>
-                                <input className='w-50 p-2' type="text" placeholder='First name' />
-                                <input className='w-50 p-2' type="text" placeholder='Last name' />
-                            </div>
-                            <div className='d-flex flex-column gap-2'>
-                                <input className='p-2' type="email" placeholder='Email address' />
-                                <input className='p-2' type="text" placeholder='Street' />
-                            </div>
-                            <div className='d-flex gap-2'>
-                                <input className='w-50 p-2' type="text" placeholder='City' />
-                                <input className='w-50 p-2' type="text" placeholder='State' />
-                            </div>
-                            <div className='d-flex gap-2'>
-                                <input className='w-50 p-2' type="text" placeholder='Pin Code' />
-                                <input className='w-50 p-2' type="text" placeholder='Country' />
-                            </div>
-                            <div className='d-flex gap-2'>
-                                <input className='w-100 p-2' type="number" placeholder='Mobile No.' />
-                            </div>
+                        <input
+                            name="email"
+                            onChange={onChangeHandler}
+                            value={data.email}
+                            className="p-2"
+                            type="email"
+                            placeholder="Email address"
+                        />
+                        <input
+                            name="street"
+                            onChange={onChangeHandler}
+                            value={data.street}
+                            className="p-2"
+                            type="text"
+                            placeholder="Street"
+                        />
+                        <div className="d-flex gap-2">
+                            <input
+                                name="city"
+                                onChange={onChangeHandler}
+                                value={data.city}
+                                className="w-50 p-2"
+                                type="text"
+                                placeholder="City"
+                            />
+                            <input
+                                name="state"
+                                onChange={onChangeHandler}
+                                value={data.state}
+                                className="w-50 p-2"
+                                type="text"
+                                placeholder="State"
+                            />
                         </div>
-                        {/* <button className='mt-2 fw-bold w-25 p-2 rounded-5'>Add Address</button> */}
-                    </div>
-                    <div className='col-lg-6 mt-sm-5 mt-5 mt-lg-0'>
-                        <div>
-                            <h2 className='fw-bold mb-3'>Cart Total</h2>
+                        <div className="d-flex gap-2">
+                            <input
+                                name="pincode"
+                                onChange={onChangeHandler}
+                                value={data.pincode}
+                                className="w-50 p-2"
+                                type="text"
+                                placeholder="Pin Code"
+                            />
+                            <input
+                                name="country"
+                                onChange={onChangeHandler}
+                                value={data.country}
+                                className="w-50 p-2"
+                                type="text"
+                                placeholder="Country"
+                            />
                         </div>
-                        <div className='d-flex justify-content-between border-bottom border-3'>
-                            <p className='fw-bold'>Subtotal</p>
-                            <p>{totalCartAmount}</p>
-                        </div>
-                        <div className='d-flex justify-content-between border-bottom border-3'>
-                            <p className='fw-bold'>Delivery Fee</p>
-                            <p>{deliverFee}</p>
-                        </div>
-                        <div className='d-flex justify-content-between'>
-                            <p className='fw-bold'>Total</p>
-                            <p>{totalCartAmount + deliverFee}</p>
-                        </div>
-                        <button className='mt-2 btn w-md-50 w-sm-100 pe-3 ps-3 pt-2 pb-2 cursor-pointer rounded-5'>Proceed Payment</button>
+                        <input
+                            name="phone"
+                            onChange={onChangeHandler}
+                            value={data.phone}
+                            className="w-100 p-2"
+                            type="number"
+                            placeholder="Phone no."
+                        />
                     </div>
                 </div>
+                <div className="col-lg-6 mt-sm-5 mt-lg-0">
+                    <h2 className="fw-bold mb-3">Cart Total</h2>
+                    <div className="d-flex justify-content-between border-bottom border-3">
+                        <p className="fw-bold">Subtotal</p>
+                        <p>₹{totalCartAmount}</p>
+                    </div>
+                    <div className="d-flex justify-content-between border-bottom border-3">
+                        <p className="fw-bold">Delivery Fee</p>
+                        <p>₹{deliveryFee > 0 ? deliveryFee : 'Free ₹0'}</p>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                        <p className="fw-bold">Total</p>
+                        <p>₹{totalCartAmount + deliveryFee}</p>
+                    </div>
+                    <button
+                        onClick={handlePlaceOrder}
+                        className="mt-2 w-md-50 w-sm-100 btn-primary"
+                    >
+                        Proceed To Payment
+                    </button>
+                </div>
             </div>
-        </>
-    )
-}
+        </div>
+    );
+};
 
-export default Checkout
+export default Checkout;

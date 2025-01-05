@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { setToken, loadCartData } from '../../Store/cartSlice';
 import { setWishToken, fetchWishlist } from '../../Store/wishlistSlice';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const LoginPopup = ({ setShowLogin }) => {
     const dispatch = useDispatch();
@@ -49,21 +50,25 @@ const LoginPopup = ({ setShowLogin }) => {
                     const token = response.data.token;
                     dispatch(setToken(token));
                     localStorage.setItem('token', token);
-                    localStorage.setItem('userName', response.data.user.name);
+                    localStorage.setItem('userId', response.data.user.userId);
+                    // localStorage.setItem('userName', response.data.user.name);
                     dispatch(loadCartData(token));
                     dispatch(setWishToken(token));
                     dispatch(fetchWishlist(token));
                     setShowLogin(false);
+                    toast.info('Sign up Successfully', { autoClose: 1000 });
                 } else {
 
                     const token = response.data.token;
                     dispatch(setToken(token));
                     localStorage.setItem('token', token);
-                    localStorage.setItem('userName', response.data.user.name);
+                    localStorage.setItem('userId', response.data.user.userId);
+                    // localStorage.setItem('userName', response.data.user.name);
                     dispatch(loadCartData(token));
                     dispatch(setWishToken(token));
                     dispatch(fetchWishlist(token));
                     setShowLogin(false);
+                    toast.info('Login Successfully', { autoClose: 1000 });
                 }
             } else {
                 alert(response.data.message);

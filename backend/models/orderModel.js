@@ -1,14 +1,15 @@
 import mongoose from 'mongoose';
 
-const orederSchema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema({
     userId: {
         type: String,
         required: true
     },
-    items: {
-        type: Array,
-        required: true,
-    },
+    items: [{
+        name: { type: String, required: true },
+        price: { type: Number, required: true },
+        quantity: { type: Number, required: true }
+    }],
     amount: {
         type: Number,
         required: true
@@ -23,13 +24,17 @@ const orederSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        default: Date.now()
+        default: Date.now
     },
     payment: {
         type: Boolean,
         default: false
-    }
-})
+    },
+    razorpay_order_id: {
+        type: String
+    },
+});
 
-const orderModel = mongoose.model.order || mongoose.model("order", orederSchema);
+
+const orderModel = mongoose.model("order", orderSchema); // Corrected line
 export default orderModel;

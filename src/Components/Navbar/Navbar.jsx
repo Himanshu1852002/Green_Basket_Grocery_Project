@@ -14,6 +14,7 @@ import './Navbar.css';
 const Navbar = ({ setShowLogin }) => {
     const [showSearch, setShowSearch] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
+    const [query, setQuery] = useState("");
     const [placeholder, setPlaceholder] = useState("Search for products...");
     const placeholderTexts = [
         "Search for fruits...",
@@ -23,6 +24,12 @@ const Navbar = ({ setShowLogin }) => {
         "Search for coldrinks...",
         "Search for chocolates...",
     ];
+
+    const handleSearch = () => {
+        if (query.trim()) {
+            navigate(`/search?q=${query}`);
+        }
+    };
 
 
     const dispatch = useDispatch();
@@ -62,7 +69,7 @@ const Navbar = ({ setShowLogin }) => {
 
     return (
         <nav className="navbar navbar-box navbar-light bg-light">
-            <div className="container d-flex justify-content-between align-items-center">
+            <div className="container d-flex justify-content-between align-items-center" >
                 {/* Logo */}
                 <Link to="/">
                     <img className="nav-logo" src={logo} />
@@ -71,9 +78,11 @@ const Navbar = ({ setShowLogin }) => {
                 {/* Search Bar */}
                 <div className="d-none d-md-flex w-50">
                     <input
-                        type="text"
+                        type="text" value={query}
+                        onChange={(e) => setQuery(e.target.value)}
                         className="form-control"
                         placeholder={placeholder}
+                        onBlur={handleSearch}
                     />
                 </div>
                 <div className="d-flex justify-content-center align-items-center gap-2">

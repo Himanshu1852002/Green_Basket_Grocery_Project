@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -10,7 +11,7 @@ export const fetchProductList = createAsyncThunk('cart/fetchProductList', async 
 });
 
 export const loadCartData = createAsyncThunk('cart/loadCartData', async (token) => {
-    const response = await axios.post(`${url}/api/cart/get`, {}, { headers: { token } });
+    const response = await axios.post(`${url}/api/cart/get`, {}, { headers: { Authorization: `Bearer ${token}` } });
     if (response.data.success) {
         return response.data.cartdata; // Ensure this matches the response structure
     }
@@ -18,12 +19,12 @@ export const loadCartData = createAsyncThunk('cart/loadCartData', async (token) 
 });
 
 export const addToCartAPI = createAsyncThunk('cart/addToCartAPI', async ({ itemId, quantity = 1, token }) => {
-    await axios.post(`${url}/api/cart/add`, { itemId, quantity }, { headers: { token } });
+    await axios.post(`${url}/api/cart/add`, { itemId, quantity }, { headers: { Authorization: `Bearer ${token}` } });
     return { itemId, quantity };
 });
 
 export const removeFromCartAPI = createAsyncThunk('cart/removeFromCartAPI', async ({ itemId, token }) => {
-    const response = await axios.post(`${url}/api/cart/remove`, { itemId }, { headers: { token } });
+    const response = await axios.post(`${url}/api/cart/remove`, { itemId }, { headers: { Authorization: `Bearer ${token}` } });
     if (response.data.success) {
         return { itemId };
     }
@@ -37,6 +38,7 @@ const calculateTotalAmount = (state) => {
     }, 0);
 };
 
+
 // Cart slice
 const cartSlice = createSlice({
     name: 'cart',
@@ -47,6 +49,9 @@ const cartSlice = createSlice({
         status: 'idle',
         error: null,
         totalCartAmount: 0,
+        orderStatus: 'idle',
+        orderError: null,
+
     },
     reducers: {
         setToken: (state, action) => {
@@ -59,6 +64,7 @@ const cartSlice = createSlice({
         },
         clearCartData: (state) => {
             state.cartItems = {};
+            state.totalCartAmount = 0;
         },
     },
     extraReducers: (builder) => {
@@ -90,7 +96,7 @@ const cartSlice = createSlice({
                     }
                 }
                 state.totalCartAmount = calculateTotalAmount(state);
-            });
+            })    
     },
 });
 

@@ -15,7 +15,7 @@ export const fetchWishlist = createAsyncThunk(
     'wishlist/fetchWishlist',
     async (token) => {
         try {
-            const response = await axios.post(`${url}/api/wishlist/get`, {}, { headers: { token } });
+            const response = await axios.post(`${url}/api/wishlist/get`, {}, { headers: { Authorization: `Bearer ${token}` } });
             return response.data.wishlistData;
         } catch (error) {
             return error("Failed to fetch wishlist");
@@ -27,7 +27,7 @@ export const addToWishlistAPI = createAsyncThunk(
     'wishlist/addToWishlistAPI',
     async ({ token, itemId }, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${url}/api/wishlist/add`, { itemId }, { headers: { token } });
+            const response = await axios.post(`${url}/api/wishlist/add`, { itemId }, { headers: { Authorization: `Bearer ${token}` } });
             if (response.data.success) {
                 return { itemId, quantity: 1 };
             }
@@ -41,7 +41,7 @@ export const removeFromWishlistAPI = createAsyncThunk(
     'wishlist/removeFromWishlistAPI',
     async ({ token, itemId }, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${url}/api/wishlist/remove`, { itemId }, { headers: { token } });
+            const response = await axios.post(`${url}/api/wishlist/remove`, { itemId }, { headers: { Authorization: `Bearer ${token}` } });
             if (response.data.success) {
                 return { itemId, success: true };
             }
@@ -72,6 +72,7 @@ const wishlistSlice = createSlice({
         },
         clearWishlistData: (state) => {
             state.items = {};
+
         },
     },
     extraReducers: (builder) => {

@@ -43,6 +43,7 @@ const loginUser = async (req, res) => {
             user: {
                 name: user.name,
                 email: user.email,
+                userId: user._id
             },
         });
     } catch (error) {
@@ -100,9 +101,10 @@ const registerUser = async (req, res) => {
             subject: 'Your OTP for Registration',
             text: `Your OTP is: ${otp}. It is valid for 10 minutes`,
         });
-
+        // const token = createToken(user._id);
         res.status(200).json({
             success: true,
+            // token,
             message: 'OTP sent successfully',
         });
     } catch (error) {
@@ -150,6 +152,7 @@ const verifyOtp = async (req, res) => {
             user: {
                 name: user.name,
                 email: user.email,
+                userId: user._id
             },
         });
     } catch (error) {

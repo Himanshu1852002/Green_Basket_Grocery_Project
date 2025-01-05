@@ -9,7 +9,8 @@ import 'dotenv/config';
 import productRouter from './routes/productRoute.js';
 import cartRouter from './routes/cartRoute.js';
 import wishlistRouter from './routes/wishlistRoute.js'
-// import orderRouter from './routes/orderRoute.js';
+import orderRouter from './routes/orderRoute.js';
+import searchRouter from './routes/searchRoute.js'
 
 
 // app config
@@ -36,7 +37,8 @@ app.use('/api/product', productRouter);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/cart', cartRouter);
 app.use('/api/wishlist', wishlistRouter);
-// app.use('/api/order', orderRouter);
+app.use('/api/orders', orderRouter);
+app.use('/api/search', searchRouter);
 
 
 app.get("/", (req, res) => {
