@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Checkout.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Checkout = () => {
+
+    const dispatch = useDispatch();
     const { product_list, cartItems, totalCartAmount } = useSelector((state) => state.cart)
     const [deliveryFee, setDeliveryFee] = useState(25);
     const [orderDetails, setOrderDetails] = useState(null);
+
     const [data, setData] = useState({
         firstName: "",
         lastName: "",
@@ -27,9 +30,15 @@ const Checkout = () => {
     };
 
     const handlePlaceOrder = async () => {
+
+        if (!data.firstName || !data.lastName || !data.street || !data.city || !data.state || !data.pincode || !data.country || !data.phone) {
+            alert('Please fill in all the required address fields.');
+            return;
+        }
+
         const userId = localStorage.getItem('userId');
         const token = localStorage.getItem('token');
-
+        console.log(data);
         const itemsWithDetails = Object.entries(cartItems).map(([id, quantity]) => {
             const item = product_list.find(product => product._id === id);
             return {
@@ -73,7 +82,7 @@ const Checkout = () => {
     const handlePayment = (order) => {
         const options = {
             key: 'rzp_test_8gC9zCCVpPxjF1',
-            amount: order.amount * 100, // Amount in paisa
+            amount: order.amount * 100,
             currency: 'INR',
             name: 'Green Basket',
             description: 'Order Payment',
@@ -88,18 +97,18 @@ const Checkout = () => {
                             Authorization: `Bearer ${localStorage.getItem('token')}`,
                         },
                         body: JSON.stringify(
-                           {
+                            {
                                 order_id: order.id,
                                 razorpay_payment_id: response.razorpay_payment_id,
                                 razorpay_signature: response.razorpay_signature,
-                           }
+                            }
                         ),
                     });
 
                     const result = await verificationResponse.json();
 
                     if (verificationResponse.ok) {
-                        navigate('/verify');
+                        navigate('/verify',);
                         console.log(orderDetails)
                     } else {
                         alert(result.message || 'Payment verification failed.');
@@ -124,20 +133,21 @@ const Checkout = () => {
         razorpay.open();
     };
 
+
     useEffect(() => {
         if (totalCartAmount > 200) {
             setDeliveryFee(0);
         } else {
             setDeliveryFee(25);
         }
-    }, [totalCartAmount]);
+    }, [dispatch, totalCartAmount,]);
 
     return (
         <div className="container checkout-container">
-            <div className="row">
+            <div className="row checkout-row">
                 <div className="col-lg-6 address-col">
                     <h2 className="fw-bold mb-3">Delivery Information</h2>
-                    <div className="d-flex flex-column gap-2">
+                    <div className="d-flex flex-column gap-2 mt-3 mb-3">
                         <div className="d-flex gap-2">
                             <input
                                 name="firstName"
@@ -234,11 +244,12 @@ const Checkout = () => {
                     </div>
                     <button
                         onClick={handlePlaceOrder}
-                        className="mt-2 w-md-50 w-sm-100 btn-primary"
+                        className="mt-2 w-md-50 w-sm-100 btn"
                     >
                         Proceed To Payment
                     </button>
                 </div>
+
             </div>
         </div>
     );

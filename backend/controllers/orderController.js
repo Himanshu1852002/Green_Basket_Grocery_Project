@@ -1,7 +1,8 @@
 /* eslint-disable no-undef */
 import Razorpay from 'razorpay';
 import crypto from 'crypto';
-import orderModel from '../models/orderModel.js'; 
+import orderModel from '../models/orderModel.js';
+import userModel from '../models/userModel.js'
 
 const RAZORPAY_KEY_ID = process.env.RAZORPAY_ID;
 const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY;
@@ -12,7 +13,7 @@ const razorpayInstance = new Razorpay({
 });
 
 const createOrder = async (req, res) => {
-    const { userId, items, amount, address } = req.body; 
+    const { userId, items, amount, address } = req.body;
     try {
         if (!amount || amount <= 0) {
             return res.status(400).json({ success: false, message: "Invalid amount" });
@@ -41,6 +42,7 @@ const createOrder = async (req, res) => {
 
             await newOrder.save();
 
+
             res.status(200).json({ success: true, data: order });
         });
     } catch (error) {
@@ -67,14 +69,45 @@ const verifyOrder = async (req, res) => {
             if (!updatedOrder) {
                 return res.status(404).json({ success: false, message: "Order not found" });
             }
+            const user = await userModel.findOneAndUpdate(
+                { _id: updatedOrder.userId },
+                { cartData: {} }, // Assuming cart is an array in user model
+                { new: true }
+            );
+
+            if (!user) {
+                return res.status(404).json({ success: false, message: "User not found" });
+            }
+
             res.status(200).json({ success: true, message: "Payment verified successfully", data: updatedOrder });
         } else {
             res.status(400).json({ success: false, message: "Payment verification failed" });
         }
+
     } catch (error) {
         res.status(500).json({ success: false, message: "Error verifying payment", error: error.message });
     }
 };
 
-export { createOrder, verifyOrder }
+const userOrders = async (req, res) => {
+    const { userId } = req.body;
+
+    if (!userId) {
+        return res.status(400).json({ success: false, message: "User ID is required" });
+    }
+
+    try {
+        const orders = await orderModel.find({ userId });
+        if (!orders.length) {
+            return res.status(404).json({ success: false, message: "No orders found" });
+        }
+        console.log("Orders retrieved:", orders);
+        res.status(200).json({ success: true, data: orders });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error retrieving orders", error: error.message });
+    }
+};
+
+
+export { createOrder, verifyOrder, userOrders }
 

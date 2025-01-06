@@ -51,9 +51,14 @@ const cartSlice = createSlice({
         totalCartAmount: 0,
         orderStatus: 'idle',
         orderError: null,
+        url
 
     },
     reducers: {
+        clearCartData: (state) => {
+            state.cartItems = {}; // Empty the cart
+            state.totalCartAmount = 0;
+        },
         setToken: (state, action) => {
             state.token = action.payload;
             localStorage.setItem('token', action.payload);
@@ -62,10 +67,7 @@ const cartSlice = createSlice({
             state.token = null;
             localStorage.removeItem('token');
         },
-        clearCartData: (state) => {
-            state.cartItems = {};
-            state.totalCartAmount = 0;
-        },
+
     },
     extraReducers: (builder) => {
         builder
@@ -96,9 +98,10 @@ const cartSlice = createSlice({
                     }
                 }
                 state.totalCartAmount = calculateTotalAmount(state);
-            })    
+            })
+
     },
 });
 
-export const { setToken, clearCartData, clearToken } = cartSlice.actions;
+export const { setToken, clearToken, clearCartData } = cartSlice.actions;
 export default cartSlice.reducer;

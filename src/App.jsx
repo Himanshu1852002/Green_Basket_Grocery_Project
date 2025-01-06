@@ -22,6 +22,7 @@ import { ToastContainer } from 'react-toastify';
 import Checkout from './Pages/Checkout/Checkout';
 import Verify from './Pages/Verify/Verify';
 import SearchResults from './Pages/SearchResults/SearchResults';
+import MyOrders from './Pages/MyOrders/MyOrders';
 
 function App() {
 
@@ -64,6 +65,7 @@ function App() {
           <Route path='/search' element={<SearchResults />} />
           <Route path='/checkout' element={<Checkout />} />
           <Route path='/verify' element={<Verify />} />
+          <Route path='/myorders' element={<MyOrders />} />
         </Routes>
       </div>
       <Footer />

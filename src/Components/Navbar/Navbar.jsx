@@ -48,7 +48,7 @@ const Navbar = ({ setShowLogin }) => {
         setShowDropdown((prevState) => !prevState);
     };
 
-    const handleLogOut = () => {
+    const handleLogOut = async () => {
         dispatch(clearToken());
         dispatch(clearCartData());
         dispatch(clearWishToken())
@@ -159,7 +159,7 @@ const Navbar = ({ setShowLogin }) => {
                                             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                                         }}
                                     >
-                                        <Link to="/orders" className="dropdown-item">Orders</Link>
+                                        <Link to="/myorders" className="dropdown-item">Orders</Link>
                                         <Link to="/saved-address" className="dropdown-item">Saved Address</Link>
                                         <button
                                             className="dropdown-item"
