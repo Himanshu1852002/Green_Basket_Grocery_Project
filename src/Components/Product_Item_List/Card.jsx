@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToWishlistAPI, removeFromWishlistAPI } from "../../Store/wishlistSlice";
@@ -37,10 +38,28 @@ const Card = ({ _id, name, price, image, unit }) => {
         }
     };
 
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+
+    const handleMouseMove = (event) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width - 0.5) * 20; // Calculate relative x-axis movement
+        const y = ((event.clientY - rect.top) / rect.height - 0.5) * 20; // Calculate relative y-axis movement
+        setPosition({ x, y });
+    };
+
+    const handleMouseLeave = () => {
+        setPosition({ x: 0, y: 0 }); // Reset position when cursor leaves
+    };
+
     return (
         <div className="col-lg-3 col-md-6 col-sm-6 col-12 cards_top_div mb-3">
             <div className="card product_card position-relative">
-                <img src={image} className="card-img-top" alt={name} />
+                <div onMouseMove={handleMouseMove}
+                    onMouseLeave={handleMouseLeave}>
+                    <img src={image} className="card-img-top" alt={name} style={{
+                        transform: `translate(${position.x}px, ${position.y}px)`,
+                    }} />
+                </div>
                 <span className="wishlist-icon position-absolute top-0 end-0 p-2" onClick={toggleWishlist}>
                     {isWishlisted ? (
                         <FaHeart className="text-danger" />

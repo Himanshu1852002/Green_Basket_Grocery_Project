@@ -62,6 +62,8 @@ const Featured_Product = () => {
         setPopupData(null);
     }
 
+    
+
     return (
         <div className="feature_product container my-5">
             <h1>Featured <span>Products</span></h1>

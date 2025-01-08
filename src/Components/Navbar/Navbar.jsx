@@ -88,11 +88,15 @@ const Navbar = ({ setShowLogin }) => {
                 </Link>
 
                 {/* Search Bar */}
-                <div className="d-none d-md-flex w-50">
+                <div className="d-none d-md-flex w-50 position-relative">
+                    <FaSearch
+                        className="icon-input ms-2 mt-2 position-absolute top-0 start-0"
+                        size={20}
+                    />
                     <input
                         type="text" value={query}
                         onChange={(e) => setQuery(e.target.value)}
-                        className="form-control search-input"
+                        className="form-control search-input ps-5"
                         placeholder={placeholder}
                         onChangeCapture={handleSearch}
 

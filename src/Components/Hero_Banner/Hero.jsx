@@ -15,7 +15,7 @@ const Hero = () => {
                         <h1> </h1>
                         <div className='d-flex flex-sm-column flex-lg-row flex-column align-items-start align-items-lg-center align-items-sm-start mt-2'>
                             <Link to={'/fruits'} className='hero_btn'><IoIosCart size={25} className='pe-1' /> Explore now</Link>
-                            <p className='mt-2 ps-2 fs-4  fw-bold'>100+ Fresh & Healthy Items</p>
+                            <p className='mt-3 ps-2 fs-4  fw-bold'>100+ Fresh & Healthy Items</p>
                        </div>
                     </div>
                     <div
