@@ -1,6 +1,6 @@
 import { useState } from 'react';
+import { FaUser } from "react-icons/fa";
 import './LoginPopup.css';
-import cross_icon from '../../assets/Images/Images/cross_icon.png';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { setToken, loadCartData } from '../../Store/cartSlice';
@@ -16,16 +16,15 @@ const LoginPopup = ({ setShowLogin }) => {
         name: "",
         email: "",
         password: "",
-        otp: ""  // Holds OTP value
+        otp: ""
     });
-    const url = "http://localhost:3000";
 
     const onChangeHandler = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setData(prev => ({ ...prev, [name]: value }));
-    }
+        const { name, value } = event.target;
+        setData((prev) => ({ ...prev, [name]: value }));
+    };
 
+    const url = "http://localhost:3000";
     const onLogin = async (event) => {
         event.preventDefault();
 
@@ -51,7 +50,6 @@ const LoginPopup = ({ setShowLogin }) => {
                     dispatch(setToken(token));
                     localStorage.setItem('token', token);
                     localStorage.setItem('userId', response.data.user.userId);
-                    // localStorage.setItem('userName', response.data.user.name);
                     dispatch(loadCartData(token));
                     dispatch(setWishToken(token));
                     dispatch(fetchWishlist(token));
@@ -63,7 +61,6 @@ const LoginPopup = ({ setShowLogin }) => {
                     dispatch(setToken(token));
                     localStorage.setItem('token', token);
                     localStorage.setItem('userId', response.data.user.userId);
-                    // localStorage.setItem('userName', response.data.user.name);
                     dispatch(loadCartData(token));
                     dispatch(setWishToken(token));
                     dispatch(fetchWishlist(token));
@@ -79,49 +76,78 @@ const LoginPopup = ({ setShowLogin }) => {
     }
 
     return (
-        <div className='login-popup'>
-            <form onSubmit={onLogin} className='login-popup-container'>
-                <div className="login-popup-title">
-                    <h2>{currState === "Login" ? "Login" : (otpState ? "Verify OTP" : "Sign Up")}</h2>
-                    <img onClick={() => setShowLogin(false)} src={cross_icon} alt="" />
-                </div>
+        <div className="login-popup">
+            <form onSubmit={onLogin} className="login-popup-container">
+                <div className="login-popup-header position-relative">
 
-                <div className="login-popup-inputs">
-                    {currState === "Sign Up" && !otpState &&
-                        <input name='name' onChange={onChangeHandler} value={data.name} type="text" placeholder='Your name' required />
-                    }
-                    <input name='email' onChange={onChangeHandler} value={data.email} type="email" placeholder='Your email' required />
-                    <input name='password' onChange={onChangeHandler} value={data.password} type="password" placeholder='Password' required />
-
-                    {otpState &&
-                        <input name='otp' onChange={onChangeHandler} value={data.otp} type="text" placeholder='Enter OTP' required />
-                    }
+                    <div className="icon-placeholder d-flex justify-content-center align-items-center">
+                        <FaUser size={30} />
+                    </div>
+                    <button
+                        type="button"
+                        className="close-button position-absolute top-0 end-0"
+                        onClick={() => setShowLogin(false)}
+                    >
+                        &times;
+                    </button>
+                    <h3 className="mt-1">{currState === "Login" ? "Login" : "Sign Up"}</h3>
                 </div>
-                <div className='forgot-password'>
-                    {currState === 'Login' ? <p className='mb-0 text-primary'>Forgot Password</p> : ''}
+                <div className="login-popup-body">
+                    {currState === "Sign Up" && !otpState && (
+                        <input
+                            name="name"
+                            onChange={onChangeHandler}
+                            value={data.name}
+                            type="text"
+                            placeholder="Your name"
+                            required
+                        />
+                    )}
+                    <input
+                        name="email"
+                        onChange={onChangeHandler}
+                        value={data.email}
+                        type="email"
+                        placeholder="Email"
+                        required
+                    />
+                    <input
+                        name="password"
+                        onChange={onChangeHandler}
+                        value={data.password}
+                        type="password"
+                        placeholder="Password"
+                        required
+                    />
+                    {otpState && (
+                        <input
+                            name="otp"
+                            onChange={onChangeHandler}
+                            value={data.otp}
+                            type="text"
+                            placeholder="Enter OTP"
+                            required
+                        />
+                    )}
                 </div>
-                <button type='submit'>
-                    {otpState ? "Verify OTP" : (currState === "Sign Up" ? "Create Account" : "Login")}
+                <button type="submit" className="login-button">
+                    {otpState ? "Verify OTP" : currState === "Sign Up" ? "Create Account" : "Login"}
                 </button>
-
-                <div className="login-popup-condition">
-                    <input type="checkbox" required />
-                    <p>By continuing, I agree to the terms of use & privacy policy.</p>
+                <div className="login-popup-footer">
+                    <p>
+                        {currState === "Login" ? "Forgot password?" : "Already have an account?"}{" "}
+                        <span onClick={() => setCurrState(currState === "Login" ? "Sign Up" : "Login")}>
+                            {currState === "Login" ? "Sign up" : "Login here"}
+                        </span>
+                    </p>
                 </div>
-
-                {currState === "Login" ?
-                    <p>Create a new account? <span onClick={() => setCurrState("Sign Up")}>Click here</span></p> :
-                    <p>Already have an account? <span onClick={() => setCurrState("Login")}>Login here</span></p>
-                }
             </form>
         </div>
     );
-}
+};
 
 LoginPopup.propTypes = {
     setShowLogin: PropTypes.func.isRequired,
 };
 
 export default LoginPopup;
-
-
