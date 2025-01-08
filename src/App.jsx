@@ -10,7 +10,6 @@ import Vegetables from './Pages/Vegetables/Vegetables';
 import Drinks from './Pages/Drinks/Drinks';
 import Snacks from './Pages/Snacks/Snacks';
 import Chocolate from './Pages/Chocolate/Chocolate';
-import Cart from './Pages/Cart/Cart';
 import About from './Pages/About/About';
 import Blog from './Pages/Blog/Blog';
 import Contact from './Pages/Contact/Contact';
@@ -56,7 +55,6 @@ function App() {
           <Route path='/drinks' element={<Drinks />} />
           <Route path='/snacks' element={<Snacks />} />
           <Route path='/chocolates' element={<Chocolate />} />
-          <Route path='/cart' element={<Cart />} />
           <Route path='/grocery' element={<Grocery />} />
           <Route path='/about' element={<About />} />
           <Route path='/blog' element={<Blog />} />
@@ -69,6 +67,7 @@ function App() {
         </Routes>
       </div>
       <Footer />
+      
     </>
   )
 }

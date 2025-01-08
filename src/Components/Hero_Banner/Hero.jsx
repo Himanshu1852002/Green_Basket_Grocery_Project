@@ -1,21 +1,22 @@
 import './Hero.css';
 import man_img from '../../assets/Images/Images/Boy.png';
 import { Link } from 'react-router-dom';
+import { IoIosCart } from "react-icons/io";
 
 const Hero = () => {
     return (
         <>
-            <div className="container  banner">
+            <div className="container-fluid px-5 banner">
                 <div className="row banner-content ">
                     <div
-                        className="col-md-6 py-5 first-col">
+                        className="col-md-6 first-col">
                         <h1 className="display-4">Make Healthy life</h1>
-                        <h1>with <span>Fresh</span></h1>
-                        <h1> grocery</h1>
-                        <p className="lead">
-                            Embrace a healthier lifestyle with Green Basket! We bring you the freshest groceries, straight from farms to your doorstep, ensuring quality, convenience, and sustainability in every bite.
-                        </p>
-                        <Link to={'/fruits'} className='hero_btn'>Shop now</Link>
+                        <h1>with <span>Fresh</span> Fruits & Vegetables</h1>
+                        <h1> </h1>
+                        <div className='d-flex flex-sm-column flex-lg-row flex-column align-items-start align-items-lg-center align-items-sm-start mt-2'>
+                            <Link to={'/fruits'} className='hero_btn'><IoIosCart size={25} className='pe-1' /> Explore now</Link>
+                            <p className='mt-2 ps-2 fs-4  fw-bold'>100+ Fresh & Healthy Items</p>
+                       </div>
                     </div>
                     <div
                         className="col-md-6 second-col">

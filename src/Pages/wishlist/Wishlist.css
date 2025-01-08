@@ -1,14 +1,7 @@
-.wish_row {
-    margin-top: 70px;
-}
 
 .empty_wish_row {
-    margin-top: 70px;
-}
-
-.empty_wish_row img {
     height: auto;
-    width: 350px;
+    width: 300px;
 }
 
 @media (max-width:992px) {
@@ -19,7 +12,7 @@
 }
 
 @media (max-width:576px) {
-    .empty_wish_row img {
+    .empty_wish_row {
         height: auto;
         width: 310px;
     }

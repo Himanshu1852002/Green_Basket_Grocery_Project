@@ -77,7 +77,7 @@ const SearchResults = () => {
                     {results.map((product) => {
                         return (
                             <div key={product._id} className="col-12 col-lg-4 col-md-6 mb-3">
-                                <div className="card product_card position-relative">
+                                <div className="card search_card position-relative">
                                     <img src={product.image} className="card-img-top" alt={product.name} />
                                     <span
                                         className="wishlist-icon position-absolute top-0 end-0 p-2"

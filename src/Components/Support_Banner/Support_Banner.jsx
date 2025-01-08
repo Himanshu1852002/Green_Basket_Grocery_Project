@@ -54,7 +54,7 @@ SupportBannerItem.propTypes = {
 
 const Support_Banner = () => {
     return (
-        <div className="card-box">
+        <div className="card-box ">
             <h1>Customer <span>Support</span></h1>
             <div className="container">
                 <div className="row">

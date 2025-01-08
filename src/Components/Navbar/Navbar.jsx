@@ -8,6 +8,7 @@ import { clearCartData, clearToken } from '../../Store/cartSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import CartSidebar from "../../Pages/Cart/CartSidebar";
 import logo from '../../assets/Images/Images/logo_ai.png';
 import './Navbar.css';
 
@@ -16,6 +17,15 @@ const Navbar = ({ setShowLogin }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [query, setQuery] = useState("");
     const [placeholder, setPlaceholder] = useState("Search for products...");
+    const [showCartSidebar, setShowCartSidebar] = useState(false);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const wishlist = useSelector((state) => state.wishlist.items);
+    const cartItems = useSelector((state) => state.cart.cartItems);
+    const token = localStorage.getItem("token");
+
     const placeholderTexts = [
         "Search for fruits...",
         "Search for vegetables...",
@@ -29,15 +39,10 @@ const Navbar = ({ setShowLogin }) => {
         if (query.trim()) {
             navigate(`/search?q=${query}`);
         }
+        else {
+            navigate('/');
+        }
     };
-
-
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-    const wishlist = useSelector((state) => state.wishlist.items);
-    const cartItems = useSelector((state) => state.cart.cartItems);
-    const token = localStorage.getItem("token");
 
     const wishlistCount = Array.isArray(wishlist) ? wishlist.length : Object.keys(wishlist).length;
     const cartItemCount = Array.isArray(cartItems)
@@ -62,14 +67,21 @@ const Navbar = ({ setShowLogin }) => {
         const interval = setInterval(() => {
             index = (index + 1) % placeholderTexts.length;
             setPlaceholder(placeholderTexts[index]);
-        }, 2000); // Change text every 2 seconds
+        }, 2000);
 
-        return () => clearInterval(interval); // Cleanup interval on component unmount
+        return () => clearInterval(interval);
     }, []);
+
+    useEffect(() => {
+        // Redirect to home if the input field is cleared
+        if (!query.trim()) {
+            navigate('/');
+        }
+    }, [query]);
 
     return (
         <nav className="navbar navbar-box navbar-light bg-light">
-            <div className="container d-flex justify-content-between align-items-center" >
+            <div className="container px-3 d-flex justify-content-between align-items-center" >
                 {/* Logo */}
                 <Link to="/">
                     <img className="nav-logo" src={logo} />
@@ -80,9 +92,10 @@ const Navbar = ({ setShowLogin }) => {
                     <input
                         type="text" value={query}
                         onChange={(e) => setQuery(e.target.value)}
-                        className="form-control"
+                        className="form-control search-input"
                         placeholder={placeholder}
-                        onBlur={handleSearch}
+                        onChangeCapture={handleSearch}
+
                     />
                 </div>
                 <div className="d-flex justify-content-center align-items-center gap-2">
@@ -119,9 +132,9 @@ const Navbar = ({ setShowLogin }) => {
                         </div>
 
                         <div className="position-relative">
-                            <Link to={'/cart'}>
-                                <FaShoppingCart className="icon" size={23} style={{ cursor: "pointer" }} />
-                            </Link>
+                           
+                                <FaShoppingCart className="icon" size={23} style={{ cursor: "pointer" }} onClick={()=>setShowCartSidebar(!showCartSidebar)} />
+                            
                             {cartItemCount > 0 && (
                                 <span
                                     className="badge h-100 w-100 rounded-circle bg-danger"
@@ -138,6 +151,12 @@ const Navbar = ({ setShowLogin }) => {
                                 </span>
                             )}
                         </div>
+                        {showCartSidebar && (
+                            <CartSidebar
+                            show={showCartSidebar}
+                            onClose={()=>setShowCartSidebar(false)}
+                            />
+                        )}
 
                         {!token ? (
                             <button onClick={() => setShowLogin(true)} className="login-btn">Login</button>

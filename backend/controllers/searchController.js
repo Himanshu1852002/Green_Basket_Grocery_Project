@@ -3,9 +3,9 @@ import productModel from '../models/productModel.js'
 const search = async (req, res) => {
     const query = req.query.q;
 
-    if (!query) {
-        return res.status(400).json({ message: "Search query is required" });
-    }
+    // if (!query) {
+    //     return res.status(400).json({ message: "Search query is required" });
+    // }
 
     try {
         const results = await productModel.find({

@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'himanshu77jangid@gmail.com',
-        pass: 'nmdz xqad mhoq qphi', // Ensure this is an App Password if 2FA is enabled
+        pass: 'nmdz xqad mhoq qphi', 
     },
     tls: {
         rejectUnauthorized: false,
@@ -52,9 +52,9 @@ const loginUser = async (req, res) => {
     }
 };
 
-const createToken = (id) => {
+const createToken = (id, name, email) => {
     // eslint-disable-next-line no-undef
-    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+    return jwt.sign({ id, name, email }, process.env.JWT_SECRET, { expiresIn: '7d' });
 };
 
 // register user
@@ -118,7 +118,7 @@ const verifyOtp = async (req, res) => {
     const { email, otp } = req.body;
 
     try {
-        // Check if OTP exists in the memory store
+
         const storedOtpData = otpStore[email];
 
         if (!storedOtpData) {
@@ -130,7 +130,6 @@ const verifyOtp = async (req, res) => {
 
         const { otp: storedOtp, otpExpiredAt } = storedOtpData;
 
-        // Convert both OTPs to strings 
         if (String(storedOtp) !== String(otp) || new Date() > new Date(otpExpiredAt)) {
             return res.status(400).json({
                 success: false,
@@ -138,10 +137,8 @@ const verifyOtp = async (req, res) => {
             });
         }
 
-        // OTP is valid, remove it from memory store
         delete otpStore[email];
 
-        // Generate JWT token
         const user = await userModel.findOne({ email });
         const token = createToken(user._id);
 

@@ -1,7 +1,5 @@
-/* Global scrollbar styles */
 ::-webkit-scrollbar {
     width: 12px;
-
 }
 
 ::-webkit-scrollbar-track {
@@ -21,3 +19,4 @@
 ::-webkit-scrollbar-thumb:hover {
     background-color: green;
 }
+

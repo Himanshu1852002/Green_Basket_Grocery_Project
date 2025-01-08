@@ -10,14 +10,12 @@ import { FaFacebookSquare } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 const Footer = () => {
     return (
-
-
         <div>
-            <div className="outer-container py-5">
-                <div className="container">
+            <div className="outer-container py-4">
+                <div className="container footer-container">
                     <div className="row">
                         <div className="col-lg-3 col-md-6 col-sm-6 mb-md-3 mb-sm-3 colm">
-                            <h3>Quick Links</h3>
+                            <h3 className='footer-titles'>Quick Links</h3>
                             <ul className="list-group">
                                 <li className="list-group-item"><Link to={'/'}>Home</Link></li>
                                 <li className="list-group-item"><Link >Offer</Link></li>
@@ -27,7 +25,7 @@ const Footer = () => {
                             </ul>
                         </div>
                         <div className="col-lg-3 col-md-6 col-sm-6 mb-md-3 mb-sm-3 colm">
-                            <h3>Information</h3>
+                            <h3 className='footer-titles'>Information</h3>
                             <ul className="list-group">
                                 <li className="list-group-item"><Link to={'/about'}>About Us</Link></li>
                                 <li className="list-group-item"><Link to={'/blog'}>Blogs</Link></li>
@@ -37,7 +35,7 @@ const Footer = () => {
                             </ul>
                         </div>
                         <div className="col-lg-3 col-md-6 col-sm-6 colm">
-                            <h3>Categories</h3>
+                            <h3 className='footer-titles'>Categories</h3>
                             <ul className="list-group">
                                 <li className="list-group-item"><Link to={'/fruits'}>Fruits</Link></li>
                                 <li className="list-group-item"><Link to={'/vegetables'}>Vegetables</Link></li>
@@ -48,7 +46,7 @@ const Footer = () => {
                             </ul>
                         </div>
                         <div className="col-lg-3 col-md-6 col-sm-6 colm">
-                            <h3>About Store</h3>
+                            <h3 className='footer-titles'>About Store</h3>
                             <ul className="list-group">
                                 <li className="list-group-item"><a href="#"><IoCall className='me-3' /> +91 6266059961</a></li>
                                 <li className="list-group-item"><a href="#"><MdEmail className='me-3'/>
