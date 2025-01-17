@@ -1,75 +1,54 @@
 import { Routes, Route } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-import Navbar from './Components/Navbar/Navbar';
-import Footer from './Components/Footer/Footer';
-import Home from './Pages/Home/Home';
-import Fruits from './Pages/Fruits/Fruits';
-import Vegetables from './Pages/Vegetables/Vegetables';
-import Drinks from './Pages/Drinks/Drinks';
-import Snacks from './Pages/Snacks/Snacks';
-import Chocolate from './Pages/Chocolate/Chocolate';
-import About from './Pages/About/About';
-import Blog from './Pages/Blog/Blog';
-import Contact from './Pages/Contact/Contact';
-import Grocery from './Pages/Grocery/Grocery';
-import LoginPopup from './Components/Login_PopUp/LoginPopup';
-import Wishlist from '../src/Pages/Wishlist/Wishlist';
-import ScrollToTop from './Pages/ScrollToTop/ScrollToTop';
-import { ToastContainer } from 'react-toastify';
-import Checkout from './Pages/Checkout/Checkout';
-import Verify from './Pages/Verify/Verify';
-import SearchResults from './Pages/SearchResults/SearchResults';
-import MyOrders from './Pages/MyOrders/MyOrders';
+import { useState, useEffect } from 'react';
+import Home from './Pages/User/Home/Home';
+import UserRoutes from './Routes/UserRoutes';
+import AdminRoutes from './Routes/AdminRoutes';
+import LoginPopup from './Components/User/Login_PopUp/LoginPopup';
+import Navbar from './Components/User/Navbar/Navbar';
+import AdminProtectedRoutes from './Shared/AdminProtectedRoutes';
 
-function App() {
-
+const App = () => {
   const [showLogin, setShowLogin] = useState(false);
+  const role = localStorage.getItem('role');
 
-
-  // Stop the scrolling when you open the login popup
   useEffect(() => {
-    if (showLogin) {
-      document.body.style.overflow = 'hidden';
-    }
-    else {
-      document.body.style.overflow = 'auto';
-    }
-    return () => {
-      document.body.style.overflow = 'auto';
-    }
+    document.body.style.overflow = showLogin ? 'hidden' : 'auto';
   }, [showLogin]);
+
+ 
+  const getRoutes = () => {
+    if (role === 'admin') {
+      return (
+        <Route
+          path="/admin/*"
+          element={
+            <AdminProtectedRoutes>
+              <AdminRoutes />
+            </AdminProtectedRoutes>
+          }
+        />
+      );
+    } else {
+      return (
+        <Route
+          path="/user/*"
+          element={<UserRoutes />} 
+        />
+      );
+    }
+  };
 
   return (
     <>
+      {role !== 'admin' && <Navbar setShowLogin={setShowLogin} />}
       {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
-      <div>
-        <ToastContainer position='top-center' autoClose={3000} />
-        <ScrollToTop />
-        <Navbar setShowLogin={setShowLogin} />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/fruits' element={<Fruits />} />
-          <Route path='/vegetables' element={<Vegetables />} />
-          <Route path='/drinks' element={<Drinks />} />
-          <Route path='/snacks' element={<Snacks />} />
-          <Route path='/chocolates' element={<Chocolate />} />
-          <Route path='/grocery' element={<Grocery />} />
-          <Route path='/about' element={<About />} />
-          <Route path='/blog' element={<Blog />} />
-          <Route path='/contact' element={<Contact />} />
-          <Route path='/wishlist' element={<Wishlist />} />
-          <Route path='/search' element={<SearchResults />} />
-          <Route path='/checkout' element={<Checkout />} />
-          <Route path='/verify' element={<Verify />} />
-          <Route path='/myorders' element={<MyOrders />} />
-        </Routes>
-      </div>
-      <Footer />
-      
+      <Routes>
+        <Route path="/" element={<Home setShowLogin={setShowLogin} />} />
+        <Route path="/login" element={<LoginPopup setShowLogin={setShowLogin} />} />
+        {getRoutes()}
+      </Routes>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

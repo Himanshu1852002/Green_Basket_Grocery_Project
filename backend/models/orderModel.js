@@ -6,6 +6,7 @@ const orderSchema = new mongoose.Schema({
         required: true
     },
     items: [{
+        image: { type: String, required: true },
         name: { type: String, required: true },
         price: { type: Number, required: true },
         quantity: { type: Number, required: true }
@@ -18,13 +19,13 @@ const orderSchema = new mongoose.Schema({
         type: Object,
         required: true
     },
-    status: {
-        type: String,
-        default: "Product Processing"
-    },
     date: {
         type: Date,
-        default: Date.now
+        default: Date.now 
+    },
+    deliveryTime: { 
+        type: String,
+        default: "Within 30 minutes to 1 hour"
     },
     payment: {
         type: Boolean,
@@ -33,8 +34,11 @@ const orderSchema = new mongoose.Schema({
     razorpay_order_id: {
         type: String
     },
+    orderStatus: {
+        type: String,
+        default: "Processing" 
+    },
 });
 
-
-const orderModel = mongoose.model("order", orderSchema); // Corrected line
+const orderModel = mongoose.model("order", orderSchema);
 export default orderModel;

@@ -34,7 +34,7 @@ export const removeFromCartAPI = createAsyncThunk('cart/removeFromCartAPI', asyn
 const calculateTotalAmount = (state) => {
     return Object.entries(state.cartItems).reduce((total, [itemId, quantity]) => {
         const product = state.product_list.find((item) => item._id === itemId);
-        return product ? total + product.price * quantity : total;
+        return product ? total + product.sellingPrice * quantity : total;
     }, 0);
 };
 

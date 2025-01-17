@@ -12,8 +12,10 @@ const addProduct = async (req, res) => {
         unit: req.body.unit,
         description: req.body.description,
         price: req.body.price,
+        sellingPrice: req.body.sellingPrice,
         category: req.body.category,
-        image: image_filename
+        image: image_filename,
+        quantity: req.body.quantity
     });
 
     try {

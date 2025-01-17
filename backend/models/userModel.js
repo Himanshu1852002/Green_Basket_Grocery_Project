@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    role: {
+        type: String,
+        default: 'user'
+    },
     cartData: {
         type: Object,
         default: {}
@@ -23,6 +27,15 @@ const userSchema = new mongoose.Schema({
         default: {}
     }
 }, { minimize: false });
+
+
+userSchema.pre("save", function (next) {
+    if (this.role === "admin") {
+        this.cartData = undefined;
+        this.wishlistData = undefined;
+    }
+    next();
+});
 
 const userModel = mongoose.model.user || mongoose.model("user", userSchema);
 

@@ -20,6 +20,33 @@ const transporter = nodemailer.createTransport({
 
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000);
 
+
+// const registerAdmin = async () => {
+//     try {
+//         const adminExists = await userModel.findOne({ email: 'admin@greenBasket.com' });
+//         if (adminExists) {
+//             console.log('Admin already exists');
+//             return;
+//         }
+
+//         const hashedPassword = await bcrypt.hash('admin@1234', 10);
+
+//         const admin = new userModel({
+//             name: 'Admin',
+//             email: 'admin@greenBasket.com',
+//             password: hashedPassword,
+//             role: 'admin'
+//         })
+
+//         await admin.save();
+//         console.log('Admin registered successfully');
+//     } catch (error) {
+//         console.error('Error registering admin:', error);
+//     }
+// }
+
+// registerAdmin();
+
 // login user
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
@@ -36,25 +63,41 @@ const loginUser = async (req, res) => {
             return res.json({ success: false, message: 'Invalid password' });
         }
 
-        const token = createToken(user._id);
-        res.json({
-            success: true,
-            token,
-            user: {
-                name: user.name,
-                email: user.email,
-                userId: user._id
-            },
-        });
+        const token = createToken(user._id,);
+
+        if (user.role === 'admin') {
+            return res.status(200).json({
+                success: true,
+                token,
+                user: {
+                    name: user.name,
+                    email: user.email,
+                    userId: user._id,
+                    role: 'admin'
+                },
+            });
+        } else {
+            return res.json({
+                success: true,
+                token,
+                user: {
+                    name: user.name,
+                    email: user.email,
+                    userId: user._id,
+                    role: 'user'
+                },
+
+            });
+        }
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: 'Error' });
     }
 };
 
-const createToken = (id, name, email) => {
+const createToken = (id, role) => {
     // eslint-disable-next-line no-undef
-    return jwt.sign({ id, name, email }, process.env.JWT_SECRET, { expiresIn: '7d' });
+    return jwt.sign({ id, role }, process.env.JWT_SECRET, { expiresIn: '7d' });
 };
 
 // register user
@@ -73,6 +116,7 @@ const registerUser = async (req, res) => {
         if (password.length < 8) {
             return res.json({ success: false, message: 'Please Enter Strong password' });
         }
+        
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -81,6 +125,7 @@ const registerUser = async (req, res) => {
             name: name,
             email: email,
             password: hashedPassword,
+            role: 'user'
         });
 
         await newUser.save();
@@ -149,7 +194,8 @@ const verifyOtp = async (req, res) => {
             user: {
                 name: user.name,
                 email: user.email,
-                userId: user._id
+                userId: user._id,
+                role:'user'
             },
         });
     } catch (error) {

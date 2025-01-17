@@ -1,0 +1,36 @@
+.product-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.list-product-card{
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 20px;
+}
+
+.list-card {
+    background: #fff;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.list-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-small {
+    border-radius: 8px;
+}
+
+.text-decoration-line-through {
+    text-decoration: line-through;
+}
+
+.text-success {
+    color: #198754 !important;
+}
