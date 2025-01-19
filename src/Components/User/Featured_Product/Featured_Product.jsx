@@ -23,7 +23,7 @@ const Cards = ({ imgSrc, title, description, onSeeMore }) => {
                     <div className="card-body">
                         <h5 className="card-title">{title}</h5>
                         <p className="card-text">{description}</p>
-                        <button className="btn btn-success" onClick={onSeeMore}>See more</button>
+                        <button className="btn- btn btn-success" onClick={onSeeMore}>See more</button>
                     </div>
                 </div>
             </div>

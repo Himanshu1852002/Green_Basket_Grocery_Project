@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchOrders = createAsyncThunk('orders/fetchOrders', async (_, { getState, rejectWithValue }) => {
+export const fetchOrders = createAsyncThunk('orders/fetchOrders', async (_, { userId, getState, rejectWithValue }) => {
     const { url, token } = getState().cart;
     try {
-        const response = await axios.post(`${url}/api/orders/userOrder`, {}, {
+        const response = await axios.post(`${url}/api/orders/userOrder`, { userId }, {
             headers: { Authorization: `Bearer ${token}` },
         });
         return response.data.data;

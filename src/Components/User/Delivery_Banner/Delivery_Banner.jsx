@@ -3,7 +3,7 @@ import './Delivery_Banner.css';
 
 const Delivery_Banner = () => {
     return (
-        <div className="container">
+        <div className="container" style={{ marginTop: "30px" }}>
             <div className="row deliver_row flex-md-row flex-column">
                 {/* Image Section */}
                 <div className="col-12 col-md-6 d-flex justify-content-center align-items-center img_div">

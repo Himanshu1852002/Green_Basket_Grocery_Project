@@ -108,7 +108,7 @@ const Checkout = () => {
                     const result = await verificationResponse.json();
 
                     if (verificationResponse.ok) {
-                        navigate('/verify',);
+                        navigate('/user/verify',);
                         console.log(orderDetails)
                     } else {
                         alert(result.message || 'Payment verification failed.');
@@ -143,7 +143,7 @@ const Checkout = () => {
     }, [dispatch, totalCartAmount,]);
 
     return (
-        <div className="container checkout-container">
+        <div className="container checkout-container" style={{marginTop:'140px',padding:'50px 0px 50px 0px'}}>
             <div className="row checkout-row">
                 <div className="col-lg-6 address-col">
                     <h2 className="fw-bold mb-3">Delivery Information</h2>
@@ -244,7 +244,7 @@ const Checkout = () => {
                     </div>
                     <button
                         onClick={handlePlaceOrder}
-                        className="mt-2 w-md-50 w-sm-100 btn"
+                        className="mt-2 w-md-50 w-sm-100 btn btn-success"
                     >
                         Proceed To Payment
                     </button>

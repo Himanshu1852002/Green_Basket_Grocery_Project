@@ -1,136 +1,136 @@
+.explore_card h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.explore_card h1 span {
+    color: orangered;
+}
+
 .explore-menu {
     display: flex;
-    height: 130px;
     justify-content: space-evenly;
-    overflow-x: auto;
-    white-space: nowrap;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
     margin-bottom: 25px;
+    padding: 20px;
+    border-radius: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
 }
 
 .explore-menu::-webkit-scrollbar {
     display: none;
 }
 
-.explore-item {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-
-}
 
 .explore-item {
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 130px;
-    width: 170px;
+}
+
+.explore-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 130px;
+    height: 150px;
     cursor: pointer;
-
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid black;
 }
 
-.explore_card {
-    border-radius: 0;
-    border: none;
-
+/* Pseudo-element for leaf image on hover */
+.explore-box:hover::before {
+    content: '';
+    position: absolute;
+    top: -18px;
+    left: -15px;
+    width: 30px;
+    height: 30px;
+    background-image: url('../../../assets/Images/Images/border-image.png');
+    z-index: 1;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
-.explore_card h1 {
-    text-align: center;
-    color: rgb(46, 46, 46);
-    font-weight: bold;
-    margin-bottom: 50px;
-    padding-top: 20px;
+.explore-box.active {
+    transform: scale(1.1);
+    border: 3px solid orangered;
 }
 
-.explore_card h1 span {
-    text-align: center;
-    color: orangered;
-    font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 5px;
-}
-
-.explore-item .active {
-    border: 4px solid tomato;
-    padding: 2px;
-}
-
-.explore-item img {
-    width: 90px;
-    height: 90px;
-    object-fit: cover;
-    border: 2px solid green;
-    border-radius: 50%;
-    display: block;
-    margin-top: 20px;
-}
-
-.explore-item p {
+.explore-item-img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
     margin-top: 10px;
-    font-size: 1.2rem;
+}
+
+.explore-box p {
+    margin-top: 10px;
+    font-size: 1rem;
     font-weight: 600;
     color: #222831;
-
+    text-align: center;
 }
 
-@media(max-width: 1140px) {
+.explore-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
 
+@media (max-width: 1140px) {
+    .explore-menu {
+        gap: 15px;
 
-    .explore-item {
-        display: flex;
-        margin-right: 10px;
-        justify-content: center;
-        align-items: center;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px - 20px, rgba(0, 0, 0, 0.3) 0px 30px 60px - 30px, rgba(10, 37, 64, 0.35) 0px - 2px 6px 0px inset;
-        border-radius: 20px;
-        border-radius: 20px;
-        height: 130px;
-        width: 140px;
-        cursor: pointer;
     }
 
-    .explore-item img {
+    .explore-box {
+        width: 120px;
+        height: 120px;
+    }
+
+    .explore-item-img {
         width: 50px;
         height: 50px;
-        object-fit: cover;
-        border: 2px solid green;
-        border-radius: 50%;
-        display: block;
-
     }
 
-    .explore-item p {
-        margin-top: 10px;
-        margin-right: 5px;
-        font-size: 1rem;
-        font-weight: 500;
-    }
-}
-
-@media(max-width: 1200px) {
-    .explore_card h1 {
-        margin-bottom: 35px;
-    }
-}
-
-@media(max-width: 992px) {
-    .explore_card h1 {
-        margin-bottom: 30px;
-    }
-
-    .explore-menu p {
+    .explore-box p {
         font-size: 0.9rem;
     }
 }
 
-@media(max-width: 767px) {
-    .explore_card h1 {
-        margin-bottom: 25px;
+@media (max-width: 992px) {
+    .explore-menu {
+        flex-wrap: nowrap;
+        /* Prevents wrapping of items */
+        overflow-x: auto;
+        /* Enables horizontal scrolling */
     }
 
-    .explore-menu p {
+    .explore-box {
+        width: 100px;
+        height: 100px;
+    }
+
+    .explore-item-img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .explore-box p {
         font-size: 0.8rem;
     }
-
 }

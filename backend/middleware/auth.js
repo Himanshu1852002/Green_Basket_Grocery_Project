@@ -12,7 +12,8 @@ const authMiddleware = async (req, res, next) => {
         // eslint-disable-next-line no-undef
         const JWT_SECRET = process.env.JWT_SECRET;
         const token_decode = jwt.verify(token, JWT_SECRET);
-        req.user = { id: token_decode.id, role: token_decode.role }
+        // req.user = { id: token_decode.id, role: token_decode.role }
+        req.body.userId = token_decode.id;
         next();
     } catch (error) {
         console.error('Token verification failed:', error);

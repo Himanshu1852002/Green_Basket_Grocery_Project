@@ -37,30 +37,12 @@
     box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
-/* Button styling */
-.btn {
-    background-color: green;
-    border-radius: 25px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #fff;
-    cursor: pointer;
-    border: 2px solid green;
-}
-
-/* Card title styling */
 .card-title {
     font-size: 1.4rem;
     font-weight: bold;
     color: #000;
 }
 
-.btn:hover {
-    background-color: transparent;
-    border: 2px solid green;
-}
-
-/* Card text styling */
 .card-text {
     font-size: 1.1rem;
     font-weight: 600;
@@ -88,8 +70,6 @@
         font-size: 0.9rem;
     }
 }
-
-
 
 @media (max-width: 992px) {
     .card img {
@@ -144,8 +124,6 @@
     }
 
 }
-
-
 
 /* Popup Overlay */
 .popup-overlay {

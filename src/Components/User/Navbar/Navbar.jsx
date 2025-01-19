@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FaSearch, FaShoppingCart, FaHeart, FaUser } from "react-icons/fa";
+import { FaSearch, FaUser } from "react-icons/fa";
+import { SlHandbag } from "react-icons/sl";
+
+import { FaRegHeart } from "react-icons/fa";
 import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { clearWishlistData, clearWishToken } from '../../../Store/wishlistSlice';
@@ -118,7 +121,7 @@ const Navbar = ({ setShowLogin }) => {
                     <div className="d-flex align-items-center gap-4">
                         <div className="position-relative">
                             <Link to={'/user/wishlist'}>
-                                <FaHeart className="icon" size={23} style={{ cursor: "pointer" }} />
+                                <FaRegHeart className="icon" size={23} style={{ cursor: "pointer" }} />
                             </Link>
                             {wishlistCount > 0 && (
                                 <span
@@ -136,11 +139,8 @@ const Navbar = ({ setShowLogin }) => {
                                 </span>
                             )}
                         </div>
-
                         <div className="position-relative">
-
-                            <FaShoppingCart className="icon" size={23} style={{ cursor: "pointer" }} onClick={() => setShowCartSidebar(!showCartSidebar)} />
-
+                            <SlHandbag className="icon" size={23} style={{ cursor: "pointer" }} onClick={() => setShowCartSidebar(!showCartSidebar)} />
                             {cartItemCount > 0 && (
                                 <span
                                     className="badge h-100 w-100 rounded-circle bg-danger"

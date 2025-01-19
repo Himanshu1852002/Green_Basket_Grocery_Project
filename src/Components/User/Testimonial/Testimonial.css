@@ -39,7 +39,7 @@
     margin: -20px auto 0;
     display: table;
     width: auto;
-    background: green;
+    background: #51A390;
     padding: 10px 30px;
     border-radius: 12px;
     text-align: center;
@@ -81,12 +81,12 @@
 
 .slick-dots li button:before {
     font-size: 12px;
-    color: green;
+    color: #276153;
     opacity: 0.6;
     transition: opacity 0.3s ease-in-out;
 }
 
 .slick-dots li.slick-active button:before {
     opacity: 1;
-    color: green;
+    color: #276153;
 }

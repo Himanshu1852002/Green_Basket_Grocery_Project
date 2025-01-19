@@ -74,11 +74,7 @@
 }
 
 
-@media (max-width:767px) {
-    .navbar-box {
-        padding: 0px 5px;
-    }
-}
+
 
 @media (max-width:576px) {
     .navbar-box {

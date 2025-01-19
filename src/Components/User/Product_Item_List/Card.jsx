@@ -42,13 +42,13 @@ const Card = ({ _id, name, price, image, sellingPrice, unit }) => {
 
     const handleMouseMove = (event) => {
         const rect = event.currentTarget.getBoundingClientRect();
-        const x = ((event.clientX - rect.left) / rect.width - 0.5) * 20; // Calculate relative x-axis movement
-        const y = ((event.clientY - rect.top) / rect.height - 0.5) * 20; // Calculate relative y-axis movement
+        const x = ((event.clientX - rect.left) / rect.width - 0.5) * 20;
+        const y = ((event.clientY - rect.top) / rect.height - 0.5) * 20;
         setPosition({ x, y });
     };
 
     const handleMouseLeave = () => {
-        setPosition({ x: 0, y: 0 }); // Reset position when cursor leaves
+        setPosition({ x: 0, y: 0 });
     };
 
     return (
@@ -70,7 +70,7 @@ const Card = ({ _id, name, price, image, sellingPrice, unit }) => {
                 <div className="card-body product_card_body">
                     <h5 className="card-title">{name}</h5>
                     <p className="card-text"><del className="text-muted">&#8377;{price}</del>-&#8377;{sellingPrice} /{unit}</p>
-                    <button className="btn" onClick={handleAddToCart}>
+                    <button className="btn btn-success" onClick={handleAddToCart}>
                         Add to cart
                     </button>
                 </div>

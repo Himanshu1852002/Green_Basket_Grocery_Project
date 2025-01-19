@@ -1,12 +1,12 @@
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import './Explore_Menu.css';
 import { menuItems_list } from '../../../assets/assets';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
-
 const ExploreMenu = ({ category, setCategory }) => {
     const navigate = useNavigate();
+    const exploreMenuRef = useRef(null);
 
     const handleCategoryClick = useCallback((menu_name) => {
         if (menu_name === category) return;
@@ -21,22 +21,29 @@ const ExploreMenu = ({ category, setCategory }) => {
                     Explore <span>Menu</span>
                 </h1>
                 <div className="card-body">
-                    <div className="explore-menu">
+                    <div className="explore-menu" ref={exploreMenuRef}>
                         {menuItems_list.map((item, index) => (
                             <div
-                                onClick={() => handleCategoryClick(item.menu_name)}
+                                onClick={() => handleCategoryClick(item.menu_name, index)}
                                 className="explore-item"
                                 key={index}
                             >
-                                <img
-                                    className={category === item.menu_name ? 'active' : ''}
-                                    src={item.imgSrc}
-                                    alt={item.altText}
-                                />
-                                <p>{item.menu_name}</p>
+                                <div
+                                    className={`explore-box ${category === item.menu_name ? 'active' : ''}`}
+                                    data-category={item.menu_name}
+                                >
+                                    <img
+                                        className="explore-item-img"
+                                        src={item.imgSrc}
+                                        alt={item.altText}
+                                    />
+                                    <p>{item.menu_name}</p>
+                                </div>
                             </div>
                         ))}
                     </div>
+
+
                 </div>
             </div>
         </div>
