@@ -17,6 +17,7 @@ import Footer from '../Components/User/Footer/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ScrollToTop from '../Pages/User/ScrollToTop/ScrollToTop';
+import Home from '../Pages/User/Home/Home';
 
 
 const UserRoutes = () => {
@@ -25,8 +26,9 @@ const UserRoutes = () => {
     <>
       <div>
         <ToastContainer position="top-center" autoClose={3000} />
-        <ScrollToTop/>
+        <ScrollToTop />
         <Routes>
+          <Route path='/' element={<Home />} />
           <Route path="fruits" element={<Fruits />} />
           <Route path="vegetables" element={<Vegetables />} />
           <Route path="coldrinks" element={<Drinks />} />

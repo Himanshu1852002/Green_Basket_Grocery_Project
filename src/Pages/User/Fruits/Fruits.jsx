@@ -16,13 +16,11 @@ const Fruits = () => {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            if (status === "idle") {
                 dispatch(fetchProductsByCategory(category));
-            }
         }, 300); 
 
         return () => clearTimeout(timer);
-    }, [dispatch, category, status]);
+    }, [dispatch, category]);
 
 
     return (

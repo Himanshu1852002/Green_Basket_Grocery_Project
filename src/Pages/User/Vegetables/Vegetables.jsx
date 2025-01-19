@@ -14,16 +14,15 @@ const Vegetables = () => {
     const status = useSelector(getProductsStatus);
     const error = useSelector(getProductsError);
 
-
     useEffect(() => {
+        // Fetch products whenever category changes
         const timer = setTimeout(() => {
-            if (status === "idle") {
-                dispatch(fetchProductsByCategory(category));
-            }
-        }, 300); // Debounce for 300ms
+            dispatch(fetchProductsByCategory(category));
+        }, 300); // Small delay for better UX
 
         return () => clearTimeout(timer);
-    }, [dispatch, category, status]);
+    }, [dispatch, category]); // Remove `status` dependency
+
 
     return (
         <>
@@ -32,15 +31,12 @@ const Vegetables = () => {
                 title2="Fresh Vegetables"
                 heading="CHOOSE FRESH AND GREEN VEGETABLES FOR HEALTH"
                 item_img={veges_img}
-                // backgroundColor="linear-gradient(to left,#9CD4A4,#78B97B,#5D9F59,#49843E,#396929,#2A4E17,#1D340B)"
                 backgroundColor="linear-gradient(to bottom,#0f2a1d,#375534,#6b9071,#aec3b0,#e3eed4)"
             />
             <ExploreMenu category={category} setCategory={setCategory} />
-            {status === 'loading' && <p>Loading products...</p>}
-            {status === 'failed' && <p>Error: {error}</p>}
-            {status === 'succeeded' && (
-                <Product_Item_List items={products} />
-            )}
+            {status === "loading" && <p>Loading products...</p>}
+            {status === "failed" && <p>Error: {error}</p>}
+            {status === "succeeded" && <Product_Item_List items={products} />}
         </>
     )
 }

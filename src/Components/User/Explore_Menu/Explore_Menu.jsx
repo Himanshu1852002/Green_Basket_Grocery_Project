@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 import './Explore_Menu.css';
 import { menuItems_list } from '../../../assets/assets';
 import PropTypes from 'prop-types';
@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const ExploreMenu = ({ category, setCategory }) => {
     const navigate = useNavigate();
-    const exploreMenuRef = useRef(null);
+    // const exploreMenuRef = useRef(null);
 
     const handleCategoryClick = useCallback((menu_name) => {
         if (menu_name === category) return;
@@ -21,7 +21,7 @@ const ExploreMenu = ({ category, setCategory }) => {
                     Explore <span>Menu</span>
                 </h1>
                 <div className="card-body">
-                    <div className="explore-menu" ref={exploreMenuRef}>
+                    <div className="explore-menu">
                         {menuItems_list.map((item, index) => (
                             <div
                                 onClick={() => handleCategoryClick(item.menu_name, index)}

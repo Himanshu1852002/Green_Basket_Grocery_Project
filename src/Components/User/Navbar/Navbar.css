@@ -72,12 +72,3 @@
 .dropdown-item:hover {
     background-color: #f8f9fa;
 }
-
-
-
-
-@media (max-width:576px) {
-    .navbar-box {
-        padding: 0px 10px;
-    }
-}

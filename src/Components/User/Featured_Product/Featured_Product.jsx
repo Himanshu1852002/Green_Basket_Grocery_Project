@@ -87,9 +87,7 @@ const Featured_Product = () => {
                 <div className="popup-overlay">
                     <div className="popup-content row">
                         {/* Close Button */}
-                        <button className="btn-close" aria-label="Close" onClick={closePopup}>
-                            &times;
-                        </button>
+                        <button className="btn-close" aria-label="Close" onClick={closePopup}></button>
                         <div className="popup-left">
                             {/* Main Image */}
                             <img className='main_img' src={popupData.imgSrc} alt={`${popupData.title} Main`} />
