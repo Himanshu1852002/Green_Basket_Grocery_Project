@@ -15,7 +15,7 @@ const ExploreMenu = ({ category, setCategory }) => {
     }, [navigate, category, setCategory]);
 
     return (
-        <div className="container-fluid pt-3">
+        <div className="container-fluid pt-3 pb-3">
             <div className="explore_card">
                 <h1>
                     Explore <span>Menu</span>

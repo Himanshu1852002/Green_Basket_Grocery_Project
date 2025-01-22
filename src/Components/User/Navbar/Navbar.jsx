@@ -184,12 +184,13 @@ const Navbar = ({ setShowLogin }) => {
                                             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                                         }}
                                     >
-                                        <Link to="/user/myorders" className="dropdown-item">Orders</Link>
-                                        <Link to="/user/saved-address" className="dropdown-item">Saved Address</Link>
+                                        <Link to="/user/myorders" className="dropdown-item" onClick={() => setShowDropdown(false)}>Orders</Link>
+                                        <Link to="/user/saved-address" className="dropdown-item" onClick={() => setShowDropdown(false)}>Saved Address</Link>
                                         <button
                                             className="dropdown-item"
                                             onClick={() => {
-                                                handleLogOut()
+                                                handleLogOut();
+                                                setShowDropdown(false);
                                             }}
                                         >
                                             Log Out

@@ -3,8 +3,9 @@
 }
 
 .blog_row {
-    height: 190px;
-    background-image: linear-gradient(to top, #1A5319, #508D4E, #80AF81, #D6EFD8);
+    height: 160px;
+    color: #fff;
+    background-color: #263d2f;
 }
 
 .blog_container img {

@@ -7,8 +7,9 @@ const Blog = () => {
     return (
         <div className="container-fluid blog_container">
             <div className="row blog_row d-flex justify-content-center align-items-center">
-                <div className="col-12 d-flex justify-content-center align-items-center">
-                    <h1 className="fw-bold fs-1">OUR BLOGS</h1>
+                <div className="col-12 d-flex justify-content-center flex-column align-items-center">
+                    <p>Home &gt; Blog</p>
+                    <h1 className="fw-bold">OUR BLOGS</h1>
                 </div>
             </div>
 

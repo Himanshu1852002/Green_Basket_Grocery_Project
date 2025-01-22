@@ -6,8 +6,9 @@ const About = () => {
         <>
             <div className="container-fluid about_container">
                 <div className="row about_row_1">
-                    <div className="col-12 d-flex justify-content-center align-items-center">
-                        <h1 className='fw-bold fs-1'>ABOUT US</h1>
+                    <div className="col-12 d-flex justify-content-center flex-column align-items-center">
+                        <p>Home &gt; About us</p>
+                        <h1 className='fw-bold'>ABOUT US</h1>
                     </div>
                 </div>
                 <div className="row about_row_2 ">

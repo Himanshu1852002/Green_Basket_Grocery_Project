@@ -28,9 +28,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #fff;
     padding: 1rem;
-    background-color: #2f353d;
+    color: #fff;
+    background-color: #263d2f;
     border-bottom: 1px solid #ddd;
     height: 88px;
 }
@@ -67,7 +67,8 @@
     background-color: none;
     border: none;
 }
-.remove-item-btn:hover{
+
+.remove-item-btn:hover {
     border: 1px solid green;
 }
 
@@ -81,7 +82,8 @@
     background-color: green;
     color: white;
 }
-.cart-footer .footer-btn:hover{
+
+.cart-footer .footer-btn:hover {
     border: 1px solid green;
     background-color: transparent;
     color: black;

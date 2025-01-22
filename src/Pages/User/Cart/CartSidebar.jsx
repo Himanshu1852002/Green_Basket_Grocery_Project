@@ -72,7 +72,7 @@ const CartSidebar = ({ show, onClose }) => {
                 {isCartEmpty ? (
                     <div className="mt-5 d-flex justify-content-center align-items-center flex-column">
                         <p className="fs-5 fw-bold">Your cart is empty!</p>
-                        <Link to="/fruits" className="btn-success btn" onClick={onClose}>
+                        <Link to="/user/fruits" className="btn-success btn" onClick={onClose}>
                             Continue Shopping
                         </Link>
                     </div>

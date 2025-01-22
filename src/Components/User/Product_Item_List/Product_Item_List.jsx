@@ -23,6 +23,7 @@ const Product_Item_List = ({ items = [] }) => {
                                 price={item.price}
                                 image={imageUrl}
                                 unit={item.unit}
+                                description={item.description}
                             />
                         );
                     })}

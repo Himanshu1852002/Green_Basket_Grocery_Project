@@ -2,7 +2,7 @@
     text-align: center;
     color: rgb(46, 46, 46);
     font-weight: bold;
-    margin-top: 100px;
+    margin-top: 80px;
     margin-bottom: 50px;
 }
 
@@ -72,6 +72,7 @@
 /* Pagination Dots */
 .slick-dots {
     margin-top: 20px;
+    margin-bottom: 20px;
     display: flex !important;
     justify-content: center;
     align-items: center;

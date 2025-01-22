@@ -54,7 +54,6 @@ const Featured_Product = () => {
         { imgSrc: termaric_img, title: "Termaric", description: "Turmeric, often referred to as 'golden spice,' is celebrated for its powerful anti-inflammatory and antioxidant properties. Used in cooking, medicine, and beauty treatments, turmeric adds a warm, earthy flavor to dishes and supports overall health. Its active compound, curcumin, is believed to promote healthy digestion, improve skin health, and boost immunity." },
         { imgSrc: rice_img, title: "Rice", description: "Rice is a staple food in many cultures around the world. Packed with carbohydrates, it provides a quick energy boost. Whether white, brown, or wild, rice is a versatile ingredient used in countless dishes. Brown rice, in particular, offers more fiber and nutrients, making it a healthier option for those looking to maintain a balanced diet." }
     ];
-
     const handleSeeMore = (card) => {
         setPopupData(card);
     }
@@ -62,7 +61,6 @@ const Featured_Product = () => {
         setPopupData(null);
     }
 
-    
 
     return (
         <div className="feature_product container my-5">
@@ -86,10 +84,8 @@ const Featured_Product = () => {
             {popupData && (
                 <div className="popup-overlay">
                     <div className="popup-content row">
-                        {/* Close Button */}
                         <button className="btn-close" aria-label="Close" onClick={closePopup}></button>
                         <div className="popup-left">
-                            {/* Main Image */}
                             <img className='main_img' src={popupData.imgSrc} alt={`${popupData.title} Main`} />
                             <div className="collage-row">
                                 <img src={popupData.imgSrc} alt={`${popupData.title} Collage 1`} />

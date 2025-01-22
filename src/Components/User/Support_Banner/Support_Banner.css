@@ -64,6 +64,9 @@
      .card-create .card-ico {
          font-size: 3rem;
      }
+     .body-card{
+        text-align: center;
+     }
      .body-card h2{
         font-size: 1.2rem;
      }

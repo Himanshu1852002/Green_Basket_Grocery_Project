@@ -83,7 +83,8 @@ const Wishlist = () => {
                                             <RxCross2
                                                 onClick={() => removeWish(item._id)}
                                                 size={25}
-                                                className="text-danger cursor-pointer"
+                                                className="text-danger"
+                                                style={{cursor:'pointer'}}
                                             />
                                         </div>
                                         <div className="card-body d-flex flex-column justify-content-center align-items-center">
@@ -92,7 +93,7 @@ const Wishlist = () => {
                                                 &#8377;{item.price || 'N/A'} - {item.unit || 'N/A'}
                                             </p>
                                             <button
-                                                className="btn mt-auto w-100"
+                                                className="btn btn-success mt-auto w-100"
                                                 onClick={() => handleAddToCart(item._id)}
                                             >
                                                 Add to Cart

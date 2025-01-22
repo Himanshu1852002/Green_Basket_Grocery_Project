@@ -23,9 +23,9 @@ const SearchResults = () => {
                 .then((response) => {
                     console.log('API Response:', response.data);
                     if (response.data && Array.isArray(response.data.results)) {
-                        setResults(response.data.results); 
+                        setResults(response.data.results);
                     } else {
-                        setResults([]); 
+                        setResults([]);
                     }
                     setLoading(false);
                 })
@@ -91,8 +91,8 @@ const SearchResults = () => {
                                     </span>
                                     <div className="card-body product_card_body">
                                         <h5 className="card-title">{product.name}</h5>
-                                        <p className="card-text">&#8377;{product.price} /{product.unit}</p>
-                                        <button className="btn" onClick={() => handleAddToCart(product._id)}>
+                                        <p className="card-text"><del className="text-muted">&#8377;{product.price}</del>-&#8377;{product.sellingPrice} /{product.unit}</p>
+                                        <button className="btn btn-success" onClick={() => handleAddToCart(product._id)}>
                                             Add to cart
                                         </button>
                                     </div>

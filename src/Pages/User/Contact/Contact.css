@@ -3,8 +3,10 @@
 }
 
 .contact_row_1 {
-    height: 180px;
-    background-image: linear-gradient(to top, #1A5319, #508D4E, #80AF81, #D6EFD8);
+    height: 160px;
+    color: #fff;
+    background-color: #263d2f;
+    margin-bottom: 20px;
 }
 
 .contact_row_2 {
@@ -61,7 +63,7 @@
     font-weight: 500;
 }
 
-.contact-form-col{
+.contact-form-col {
     height: 400px;
 }
 
@@ -78,10 +80,11 @@
     padding: 10px;
     width: 450px;
 }
-.contact-form button{
+
+.contact-form button {
     cursor: pointer;
     height: 35px;
-    border-radius:20px;
+    border-radius: 20px;
     background-color: green;
     color: #fff;
 }
