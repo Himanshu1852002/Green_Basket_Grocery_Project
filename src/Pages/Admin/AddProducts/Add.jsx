@@ -1,5 +1,5 @@
 import './Add.css';
-// import upload_img from '../../../assets/Images/Images/upload_img';
+import upload_img from '../../../assets/Images/Images/upload_area.png';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import axios from 'axios';
@@ -63,7 +63,7 @@ const Add = ({ url }) => {
                     <label htmlFor="image" className="add-img-upload">
                         <img
                             className="w-100 h-auto"
-                            src={image ? URL.createObjectURL(image) : "upload_img"}
+                            src={image ? URL.createObjectURL(image) : upload_img}
                             alt="Upload"
                         />
                     </label>

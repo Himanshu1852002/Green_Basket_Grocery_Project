@@ -36,6 +36,7 @@ a {
 
 .sidebar-option {
     color: #fff0ed;
+    text-decoration: none;
 }
 
 .sidebar-option:hover {

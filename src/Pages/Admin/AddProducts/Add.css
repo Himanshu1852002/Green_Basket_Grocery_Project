@@ -35,3 +35,9 @@
 .add button:hover {
     background-color: #218838;
 }
+
+.add input:focus,
+.add select:focus{
+    border-color: #218838;
+}
+

@@ -3,9 +3,10 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    margin-left: 100px;
 }
 
-.list-product-card{
+.list-product-card {
     width: 100%;
     max-width: 800px;
     margin-bottom: 20px;
@@ -33,4 +34,11 @@
 
 .text-success {
     color: #198754 !important;
+}
+
+@media (max-width:576px) {
+    .product-list {
+       
+        margin-left: 10px;
+    }
 }

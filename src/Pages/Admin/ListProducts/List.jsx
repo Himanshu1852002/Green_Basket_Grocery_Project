@@ -4,11 +4,15 @@ import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { MdDeleteForever } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
 import { Button } from 'react-bootstrap';
 
 const List = ({ url }) => {
     const [list, setList] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
+    const [editingProduct, setEditingProduct] = useState(null);
+    const [updatedProduct, setUpdatedProduct] = useState({});
+    const [newImage, setNewImage] = useState(null);
 
     const fetchList = async () => {
         const response = await axios.get(`${url}/api/product/list?category=${selectedCategory}`);
@@ -29,8 +33,54 @@ const List = ({ url }) => {
         }
     };
 
-    const handleEdit = (productId) => {
-        toast.info(`Edit item with ID: ${productId}`);
+    const startEditing = (product) => {
+        setEditingProduct(product._id);
+        setUpdatedProduct(product);
+        setNewImage(null);
+    };
+
+    const handleUpdateChange = (e) => {
+        const { name, value } = e.target;
+        setUpdatedProduct({ ...updatedProduct, [name]: value });
+    };
+
+    const handleImageChange = (e) => {
+        setNewImage(e.target.files[0]);
+    };
+
+    const updateProduct = async () => {
+        const formData = new FormData();
+        formData.append('id', updatedProduct._id);
+        formData.append('name', updatedProduct.name);
+        formData.append('price', updatedProduct.price);
+        formData.append('sellingPrice', updatedProduct.sellingPrice);
+        formData.append('quantity', updatedProduct.quantity);
+        formData.append('category', updatedProduct.category);
+        if (newImage) {
+            formData.append('image', newImage); 
+        }
+
+        try {
+            const response = await axios.post(`${url}/api/product/update`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            if (response.data.success) {
+                toast.success("Product updated successfully!");
+                setEditingProduct(null);
+                fetchList();
+            } else {
+                toast.error("Error updating product");
+            }
+        } catch (error) {
+            toast.error("Error updating product");
+            console.log(error)
+        }
+    };
+
+    const cancelEditing = () => {
+        setEditingProduct(null);
     };
 
     useEffect(() => {
@@ -38,11 +88,11 @@ const List = ({ url }) => {
     }, [selectedCategory]);
 
     return (
-        <div className="list-container mt-5 container">
-            <h1 className="text-center text-muted mt-5 mb-4">All Products List</h1>
-            <div className="mb-4 text-center">
+        <div className="list-container mt-5 ms-5 container-fluid">
+            <h1 className="text-center text-muted mt-5 ms-5 mb-4">All Products List</h1>
+            <div className="mb-4 ms-5 text-center">
                 <select
-                    className="form-select w-50 mx-auto"
+                    className="form-select w-25 mx-auto"
                     name="category"
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
@@ -58,8 +108,8 @@ const List = ({ url }) => {
             </div>
 
             <div className="product-list">
-                {list.map((item, index) => (
-                    <div key={index} className="list-product-card mb-3">
+                {list.map((item) => (
+                    <div key={item._id} className="list-product-card mb-3">
                         <div className="list-card d-flex flex-row align-items-center p-3 shadow-sm">
                             <img
                                 src={`${url}/uploads/${item.image}`}
@@ -84,24 +134,85 @@ const List = ({ url }) => {
                                 <Button
                                     variant="primary"
                                     size="sm"
-                                    className="me-2"
-                                    onClick={() => handleEdit(item._id)}
+                                    className="me-2 mb-1 mb-sm-0 btn-success"
+                                    onClick={() => startEditing(item)}
                                 >
-                                    Edit
+                                    <FaEdit size={16}/>
                                 </Button>
                                 <Button
                                     variant="danger"
                                     size="sm"
                                     onClick={() => removeProduct(item._id)}
                                 >
-                                    <MdDeleteForever size={16} /> Delete
+                                    <MdDeleteForever size={16} />
                                 </Button>
                             </div>
                         </div>
+
+                        {/* Popup for editing */}
+                        {editingProduct === item._id && (
+                            <div className="edit-popup p-3 mt-3 border rounded bg-light">
+                                <div className="mb-3">
+                                    <label className="form-label">Name</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        name="name"
+                                        value={updatedProduct.name}
+                                        onChange={handleUpdateChange}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Price</label>
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        name="price"
+                                        value={updatedProduct.price}
+                                        onChange={handleUpdateChange}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Selling Price</label>
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        name="sellingPrice"
+                                        value={updatedProduct.sellingPrice}
+                                        onChange={handleUpdateChange}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Quantity</label>
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        name="quantity"
+                                        value={updatedProduct.quantity}
+                                        onChange={handleUpdateChange}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Image</label>
+                                    <input
+                                        type="file"
+                                        className="form-control"
+                                        onChange={handleImageChange}
+                                    />
+                                </div>
+                                <div className="d-flex justify-content-between">
+                                    <Button variant="success" onClick={updateProduct}>
+                                        Save Changes
+                                    </Button>
+                                    <Button variant="secondary" onClick={cancelEditing}>
+                                        Cancel
+                                    </Button>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>
-
         </div>
     );
 };
