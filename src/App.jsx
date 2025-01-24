@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Home from './Pages/User/Home/Home';
 import UserRoutes from './Routes/UserRoutes';
-import AdminRoutes from './Routes/AdminRoutes';
+import AdminRoutes from './Routes/Admin/AdminRoutes';
 import LoginPopup from './Components/User/Login_PopUp/LoginPopup';
 import Navbar from './Components/User/Navbar/Navbar';
 import AdminProtectedRoutes from './Shared/AdminProtectedRoutes';
@@ -15,7 +15,7 @@ const App = () => {
     document.body.style.overflow = showLogin ? 'hidden' : 'auto';
   }, [showLogin]);
 
- 
+
   const getRoutes = () => {
     if (role === 'admin') {
       return (
@@ -32,7 +32,7 @@ const App = () => {
       return (
         <Route
           path="/user/*"
-          element={<UserRoutes />} 
+          element={<UserRoutes />}
         />
       );
     }

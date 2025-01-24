@@ -1,5 +1,5 @@
 import './Sidebar.css'
-import { MdLibraryAdd } from "react-icons/md";
+import { MdLibraryAdd, MdDashboardCustomize } from "react-icons/md";
 import { FaListAlt } from "react-icons/fa";
 import { AiFillProduct } from "react-icons/ai";
 import { Link } from 'react-router-dom'
@@ -8,6 +8,10 @@ const Sidebar = () => {
     return (
         <div className='sidebar position-fixed'>
             <div className="sidebar-options">
+                <Link to='/admin/dashboard' className="sidebar-option">
+                    <MdDashboardCustomize size={25} />
+                    <span className='d-none d-md-flex'>Dashboard</span>
+                </Link>
                 <Link to='/admin/add' className="sidebar-option">
                     <MdLibraryAdd size={25} />
                     <span className='d-none d-md-flex'> Add Items</span>
@@ -26,3 +30,4 @@ const Sidebar = () => {
 }
 
 export default Sidebar
+

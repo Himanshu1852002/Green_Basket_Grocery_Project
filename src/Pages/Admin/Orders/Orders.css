@@ -1,7 +1,4 @@
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
+
 
 .order-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;

@@ -1,0 +1,18 @@
+.card {
+    border-radius: 10px;
+}
+
+.card-title {
+    font-weight: bold;
+    color: #333;
+}
+
+.card-text {
+    font-size: 1.5rem;
+    color: #007bff;
+}
+
+h1,
+h3 {
+    color: #333;
+}

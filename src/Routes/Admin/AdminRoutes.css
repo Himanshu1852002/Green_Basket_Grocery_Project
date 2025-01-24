@@ -1,0 +1,50 @@
+/* AdminRoutes.css */
+.admin-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.admin-layout .display-flex {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+.admin-layout .display-flex .admin-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    margin-left: 100px;
+    background-color: #f8f9fa;
+}
+
+.admin-layout .display-flex .admin-sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    background-color: #343a40;
+    color: #fff;
+    height: 100%;
+    position: sticky;
+    top: 0;
+}
+
+@media (max-width:1200px) {
+    .admin-layout .display-flex .admin-content {
+        margin-left: 80px;
+        padding: 15px;
+    }
+}
+
+
+@media (max-width:767px) {
+    .admin-layout .display-flex .admin-content {
+        margin-left: 80px;
+    }
+}
+
+@media (max-width:576px) {
+    .admin-layout .display-flex .admin-content {
+        margin-left: 30px;
+    }
+}

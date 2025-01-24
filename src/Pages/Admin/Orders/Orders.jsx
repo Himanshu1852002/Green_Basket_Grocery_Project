@@ -31,7 +31,7 @@ const Orders = () => {
     }, []);
 
     return (
-        <div className="container-fluid d-flex justify-content-center align-items-center flex-column mt-5 my-5" style={{ paddingLeft: "100px" }}>
+        <div className="container d-flex justify-content-center align-items-center flex-column mt-5 my-5">
             <h1 className="text-center text-muted mt-5 mb-4">All Orders</h1>
             <div className="row w-75">
                 {orders.map((order) => (

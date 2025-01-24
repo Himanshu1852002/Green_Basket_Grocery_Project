@@ -55,10 +55,9 @@ const Add = ({ url }) => {
     };
 
     return (
-        <div className="container-fluid mt-5 d-flex justify-content-center align-items-center flex-column add">
-            <h1 className='mt-5 text-center'>Add Products</h1>
-            <form className="row w-lg-75 w-50 g-4" onSubmit={onSubmitHandler}>
-                {/* Image Upload */}
+        <div className="container mt-5 d-flex justify-content-center align-items-center flex-column add-item">
+            <h1 className='add-text mt-5 text-center'>Add Products</h1>
+            <form className="row w-75 g-4" onSubmit={onSubmitHandler}>
                 <div className="col-md-3 text-center">
                     <label htmlFor="image" className="add-img-upload">
                         <img
@@ -197,3 +196,4 @@ Add.propTypes = {
 };
 
 export default Add;
+

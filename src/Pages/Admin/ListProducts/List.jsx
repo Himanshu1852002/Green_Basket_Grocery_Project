@@ -88,9 +88,9 @@ const List = ({ url }) => {
     }, [selectedCategory]);
 
     return (
-        <div className="list-container mt-5 ms-5 container-fluid">
-            <h1 className="text-center text-muted mt-5 ms-5 mb-4">All Products List</h1>
-            <div className="mb-4 ms-5 text-center">
+        <div className="mt-5 pt-2 container">
+            <h1 className="text-center text-muted mb-4 mt-5">All Products List</h1>
+            <div className="mb-4 text-center">
                 <select
                     className="form-select w-25 mx-auto"
                     name="category"
@@ -222,3 +222,5 @@ List.propTypes = {
 };
 
 export default List;
+
+

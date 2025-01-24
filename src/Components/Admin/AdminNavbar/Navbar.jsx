@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'; // To handle redirection
+import { useNavigate } from 'react-router-dom';
 import logo from '../../../assets/Images/Images/logo_ai.png';
 import { FaUserCircle } from 'react-icons/fa';
 import './Navbar.css';
