@@ -19,9 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ScrollToTop from '../Pages/User/ScrollToTop/ScrollToTop';
 import Home from '../Pages/User/Home/Home';
 
-
 const UserRoutes = () => {
-
   return (
     <>
       <div>

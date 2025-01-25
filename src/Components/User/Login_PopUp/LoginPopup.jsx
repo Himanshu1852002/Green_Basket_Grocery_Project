@@ -70,10 +70,10 @@ const LoginPopup = ({ setShowLogin }) => {
                     toast.info('Login Successfully', { autoClose: 1000 });
 
                     if (role === 'admin') {
-                        navigate('/admin/*')
+                        navigate('/admin')
                     }
                     else if (role === 'user') {
-                        navigate('/user/*')
+                        navigate('/user')
                     }
 
                 }

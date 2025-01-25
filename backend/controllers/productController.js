@@ -98,5 +98,16 @@ const updateProduct = async (req, res) => {
     }
 };
 
+const productCount = async (req, res) => {
+    try {
+        const count = await productModel.countDocuments();
+        res.status(200).json({ success: true, count });
+    } catch (error) {
+        console.error('Error fetching product count:', error);
+        res.status(500).json({ success: false, message: 'Error fetching product count' });
+    }
+};
 
-export { addProduct, listProduct, removeProduct, updateProduct }
+
+
+export { addProduct, listProduct, removeProduct, updateProduct, productCount }

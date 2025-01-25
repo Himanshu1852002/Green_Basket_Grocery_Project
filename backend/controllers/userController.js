@@ -116,7 +116,7 @@ const registerUser = async (req, res) => {
         if (password.length < 8) {
             return res.json({ success: false, message: 'Please Enter Strong password' });
         }
-        
+
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -195,7 +195,7 @@ const verifyOtp = async (req, res) => {
                 name: user.name,
                 email: user.email,
                 userId: user._id,
-                role:'user'
+                role: 'user'
             },
         });
     } catch (error) {
@@ -204,5 +204,16 @@ const verifyOtp = async (req, res) => {
     }
 };
 
+// Get user count based on role
+const getUserCount = async (req, res) => {
+    try {
+        const userCount = await userModel.countDocuments({ role: 'user' });
+        res.status(200).json({ success: true, count: userCount });
+    } catch (error) {
+        console.error('Error fetching user count:', error);
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
 
-export { loginUser, registerUser, verifyOtp };
+
+export { loginUser, registerUser, verifyOtp, getUserCount };

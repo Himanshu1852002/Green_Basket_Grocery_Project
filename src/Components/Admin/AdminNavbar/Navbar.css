@@ -9,7 +9,7 @@
 
 
 @media (max-width: 768px) {
-    .navbar {
+    .admin-navbar {
         height: 60px;
         padding: 0 10px;
     }

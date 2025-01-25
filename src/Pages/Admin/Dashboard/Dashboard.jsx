@@ -1,8 +1,13 @@
 import { Bar } from "react-chartjs-2";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FaUserAlt, FaBox, FaCartPlus } from "react-icons/fa"; // Importing icons
+import user_svg from '../../../assets/Images/Images/user_svg.svg'
+import product_svg from '../../../assets/Images/Images/product_svg.svg'
+import order_svg from '../../../assets/Images/Images/order_svg.svg'
+import { useEffect } from "react";
+import './Dashboard.css';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserCount, fetchProductCount, fetchOrderCount } from '../../../Store/adminDashSlice'; // Path to your slice
 
-// Import Chart.js and required components
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -13,14 +18,20 @@ import {
     Legend,
 } from "chart.js";
 
-// Register the components with Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const Dashboard = () => {
-    // Dummy data (Replace this with your API data)
-    const totalUsers = 120;
-    const totalProducts = 50;
-    const totalOrders = 300;
+    const dispatch = useDispatch();
+    const { userCount, productCount, orderCount, status } = useSelector((state) => state.dashboard);
+
+    useEffect(() => {
+        if (status === 'idle') {
+            dispatch(fetchUserCount());
+            dispatch(fetchProductCount());
+            dispatch(fetchOrderCount());
+        }
+    }, [dispatch, status]);
+
     // Chart Data
     const chartData = {
         labels: ["January", "February", "March", "April", "May", "June"],
@@ -53,44 +64,52 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="container mt-5 pt-5">
+        <div className="container mt-5 pt-5 d-flex justify-content-center align-items-center flex-column">
             <h1 className="text-center mb-4">Admin Dashboard</h1>
 
             {/* Cards Section */}
-            <div className="row">
-                <div className="col-md-4 col-sm-6 mb-4">
-                    <div className="card shadow text-center" style={{ background: "linear-gradient(135deg, #28a745, #ff7f00)" }}>
-                        <div className="card-body">
-                            <FaUserAlt size={40} color="white" />
-                            <h5 className="card-title text-white">Total Users</h5>
-                            <p className="card-text fs-3 text-white">{totalUsers}</p>
+            <div className="row dashboard-row w-100 justify-content-center align-items-center">
+                <div className="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                    <div className="dashboard-card card shadow text-center">
+                        <div className="card-body d-flex justify-content-center flex-column align-items-center">
+                            <div className="w-75 h-75">
+                                <img className="w-75 h-75" src={user_svg} />
+                            </div>
+                            <h5 className="card-title text-black">Total Users</h5>
+                            <p className="card-text fs-4 text-black">{userCount}</p>
                         </div>
                     </div>
                 </div>
-                <div className="col-md-4 col-sm-6 mb-4">
-                    <div className="card shadow text-center" style={{ background: "linear-gradient(135deg, #ff7f00, #28a745)" }}>
-                        <div className="card-body">
-                            <FaBox size={40} color="white" />
-                            <h5 className="card-title text-white">Total Products</h5>
-                            <p className="card-text fs-3 text-white">{totalProducts}</p>
+                <div className="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                    <div className="dashboard-card card shadow text-center">
+                        <div className="card-body d-flex justify-content-center flex-column align-items-center">
+                            <div className="w-75 h-75">
+                                <img className="w-75 h-75 mb-2" src={product_svg} alt="" />
+                            </div>
+
+                            <h5 className="card-title text-black">Total Products</h5>
+                            <p className="card-text fs-4 text-black">{productCount}</p>
                         </div>
                     </div>
                 </div>
-                <div className="col-md-4 col-sm-6 mb-4">
-                    <div className="card shadow text-center" style={{ background: "linear-gradient(135deg, #28a745, #ff7f00)" }}>
-                        <div className="card-body">
-                            <FaCartPlus size={40} color="white" />
-                            <h5 className="card-title text-white">Total Orders</h5>
-                            <p className="card-text fs-3 text-white">{totalOrders}</p>
+                <div className="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                    <div className="dashboard-card card shadow text-center">
+                        <div className="card-body d-flex justify-content-center flex-column align-items-center">
+                            <div className="w-75 h-75">
+                                <img className="w-75 h-75" src={order_svg} alt="" />
+                            </div>
+
+                            <h5 className="card-title text-black">Total Orders</h5>
+                            <p className="card-text fs-4 text-black">{orderCount}</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             {/* Chart Section */}
-            <div className="mt-5">
+            <div className="mt-5 d-flex justify-content-center align-items-center flex-column w-100">
                 <h3 className="text-center mb-4">Sales and Revenue Chart</h3>
-                <div style={{ height: "400px" }}>
+                <div className="chart-container">
                     <Bar data={chartData} options={chartOptions} />
                 </div>
             </div>

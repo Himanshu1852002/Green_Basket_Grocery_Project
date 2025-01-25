@@ -1,5 +1,13 @@
-.card {
+.dashboard-card {
     border-radius: 10px;
+    width: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.dashboard-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .card-title {
@@ -8,11 +16,40 @@
 }
 
 .card-text {
-    font-size: 1.5rem;
-    color: #007bff;
+    font-size: 1rem;
+    color: black;
 }
 
 h1,
 h3 {
     color: #333;
+}
+
+.chart-container {
+    height: 400px;
+    width: 100%;
+    /* Full width */
+    max-width: 800px;
+    /* Max width for larger screens */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .chart-container {
+        height: 300px;
+    }
+}
+
+@media (max-width: 576px) {
+    .chart-container {
+        height: 250px;
+    }
+
+    .dashboard-row {
+        margin-left: 50px;
+    }
+
+    .dashboard-card {
+        width: 80%;
+    }
 }

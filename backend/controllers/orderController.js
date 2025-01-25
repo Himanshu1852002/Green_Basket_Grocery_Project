@@ -144,4 +144,21 @@ const updateStatus = async (req, res) => {
     }
 }
 
-export { createOrder, verifyOrder, userOrders, fetchAllOrders, updateStatus }
+const orderCount = async (req, res) => {
+    try {
+        const totalOrders = await orderModel.countDocuments();
+
+        return res.status(200).json({
+            success: true,
+            totalOrders,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Server Error",
+            error,
+        });
+    }
+};
+
+export { createOrder, verifyOrder, userOrders, fetchAllOrders, updateStatus, orderCount }
