@@ -143,7 +143,7 @@ const Checkout = () => {
     }, [dispatch, totalCartAmount,]);
 
     return (
-        <div className="container checkout-container" style={{marginTop:'140px',padding:'50px 0px 50px 0px'}}>
+        <div className="container checkout-container" style={{padding:'50px 0px 50px 0px'}}>
             <div className="row checkout-row">
                 <div className="col-lg-6 address-col">
                     <h2 className="fw-bold mb-3">Delivery Information</h2>

@@ -5,7 +5,6 @@
 }
 
 .banner {
-    margin-top: 88px;
     background-color: #4f743d;
 }
 
@@ -102,9 +101,7 @@
         width: 140px;
         font-size: 0.9rem;
     }
-    .banner{
-        margin-top: 73px;
-    }
+    
 
     .first-col {
         padding-top: 25px;

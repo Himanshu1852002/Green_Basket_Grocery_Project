@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const Banners = ({ title1, title2, heading, item_img, backgroundColor }) => {
 
     return (
-        <div className="container-fluid" style={{marginTop:'70px'}}>
+        <div className="container-fluid">
             <div className="row banner_row" style={{background:backgroundColor}}>
                 <div className="col-lg-6 col-md-6 col-sm-6 d-flex justify-content-center align-items-start flex-column banner_text">
                     <h1 className="first_text ms-3">{title1}</h1>

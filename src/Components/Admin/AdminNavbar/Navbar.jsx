@@ -11,8 +11,8 @@ const Navbar = () => {
         localStorage.removeItem('role');
         localStorage.removeItem('userId')
         alert('Admin Logout Successfully');
-        window.location.reload();
         navigate('/');
+        window.location.reload();
     };
 
     return (

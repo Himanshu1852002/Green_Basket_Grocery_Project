@@ -9,8 +9,8 @@ const Contact = () => {
             <div className="container-fluid contact_container">
                 <div className="row contact_row_1">
                     <div className="col-12 d-flex justify-content-center flex-column align-items-center contact_heading">
-                        <p>Home &gt; Contact</p>
-                        <h1 className="fw-bold">CONTACT US</h1>
+                        <p className='text-white'>Home &gt; Contact</p>
+                        <h1 className="fw-bold text-white">CONTACT US</h1>
                     </div>
                 </div>
 

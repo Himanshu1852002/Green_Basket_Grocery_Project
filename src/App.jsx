@@ -8,6 +8,7 @@ import Navbar from './Components/User/Navbar/Navbar';
 import AdminProtectedRoutes from './Shared/AdminProtectedRoutes';
 
 const App = () => {
+
   const [showLogin, setShowLogin] = useState(false);
   const role = localStorage.getItem('role');
 

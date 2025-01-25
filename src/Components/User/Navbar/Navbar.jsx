@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FaSearch, FaUser } from "react-icons/fa";
-import { SlHandbag } from "react-icons/sl";
-
+import { FaUser, FaBars, FaTimes } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
+import { SlHandbag } from "react-icons/sl";
 import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { clearWishlistData, clearWishToken } from '../../../Store/wishlistSlice';
@@ -13,14 +12,16 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import CartSidebar from "../../../Pages/User/Cart/CartSidebar";
 import logo from '../../../assets/Images/Images/logo_ai.png';
+import { FaSearch } from "react-icons/fa";
 import './Navbar.css';
 
 const Navbar = ({ setShowLogin }) => {
-    const [showSearch, setShowSearch] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
+    const [showCartSidebar, setShowCartSidebar] = useState(false);
+    const [isNavCollapsed, setIsNavCollapsed] = useState(true);
     const [query, setQuery] = useState("");
     const [placeholder, setPlaceholder] = useState("Search for products...");
-    const [showCartSidebar, setShowCartSidebar] = useState(false);
+
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -28,24 +29,6 @@ const Navbar = ({ setShowLogin }) => {
     const wishlist = useSelector((state) => state.wishlist.items);
     const cartItems = useSelector((state) => state.cart.cartItems);
     const token = localStorage.getItem("token");
-
-    const placeholderTexts = [
-        "Search for fruits...",
-        "Search for vegetables...",
-        "Search for snacks...",
-        "Search for grocery...",
-        "Search for coldrinks...",
-        "Search for chocolates...",
-    ];
-
-    const handleSearch = () => {
-        if (query.trim()) {
-            navigate(`/user/search?q=${query}`);
-        }
-        else {
-            navigate('/');
-        }
-    };
 
     const wishlistCount = Array.isArray(wishlist) ? wishlist.length : Object.keys(wishlist).length;
     const cartItemCount = Array.isArray(cartItems)
@@ -62,10 +45,36 @@ const Navbar = ({ setShowLogin }) => {
         dispatch(clearWishToken())
         dispatch(clearWishlistData());
         localStorage.removeItem("token");
-        localStorage.removeItem("role")
-        localStorage.removeItem("userId")
+        localStorage.removeItem("role");
+        localStorage.removeItem("userId");
         navigate('/');
-    }
+    };
+
+    const handleNavCollapse = () => {
+        setIsNavCollapsed((prevState) => !prevState);
+    };
+
+    
+    const placeholderTexts = [
+        "Search for fruits...",
+        "Search for vegetables...",
+        "Search for snacks...",
+        "Search for grocery...",
+        "Search for coldrinks...",
+        "Search for chocolates...",
+    ];
+
+    const handleSearch = () => {
+        if (query.trim()) {
+            navigate(`/user/search?q=${query}`);
+        }
+    };
+
+    useEffect(() => {
+        if (query.trim()) {
+            handleSearch();
+        }
+    }, [query]);
 
     useEffect(() => {
         let index = 0;
@@ -77,51 +86,61 @@ const Navbar = ({ setShowLogin }) => {
         return () => clearInterval(interval);
     }, []);
 
-    useEffect(() => {
-        // Redirect to home if the input field is cleared
-        if (!query.trim()) {
-            navigate('/');
-        }
-    }, [query]);
-
     return (
-        <nav className="navbar navbar-box navbar-light bg-light">
-            <div className="container px-3 d-flex justify-content-between align-items-center" >
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <div className="container px-3 d-flex justify-content-between align-items-center">
                 {/* Logo */}
-                <Link to="/">
-                    <img className="nav-logo" src={logo} />
+                <Link to="/" className="navbar-brand">
+                    <img className="nav-logo" src={logo} alt="Brand Logo" />
                 </Link>
-
-                {/* Search Bar */}
-                <div className="d-none d-md-flex w-50 position-relative">
-                    <FaSearch
-                        className="icon-input ms-2 mt-2 position-absolute top-0 start-0"
-                        size={20}
-                    />
+                <div className="input-group  w-50 mx-auto d-flex d-lg-none">
+                    <span className="input-group-text">
+                        <FaSearch size={20} />
+                    </span>
                     <input
-                        type="text" value={query}
+                        type="text"
+                        className="form-control search-input"
+                        value={query}
                         onChange={(e) => setQuery(e.target.value)}
-                        className="form-control search-input ps-5"
                         placeholder={placeholder}
-                        onChangeCapture={handleSearch}
-
+                        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                     />
                 </div>
-                <div className="d-flex justify-content-center align-items-center gap-2">
-                    <div className="d-flex d-md-none align-items-center">
-                        <FaSearch
-                            className="icon me-2"
-                            size={23}
-                            style={{ cursor: "pointer" }}
-                            onClick={() => setShowSearch(!showSearch)}
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    aria-expanded={!isNavCollapsed}
+                    aria-label="Toggle navigation"
+                    onClick={handleNavCollapse}
+                >
+                    {isNavCollapsed ? <FaBars /> : <FaTimes />}
+                </button>
+
+                {/* Collapsible Content */}
+                <div
+                    className={`collapse navbar-collapse ${isNavCollapsed ? "" : "show"}`}
+                    id="navbarContent"
+                >
+                
+                    <div className="input-group w-50 mx-auto d-none d-lg-flex">
+                        <span className="input-group-text">
+                            <FaSearch size={20} />
+                        </span>
+                        <input
+                            type="text"
+                            className="form-control search-input"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            placeholder={placeholder}
+                            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                         />
                     </div>
 
-                    {/* Right Icons */}
-                    <div className="d-flex align-items-center gap-4">
+                    {/* Wishlist, Cart, and Login */}
+                    <div className="d-flex align-items-center flex-column flex-lg-row gap-3">
                         <div className="position-relative">
                             <Link to={'/user/wishlist'}>
-                                <FaRegHeart className="icon" size={23} style={{ cursor: "pointer" }} />
+                                <FaRegHeart className="icon" size={23} />
                             </Link>
                             {wishlistCount > 0 && (
                                 <span
@@ -134,7 +153,7 @@ const Navbar = ({ setShowLogin }) => {
                                         display: 'flex',
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                    }}>
+                                    }} >
                                     {wishlistCount}
                                 </span>
                             )}
@@ -152,7 +171,7 @@ const Navbar = ({ setShowLogin }) => {
                                         display: 'flex',
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                    }}>
+                                    }} >
                                     {cartItemCount}
                                 </span>
                             )}
@@ -202,15 +221,6 @@ const Navbar = ({ setShowLogin }) => {
                     </div>
                 </div>
             </div>
-            {showSearch && (
-                <div className="container mt-2 d-md-none">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Search for products..."
-                    />
-                </div>
-            )}
         </nav>
     );
 };

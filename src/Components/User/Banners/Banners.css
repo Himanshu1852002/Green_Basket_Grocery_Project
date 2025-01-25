@@ -2,10 +2,8 @@
  @import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Ribeye&display=swap');
 
  .banner_row {
-     margin-top: 70px;
      margin-bottom: 45px;
      height: 390px;
-     
  }
 
  .banner_text .first_text {
@@ -63,7 +61,6 @@
 
  @media (max-width:1200px) {
      .banner_row {
-         margin-top: 70px;
          height: 350px;
      }
 
@@ -121,7 +118,6 @@
 
  @media (max-width:767px) {
      .banner_row {
-         margin-top: 70px;
          height: 300px;
          padding-top: 20px;
      }
@@ -157,7 +153,6 @@
 
  @media (max-width:576px) {
      .banner_row {
-         margin-top: 70px;
          height: 540px;
          padding-top: 20px;
      }

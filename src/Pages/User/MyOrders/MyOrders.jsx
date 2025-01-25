@@ -14,10 +14,10 @@ const OrderDetails = () => {
 
     return (
         <>
-            <div className="container-fluid py-3" style={{ marginTop: '88px', backgroundColor:'#263d2f',color:'#fff'}}>
+            <div className="container-fluid py-3" style={{ backgroundColor: '#263d2f', color: '#fff' }}>
                 <div className="d-flex justify-content-center align-items-center flex-column">
                     <p className="text-white">Home &gt; My Orders</p>
-                    <h1 className="text-center fw-bold">My Orders</h1>
+                    <h1 className="text-center text-white fw-bold">My Orders</h1>
                 </div>
             </div>
 

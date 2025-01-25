@@ -47,7 +47,7 @@ const Wishlist = () => {
     };
 
     return (
-        <div className="container-fluid" style={{ marginTop: "88px" }}>
+        <div className="container-fluid">
             {/* Header Section */}
             <div className="row d-flex justify-content-center align-items-center pt-3 pb-3" style={{ backgroundColor:'#263d2f'}}>
                 <div className="col-12 d-flex justify-content-center align-items-center flex-column">
