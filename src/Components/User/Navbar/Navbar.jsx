@@ -137,7 +137,7 @@ const Navbar = ({ setShowLogin }) => {
                     </div>
 
                     {/* Wishlist, Cart, and Login */}
-                    <div className="d-flex align-items-center flex-column flex-lg-row gap-3">
+                    <div className="d-flex align-items-center flex-column flex-lg-row gap-4">
                         <div className="position-relative">
                             <Link to={'/user/wishlist'}>
                                 <FaRegHeart className="icon" size={23} />
