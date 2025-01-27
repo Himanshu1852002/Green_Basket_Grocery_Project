@@ -14,17 +14,22 @@ const Orders = () => {
             .catch((error) => {
                 console.error("Error fetching orders:", error);
             });
-    }
+    };
 
     const statusHandler = async (event, orderId) => {
+        const newStatus = event.target.value;
+
         const response = await axios.post(`${url}/api/orders/updateStatus`, {
             orderId,
-            orderStatus: event.target.value
-        })
+            orderStatus: newStatus,
+            cancelReason: newStatus === "Cancelled" ? "Corrupt Order" : "",
+            cancelledBy: newStatus === "Cancelled" ? "Admin" : "",
+        });
+
         if (response.data.success) {
             await fetchAllOrders();
         }
-    }
+    };
 
     useEffect(() => {
         fetchAllOrders();
@@ -48,7 +53,7 @@ const Orders = () => {
                                     </span>
                                 </h6>
                                 <h6 className="mb-2">Order Status:
-                                    <span className={`badge ${order.status === "Delivered" ? "bg-success" : "bg-info"}`}>
+                                    <span className={`badge ${order.orderStatus === "Delivered" ? "bg-success" : "bg-info"}`}>
                                         {order.orderStatus}
                                     </span>
                                 </h6>
@@ -63,12 +68,12 @@ const Orders = () => {
                                     <div className="alert alert-danger mt-3">
                                         <strong>Order Cancelled:</strong> {order.cancelReason}
                                         <br />
-                                        <strong>Order Cancel By:</strong> {order.cancelledBy}
+                                        <strong>Order Cancelled By:</strong> {order.cancelledBy}
                                     </div>
                                 )}
 
                                 {/* Status Change Dropdown */}
-                                {order.orderStatus !== "Cancelled" && (
+                                {order.orderStatus !== "Cancelled" ? (
                                     <div>
                                         <label htmlFor={`status-select-${order._id}`}>Change Status:</label>
                                         <select
@@ -81,6 +86,10 @@ const Orders = () => {
                                             <option value="Delivered">Delivered</option>
                                             <option value="Cancelled">Cancelled</option>
                                         </select>
+                                    </div>
+                                ) : (
+                                    <div className="mt-2">
+                                        <strong>Status:</strong> <span className="text-danger">Cancelled</span>
                                     </div>
                                 )}
 

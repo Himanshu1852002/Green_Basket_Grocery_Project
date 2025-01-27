@@ -128,10 +128,10 @@ const fetchAllOrders = async (req, res) => {
 }
 
 const updateStatus = async (req, res) => {
-    const { orderId, orderStatus } = req.body;
+    const { orderId, orderStatus, cancelReason, cancelledBy } = req.body;
 
     try {
-        await orderModel.findByIdAndUpdate(orderId, { orderStatus: orderStatus });
+        await orderModel.findByIdAndUpdate(orderId, { orderStatus: orderStatus, cancelReason: cancelReason, cancelledBy: cancelledBy });
         res.status(200).json({
             success: true,
             message: "Status update succeefully"

@@ -49,7 +49,8 @@ const App = () => {
         <Route path="/login" element={<LoginPopup setShowLogin={setShowLogin} />} />
         {getRoutes()}
       </Routes>
-      <Footer />
+      {role !== 'admin' && <Footer />}
+
     </>
   );
 };
