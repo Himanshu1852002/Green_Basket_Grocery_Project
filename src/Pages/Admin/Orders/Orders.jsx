@@ -57,19 +57,33 @@ const Orders = () => {
                                         {order.deliveryTime}
                                     </span>
                                 </h6>
-                                <div>
-                                    <label htmlFor={`status-select-${order._id}`}>Change Status:</label>
-                                    <select
-                                        id={`status-select-${order._id}`}
-                                        value={order.status}
-                                        onChange={(event) => statusHandler(event, order._id)}
-                                    >
-                                        <option value="Processing">Processing</option>
-                                        <option value="Shipped">Shipped</option>
-                                        <option value="Delivered">Delivered</option>
-                                        <option value="Cancelled">Cancelled</option>
-                                    </select>
-                                </div>
+
+                                {/* Show cancel reason if the order is cancelled */}
+                                {order.orderStatus === "Cancelled" && order.cancelReason && (
+                                    <div className="alert alert-danger mt-3">
+                                        <strong>Order Cancelled:</strong> {order.cancelReason}
+                                        <br />
+                                        <strong>Order Cancel By:</strong> {order.cancelledBy}
+                                    </div>
+                                )}
+
+                                {/* Status Change Dropdown */}
+                                {order.orderStatus !== "Cancelled" && (
+                                    <div>
+                                        <label htmlFor={`status-select-${order._id}`}>Change Status:</label>
+                                        <select
+                                            id={`status-select-${order._id}`}
+                                            value={order.orderStatus}
+                                            onChange={(event) => statusHandler(event, order._id)}
+                                        >
+                                            <option value="Processing">Processing</option>
+                                            <option value="Shipped">Shipped</option>
+                                            <option value="Delivered">Delivered</option>
+                                            <option value="Cancelled">Cancelled</option>
+                                        </select>
+                                    </div>
+                                )}
+
                                 <h6 className="mb-3">Delivery Address:</h6>
                                 <p>
                                     {order.address

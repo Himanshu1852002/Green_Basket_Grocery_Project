@@ -163,7 +163,7 @@ const orderCount = async (req, res) => {
 
 const orderCancel = async (req, res) => {
     const { orderId } = req.params;
-    const { cancelReason } = req.body;
+    const { cancelReason, cancelledBy } = req.body;
 
     try {
 
@@ -185,6 +185,7 @@ const orderCancel = async (req, res) => {
 
         order.orderStatus = "Cancelled";
         order.cancelReason = cancelReason;
+        order.cancelledBy = cancelledBy;
         await order.save();
 
         return res.status(200).json({

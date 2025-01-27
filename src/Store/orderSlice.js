@@ -15,13 +15,12 @@ export const fetchOrders = createAsyncThunk('orders/fetchOrders', async (_, { us
 
 export const cancelOrder = createAsyncThunk(
     'orders/cancelOrder',
-    async ({ orderId, cancelReason }, { getState, rejectWithValue }) => {
+    async ({ orderId, cancelReason, cancelledBy }, { getState, rejectWithValue }) => {
         const { url, token } = getState().cart;
-
         try {
             const response = await axios.post(
                 `${url}/api/orders/orderCancel/${orderId}`,
-                { cancelReason },
+                { cancelReason, cancelledBy },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             return response.data.updatedOrder;

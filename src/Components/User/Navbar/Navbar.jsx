@@ -87,13 +87,13 @@ const Navbar = ({ setShowLogin }) => {
     }, []);
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-box navbar-expand-lg navbar-light bg-light">
             <div className="container px-3 d-flex justify-content-between align-items-center">
                 {/* Logo */}
                 <Link to="/" className="navbar-brand">
                     <img className="nav-logo" src={logo} alt="Brand Logo" />
                 </Link>
-                <div className="input-group  w-50 mx-auto d-flex d-lg-none">
+                <div className="input-group w-50 mx-auto d-flex d-lg-none">
                     <span className="input-group-text">
                         <FaSearch size={20} />
                     </span>

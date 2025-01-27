@@ -53,7 +53,8 @@
 }
 
 /* Pseudo-element for leaf image on hover */
-.explore-box:hover::before {
+.explore-box:hover::before,
+.explore-box.active::before {
     content: '';
     position: absolute;
     top: -18px;

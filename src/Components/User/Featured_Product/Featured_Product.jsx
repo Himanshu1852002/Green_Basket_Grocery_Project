@@ -15,7 +15,7 @@ const Cards = ({ imgSrc, title, description, onSeeMore }) => {
     return (
         <>
             <div className="col">
-                <div className="card d-flex flex-column justify-content-center align-items-center cursor-pointer rounded-3 position-relative">
+                <div className="featured-card card d-flex flex-column justify-content-center align-items-center cursor-pointer rounded-3 position-relative">
                     <img src={imgSrc} className="card-img-top" alt={`${title} Image`} />
                     <span className="badge position-absolute top-0 start-0 m-2">
                         Featured

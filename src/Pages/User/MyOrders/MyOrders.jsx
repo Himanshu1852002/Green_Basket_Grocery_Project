@@ -10,6 +10,7 @@ const OrderDetails = () => {
     const [expandedOrder, setExpandedOrder] = useState(null);
     const [cancelOrderId, setCancelOrderId] = useState(null);
     const [cancelReason, setCancelReason] = useState("");
+    const role = localStorage.getItem('role');
 
     useEffect(() => {
         dispatch(fetchOrders());
@@ -25,7 +26,7 @@ const OrderDetails = () => {
 
     const submitCancelReason = () => {
         if (cancelReason.trim()) {
-            dispatch(cancelOrder({ orderId: cancelOrderId, cancelReason }))
+            dispatch(cancelOrder({ orderId: cancelOrderId, cancelReason, cancelledBy: role }))
                 .then(() => {
                     setCancelOrderId(null);
                     setCancelReason("");
@@ -56,7 +57,7 @@ const OrderDetails = () => {
                         orders.map((order) => (
                             <div
                                 key={order._id}
-                                className={`order-card border rounded mb-4 p-3 shadow-sm ${order.orderStatus === "Cancelled" ? "disabled-card" : ""}`}
+                                className={`order-card  rounded mb-4 p-3 shadow-sm ${order.orderStatus === "Cancelled" ? "disabled-card" : ""}`}
                             >
                                 <div className="row align-items-center">
                                     <div className="col-12 col-md-6 mb-2 mb-md-0">
@@ -136,8 +137,8 @@ const OrderDetails = () => {
 
             {/* Cancel Order Popup */}
             {cancelOrderId && (
-                <div className="popup-overlay">
-                    <div className="popup-content">
+                <div className="order-popup-overlay">
+                    <div className="order-popup-content">
                         <h5 className="mb-3">Cancel Order</h5>
                         <textarea
                             className="form-control mb-3"

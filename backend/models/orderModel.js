@@ -41,6 +41,9 @@ const orderSchema = new mongoose.Schema({
     cancelReason: {
         type: String,
         default: "Not cancelled"
+    },
+    cancelledBy: {
+        type: String,
     }
 });
 
