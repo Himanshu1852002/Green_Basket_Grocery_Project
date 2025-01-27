@@ -161,4 +161,43 @@ const orderCount = async (req, res) => {
     }
 };
 
-export { createOrder, verifyOrder, userOrders, fetchAllOrders, updateStatus, orderCount }
+const orderCancel = async (req, res) => {
+    const { orderId } = req.params;
+    const { cancelReason } = req.body;
+
+    try {
+
+        const order = await orderModel.findById(orderId);
+
+        if (!order) {
+            return res.status(404).json({
+                success: false,
+                message: "Order Not Found"
+            })
+        }
+
+        if (order.orderStatus === "Cancelled") {
+            return res.status(400).json({
+                success: false,
+                message: 'Order is already cancelled'
+            });
+        }
+
+        order.orderStatus = "Cancelled";
+        order.cancelReason = cancelReason;
+        await order.save();
+
+        return res.status(200).json({
+            message: 'Order cancelled successfully',
+            updatedOrder: order
+        });
+
+    } catch (error) {
+        console.error('Error cancelling order:', error);
+        return res.status(500).json({
+            message: 'Internal server error'
+        });
+    }
+}
+
+export { createOrder, verifyOrder, userOrders, fetchAllOrders, updateStatus, orderCount, orderCancel }

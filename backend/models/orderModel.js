@@ -21,9 +21,9 @@ const orderSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        default: Date.now 
+        default: Date.now
     },
-    deliveryTime: { 
+    deliveryTime: {
         type: String,
         default: "Within 30 minutes to 1 hour"
     },
@@ -36,8 +36,12 @@ const orderSchema = new mongoose.Schema({
     },
     orderStatus: {
         type: String,
-        default: "Processing" 
+        default: "Processing"
     },
+    cancelReason: {
+        type: String,
+        default: "Not cancelled"
+    }
 });
 
 const orderModel = mongoose.model("order", orderSchema);

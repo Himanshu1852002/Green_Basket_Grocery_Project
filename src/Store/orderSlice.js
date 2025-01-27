@@ -13,6 +13,24 @@ export const fetchOrders = createAsyncThunk('orders/fetchOrders', async (_, { us
     }
 });
 
+export const cancelOrder = createAsyncThunk(
+    'orders/cancelOrder',
+    async ({ orderId, cancelReason }, { getState, rejectWithValue }) => {
+        const { url, token } = getState().cart;
+
+        try {
+            const response = await axios.post(
+                `${url}/api/orders/orderCancel/${orderId}`,
+                { cancelReason },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            return response.data.updatedOrder;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || error.message);
+        }
+    }
+)
+
 const orderSlice = createSlice({
     name: 'orders',
     initialState: {
@@ -23,6 +41,7 @@ const orderSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
+            // fetch cases
             .addCase(fetchOrders.pending, (state) => {
                 state.status = 'loading';
             })
@@ -31,6 +50,22 @@ const orderSlice = createSlice({
                 state.orders = action.payload;
             })
             .addCase(fetchOrders.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.payload;
+            })
+
+            // cancel addcases
+            .addCase(cancelOrder.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(cancelOrder.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                // Update the specific order in the state
+                state.orders = state.orders.map((order) =>
+                    order._id === action.payload._id ? action.payload : order
+                );
+            })
+            .addCase(cancelOrder.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.payload;
             });

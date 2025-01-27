@@ -5,7 +5,6 @@ import Testimonial from '../../../Components/User/Testimonial/Testimonial';
 import Support_Banner from "../../../Components/User/Support_Banner/Support_Banner";
 import Delivery_Banner from "../../../Components/User/Delivery_Banner/Delivery_Banner";
 import { useState } from "react";
-import Footer from "../../../Components/User/Footer/Footer";
 
 const Home = () => {
 
@@ -20,7 +19,6 @@ const Home = () => {
                 <Testimonial />
                 <Delivery_Banner />
                 <Support_Banner />
-                <Footer />
             </div>
         </>
     );

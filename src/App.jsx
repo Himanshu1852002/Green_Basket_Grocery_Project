@@ -6,6 +6,7 @@ import AdminRoutes from './Routes/Admin/AdminRoutes';
 import LoginPopup from './Components/User/Login_PopUp/LoginPopup';
 import Navbar from './Components/User/Navbar/Navbar';
 import AdminProtectedRoutes from './Shared/AdminProtectedRoutes';
+import Footer from './Components/User/Footer/Footer';
 
 const App = () => {
 
@@ -48,6 +49,7 @@ const App = () => {
         <Route path="/login" element={<LoginPopup setShowLogin={setShowLogin} />} />
         {getRoutes()}
       </Routes>
+      <Footer />
     </>
   );
 };

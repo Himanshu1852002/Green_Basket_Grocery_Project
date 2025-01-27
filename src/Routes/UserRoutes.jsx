@@ -13,7 +13,6 @@ import Verify from '../Pages/User/Verify/Verify';
 import SearchResults from '../Pages/User/SearchResults/SearchResults';
 import MyOrders from '../Pages/User/MyOrders/MyOrders';
 import Wishlist from '../Pages/User/Wishlist/Wishlist';
-import Footer from '../Components/User/Footer/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ScrollToTop from '../Pages/User/ScrollToTop/ScrollToTop';
@@ -42,7 +41,6 @@ const UserRoutes = () => {
           <Route path="verify" element={<Verify />} />
           <Route path="myorders" element={<MyOrders />} />
         </Routes>
-        <Footer />
       </div>
     </>
   )
