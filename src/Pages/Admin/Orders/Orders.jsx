@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "./Orders.css";
+import { FaArrowDown, FaArrowUp,} from "react-icons/fa";
 
 const Orders = () => {
     const [orders, setOrders] = useState([]);
+    const [expandedOrder, setExpandedOrder] = useState(null); // Track the expanded order
     const url = "http://localhost:3000";
 
     const fetchAllOrders = async () => {
@@ -31,6 +33,10 @@ const Orders = () => {
         }
     };
 
+    const toggleOrderDetails = (orderId) => {
+        setExpandedOrder(prev => (prev === orderId ? null : orderId)); // Toggle expanded state
+    };
+
     useEffect(() => {
         fetchAllOrders();
     }, []);
@@ -40,8 +46,8 @@ const Orders = () => {
             <h1 className="text-center text-muted mt-5 mb-4">All Orders</h1>
             <div className="row w-75">
                 {orders.map((order) => (
-                    <div key={order._id} className="col-lg-4 col-md-6 mb-4">
-                        <div className="order-card card shadow-sm">
+                    <div key={order._id} className="col-lg-12 mb-4">
+                        <div className={`order-card card shadow-sm ${expandedOrder === order._id ? "expanded" : ""}`}>
                             <div className="order-card-body card-body">
                                 <h5 className="card-title">User Name: {order.address.firstName} {order.address.lastName}</h5>
                                 <h6 className="card-subtitle mb-3 text-muted">Order ID: {order._id}</h6>
@@ -117,6 +123,10 @@ const Orders = () => {
                                     ))}
                                 </div>
                             </div>
+                            {/* Toggle Button to expand/collapse card */}
+                            <button className="toggle-button" onClick={() => toggleOrderDetails(order._id)}>
+                                {expandedOrder === order._id ? <FaArrowUp /> : <FaArrowDown />}
+                            </button>
                         </div>
                     </div>
                 ))}

@@ -9,15 +9,27 @@
 }
 
 .navbar-box {
-    background-color: #EFF3EA;
     box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
 }
 
-.search-input:focus{
+.search-input:focus {
     box-shadow: none;
 }
 
-.icon-input{
+
+.search-input {
+    background-color: #EFF3EA;
+    border: 1px solid gray;
+    border-left: none;
+}
+
+.input-group-text {
+    background-color: #EFF3EA;
+    border: 1px solid gray;
+    border-right: none;
+}
+
+.icon-input {
     color: #4b4b4b;
 }
 
@@ -35,10 +47,11 @@
     border-radius: 20px;
     border: 2px solid #059212;
     background-color: transparent;
-    color:green;
+    color: green;
 }
+
 .login-btn:active,
-.login-btn:hover{
+.login-btn:hover {
     background-color: green;
     color: #fff;
 }

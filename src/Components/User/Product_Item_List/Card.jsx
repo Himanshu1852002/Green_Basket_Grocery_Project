@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { FaEye, FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaEye, FaHeart, FaRegHeart, FaTruck } from "react-icons/fa";
+import { FaMoneyBillTransfer } from "react-icons/fa6";
+import { IoIosTime } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { addToWishlistAPI, removeFromWishlistAPI } from "../../../Store/wishlistSlice";
 import { addToCartAPI } from "../../../Store/cartSlice";
@@ -45,8 +47,10 @@ const Card = ({ _id, name, price, image, sellingPrice, unit, description }) => {
     return (
         <>
             <div className="col-lg-3 col-md-6 col-sm-6 col-12 cards_top_div mb-3">
-                <div className="card product_card position-relative" style={{ backgroundColor:'#BFBBA9'}}>
-                    <img src={image} className="card-img-top" alt={name} />
+                <div className="card product_card position-relative">
+                    <div>
+                        <img src={image} className="card-img-top" alt={name} />
+                    </div>
                     <div className="position-absolute top-0 end-0 p-2 d-flex justify-content-center flex-column align-items-center">
                         {/* Wishlist Icon */}
                         <span
@@ -125,21 +129,18 @@ const Card = ({ _id, name, price, image, sellingPrice, unit, description }) => {
                                                 alt={`${name} thumbnail`}
                                                 className="img-thumbnail"
                                                 style={{ width: "60px", height: "60px", cursor: "pointer" }}
-                                               
                                             />
                                             <img
                                                 src={image}
                                                 alt={`${name} thumbnail 2`}
                                                 className="img-thumbnail"
                                                 style={{ width: "60px", height: "60px", cursor: "pointer" }}
-                                                
                                             />
                                             <img
                                                 src={image}
                                                 alt={`${name} thumbnail 3`}
                                                 className="img-thumbnail"
                                                 style={{ width: "60px", height: "60px", cursor: "pointer" }}
-                                               
                                             />
                                         </div>
                                     </div>
@@ -173,6 +174,14 @@ const Card = ({ _id, name, price, image, sellingPrice, unit, description }) => {
                                                 <i className="bi bi-cart-plus"></i> Add to Cart
                                             </button>
                                         </div>
+                                        {/* Policy Section */}
+                                        <div className="mt-3">
+                                            <ul className="list-unstyled">
+                                                <li><FaTruck /> Free Shipping</li>
+                                                <li><IoIosTime /> 24/7 Support</li>
+                                                <li><FaMoneyBillTransfer /> Money Back Guarantee</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -185,8 +194,6 @@ const Card = ({ _id, name, price, image, sellingPrice, unit, description }) => {
                     </div>
                 </div>
             )}
-
-
         </>
     );
 };

@@ -19,6 +19,7 @@ const AdminRoutes = () => {
                 <Sidebar />
                 <div className="admin-content">
                     <Routes>
+                        <Route path="/" element={<Dashboard url={url} />} />
                         <Route path="dashboard" element={<Dashboard url={url} />} />
                         <Route path="add" element={<Add url={url} />} />
                         <Route path="list" element={<List url={url} />} />
