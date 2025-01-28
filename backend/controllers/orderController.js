@@ -13,7 +13,7 @@ const razorpayInstance = new Razorpay({
 });
 
 const createOrder = async (req, res) => {
-    const { userId, items, amount, address } = req.body;
+    const { userId, items, amount, address, paymentMethod } = req.body;
     try {
         if (!amount || amount <= 0) {
             return res.status(400).json({ success: false, message: "Invalid amount" });
@@ -37,13 +37,30 @@ const createOrder = async (req, res) => {
                 items,
                 amount,
                 address,
+                paymentMethod,
                 razorpay_order_id: order.id,
             });
 
             await newOrder.save();
 
 
-            return res.status(200).json({ success: true, data: order });
+            if (paymentMethod === "Cash on Delivery") {
+                const user = await userModel.findByIdAndUpdate(
+                    userId,
+                    { cartData: {} },
+                    { new: true }
+                );
+
+                if (!user) {
+                    return res.status(404).json({ success: false, message: "User not found" });
+                }
+            }
+
+            return res.status(200).json({
+                success: true,
+                message: "Order created successfully and cart cleared",
+                data: order,
+            });
         });
     } catch (error) {
         return res.status(500).json({ success: false, message: "Internal server error", error });
@@ -101,7 +118,6 @@ const userOrders = async (req, res) => {
         if (!orders.length) {
             return res.status(404).json({ success: false, message: "No orders found" });
         }
-        console.log("Orders retrieved:", orders);
         return res.status(200).json({ success: true, data: orders });
     } catch (error) {
         return res.status(500).json({ success: false, message: "Error retrieving orders", error: error.message });

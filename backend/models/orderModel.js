@@ -31,6 +31,9 @@ const orderSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    paymentMethod: {
+        type: String
+    },
     razorpay_order_id: {
         type: String
     },

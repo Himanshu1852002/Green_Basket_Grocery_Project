@@ -49,7 +49,7 @@ const Orders = () => {
                                 <h6 className="mb-2">Amount: ₹{order.amount}</h6>
                                 <h6 className="mb-2">Payment Status:
                                     <span className={`badge ${order.payment ? "bg-success" : "bg-warning"}`}>
-                                        {order.payment ? "Paid" : "Cash On Delivery"}
+                                        {order.paymentMethod}
                                     </span>
                                 </h6>
                                 <h6 className="mb-2">Order Status:

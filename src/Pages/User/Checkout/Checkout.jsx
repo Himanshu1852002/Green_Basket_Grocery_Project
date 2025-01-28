@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Checkout.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const Checkout = () => {
-
-    const dispatch = useDispatch();
-    const { product_list, cartItems, totalCartAmount } = useSelector((state) => state.cart)
+    const { product_list, cartItems, totalCartAmount } = useSelector((state) => state.cart);
     const [deliveryFee, setDeliveryFee] = useState(25);
     const [orderDetails, setOrderDetails] = useState(null);
+    const [paymentMethod, setPaymentMethod] = useState("cod"); // Default payment method: COD
     const [data, setData] = useState({
         firstName: "",
         lastName: "",
@@ -20,7 +19,7 @@ const Checkout = () => {
         country: "",
         phone: "",
     });
-    const url = "http://localhost:3000"
+    const url = "http://localhost:3000";
     const navigate = useNavigate();
 
     const onChangeHandler = (event) => {
@@ -29,19 +28,18 @@ const Checkout = () => {
     };
 
     const handlePlaceOrder = async () => {
-
         if (!data.firstName || !data.lastName || !data.street || !data.city || !data.state || !data.pincode || !data.country || !data.phone) {
-            alert('Please fill in all the required address fields.');
+            alert("Please fill in all the required address fields.");
             return;
         }
 
-        const userId = localStorage.getItem('userId');
-        const token = localStorage.getItem('token');
-        console.log(data);
+        const userId = localStorage.getItem("userId");
+        const token = localStorage.getItem("token");
+
         const itemsWithDetails = Object.entries(cartItems).map(([id, quantity]) => {
             const item = product_list.find(product => product._id === id);
             return {
-                image:item?.image || "image.png",
+                image: item?.image || "image.png",
                 name: item?.name || "Unknown",
                 price: item?.price || 0,
                 quantity
@@ -50,72 +48,101 @@ const Checkout = () => {
 
         const totalAmount = totalCartAmount + deliveryFee;
 
-        try {
-            const response = await fetch(`${url}/api/orders/createOrder`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({
-                    userId,
-                    items: itemsWithDetails,
-                    amount: totalAmount,
-                    address: data,
-                }),
-            });
+        if (paymentMethod === "cod") {
+            // Handle Cash on Delivery
+            try {
+                const response = await fetch(`${url}/api/orders/createOrder`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        userId,
+                        items: itemsWithDetails,
+                        amount: totalAmount,
+                        address: data,
+                        paymentMethod: "Cash on Delivery",
+                    }),
+                });
 
-            const result = await response.json();
-
-            if (response.ok) {
-                setOrderDetails(result.data);
-                handlePayment(result.data);
-            } else {
-                alert(result.message || 'Failed to place order');
+                const result = await response.json();
+                if (response.ok) {
+                    navigate("/user/verify");
+                    console.log(orderDetails)
+                } else {
+                    alert(result.message || "Failed to place order.");
+                }
+            } catch (error) {
+                console.error("Error placing order:", error);
+                alert("Something went wrong. Please try again.");
             }
-        } catch (error) {
-            console.error('Error placing order:', error);
-            alert('Something went wrong. Please try again.');
+        } else if (paymentMethod === "card") {
+            // Handle Razorpay Payment
+            try {
+                const response = await fetch(`${url}/api/orders/createOrder`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        userId,
+                        items: itemsWithDetails,
+                        amount: totalAmount,
+                        address: data,
+                        paymentMethod: "Credit/Debit Card",
+                    }),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    setOrderDetails(result.data);
+                    handlePayment(result.data);
+                } else {
+                    alert(result.message || "Failed to place order.");
+                }
+            } catch (error) {
+                console.error("Error placing order:", error);
+                alert("Something went wrong. Please try again.");
+            }
         }
     };
 
     const handlePayment = (order) => {
         const options = {
-            key: 'rzp_test_8gC9zCCVpPxjF1',
+            key: "rzp_test_8gC9zCCVpPxjF1",
             amount: order.amount * 100,
-            currency: 'INR',
-            name: 'Green Basket',
-            description: 'Order Payment',
+            currency: "INR",
+            name: "Green Basket",
+            description: "Order Payment",
             order_id: order.id,
             handler: async (response) => {
-                console.log(response)
                 try {
                     const verificationResponse = await fetch(`${url}/api/orders/verifyOrder`, {
-                        method: 'POST',
+                        method: "POST",
                         headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer ${localStorage.getItem('token')}`,
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${localStorage.getItem("token")}`,
                         },
-                        body: JSON.stringify(
-                            {
-                                order_id: order.id,
-                                razorpay_payment_id: response.razorpay_payment_id,
-                                razorpay_signature: response.razorpay_signature,
-                            }
-                        ),
+                        body: JSON.stringify({
+                            order_id: order.id,
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_signature: response.razorpay_signature,
+                        }),
                     });
 
                     const result = await verificationResponse.json();
 
                     if (verificationResponse.ok) {
-                        navigate('/user/verify',);
-                        console.log(orderDetails)
+                        navigate("/user/verify"); // Redirect to success page
                     } else {
-                        alert(result.message || 'Payment verification failed.');
+                        alert(result.message || "Payment verification failed.");
                     }
                 } catch (error) {
-                    console.error('Error verifying payment:', error);
-                    alert('Something went wrong. Please try again.');
+                    console.error("Error verifying payment:", error);
+                    alert("Something went wrong. Please try again.");
                 }
             },
             prefill: {
@@ -126,13 +153,12 @@ const Checkout = () => {
         };
 
         const razorpay = new window.Razorpay(options);
-        razorpay.on('payment.failed', (response) => {
-            console.error('Payment failed:', response);
-            alert('Payment failed! Please try again.');
+        razorpay.on("payment.failed", (response) => {
+            console.error("Payment failed:", response);
+            alert("Payment failed! Please try again.");
         });
         razorpay.open();
     };
-
 
     useEffect(() => {
         if (totalCartAmount > 200) {
@@ -140,10 +166,10 @@ const Checkout = () => {
         } else {
             setDeliveryFee(25);
         }
-    }, [dispatch, totalCartAmount,]);
+    }, [totalCartAmount]);
 
     return (
-        <div className="container checkout-container" style={{padding:'50px 0px 50px 0px'}}>
+        <div className="container checkout-container" style={{ padding: "50px 0px 50px 0px" }}>
             <div className="row checkout-row">
                 <div className="col-lg-6 address-col">
                     <h2 className="fw-bold mb-3">Delivery Information</h2>
@@ -226,6 +252,7 @@ const Checkout = () => {
                             type="number"
                             placeholder="Phone no."
                         />
+
                     </div>
                 </div>
                 <div className="col-lg-6 mt-sm-5 mt-lg-0">
@@ -236,22 +263,32 @@ const Checkout = () => {
                     </div>
                     <div className="d-flex justify-content-between border-bottom border-3">
                         <p className="fw-bold">Delivery Fee</p>
-                        <p>₹{deliveryFee > 0 ? deliveryFee : 'Free ₹0'}</p>
+                        <p>₹{deliveryFee > 0 ? deliveryFee : "Free ₹0"}</p>
                     </div>
                     <div className="d-flex justify-content-between">
                         <p className="fw-bold">Total</p>
                         <p>₹{totalCartAmount + deliveryFee}</p>
                     </div>
+                    <div className="mt-3">
+                        <label className="fw-bold">Select Payment Method:</label>
+                        <select
+                            className="form-select"
+                            value={paymentMethod}
+                            onChange={(e) => setPaymentMethod(e.target.value)}
+                        >
+                            <option value="cod">Cash on Delivery</option>
+                            <option value="card">Credit/Debit Card</option>
+                        </select>
+                    </div>
                     <button
                         onClick={handlePlaceOrder}
-                        className="mt-2 w-md-50 w-sm-100 btn btn-success"
+                        className="mt-3 w-md-50 w-sm-100 btn btn-success"
                     >
                         Proceed To Payment
                     </button>
                 </div>
-
             </div>
-        </div>
+        </div >
     );
 };
 

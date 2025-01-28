@@ -45,7 +45,7 @@ const Card = ({ _id, name, price, image, sellingPrice, unit, description }) => {
     return (
         <>
             <div className="col-lg-3 col-md-6 col-sm-6 col-12 cards_top_div mb-3">
-                <div className="card product_card position-relative">
+                <div className="card product_card position-relative" style={{ backgroundColor:'#BFBBA9'}}>
                     <img src={image} className="card-img-top" alt={name} />
                     <div className="position-absolute top-0 end-0 p-2 d-flex justify-content-center flex-column align-items-center">
                         {/* Wishlist Icon */}

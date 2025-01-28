@@ -54,7 +54,7 @@ const Navbar = ({ setShowLogin }) => {
         setIsNavCollapsed((prevState) => !prevState);
     };
 
-    
+
     const placeholderTexts = [
         "Search for fruits...",
         "Search for vegetables...",
@@ -68,11 +68,17 @@ const Navbar = ({ setShowLogin }) => {
         if (query.trim()) {
             navigate(`/user/search?q=${query}`);
         }
+        else {
+            navigate("/")
+        }
     };
 
     useEffect(() => {
         if (query.trim()) {
             handleSearch();
+        }
+        else {
+            navigate("/")
         }
     }, [query]);
 
@@ -121,7 +127,7 @@ const Navbar = ({ setShowLogin }) => {
                     className={`collapse navbar-collapse ${isNavCollapsed ? "" : "show"}`}
                     id="navbarContent"
                 >
-                
+
                     <div className="input-group w-50 mx-auto d-none d-lg-flex">
                         <span className="input-group-text">
                             <FaSearch size={20} />

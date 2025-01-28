@@ -67,13 +67,13 @@ const SearchResults = () => {
     };
     console.log('Results Length:', results.length);
     return (
-        <div className="container product_row">
+        <div className="container product_container">
             <h3 >Search Results for {query}</h3>
             <hr className="mb-5 fs-2" />
             {loading ? (
                 <p>Loading...</p>
             ) : Array.isArray(results) && results.length > 0 ? (
-                <div className="row">
+                    <div className="row product_row">
                     {results.map((product) => {
                         return (
                             <div key={product._id} className="col-12 col-lg-4 col-md-6 mb-3">

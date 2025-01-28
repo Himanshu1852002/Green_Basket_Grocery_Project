@@ -19,7 +19,7 @@ const Verify = () => {
                 <h1>Thank You !</h1>
                 <div className='d-flex justify-content-center align-items-center gap-4'>
                     <IoCheckmarkDoneCircle size={30} style={{ color: 'green' }} />
-                    <h3>Payment Done Successfully</h3>
+                    <h3>Order Done Successfully</h3>
                 </div>
                 <p className='text-center'>Your order has been placed successfully and is now being prepared for delivery.</p>
                 <button onClick={myorderHandler} className='btn btn-success'>Check Order!</button>

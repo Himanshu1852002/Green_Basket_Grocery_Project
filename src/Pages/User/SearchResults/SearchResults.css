@@ -5,13 +5,15 @@
      filter: drop-shadow(2px 5px 5px #282828);
 
  }
-.search_card{
-    width: 280px;
-}
 
- .product_row {
+ .search_card {
+     width: 280px;
+ }
+
+ .product_container {
      margin-bottom: 135px;
      height: 100%;
+     margin-top: 20px;
  }
 
  .search_card,
@@ -21,6 +23,8 @@
      align-items: center;
      flex-direction: column;
  }
+
+
 
  .wishlist-icon {
      opacity: 0;
@@ -90,6 +94,20 @@
 
      .search_card img {
          height: 130px;
+     }
+
+     .product_container {
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+     }
+
+     .product_row {
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
      }
  }
 

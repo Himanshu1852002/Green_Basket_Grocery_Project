@@ -54,9 +54,13 @@
 
 @media (min-width: 768px) {
     .order-popup-content {
-        flex-direction: row;
+        flex-direction: column;
         height: 250px;
         justify-content: space-between;
+    }
+
+    .order-popup-content textarea {
+        height: 100px;
     }
 
     .order-popup-content button {
