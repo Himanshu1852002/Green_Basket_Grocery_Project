@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaUser } from "react-icons/fa";
+import { FaUser, FaEye, FaEyeSlash } from "react-icons/fa";
 import './LoginPage.css';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
@@ -15,6 +15,12 @@ const LoginPopup = ({ setShowLogin }) => {
     const navigate = useNavigate();
     const [currState, setCurrState] = useState("Login");
     const [otpState, setOtpState] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(prev => !prev);
+    };
+
     const [data, setData] = useState({
         name: "",
         email: "",
@@ -122,14 +128,24 @@ const LoginPopup = ({ setShowLogin }) => {
                         placeholder="Email"
                         required
                     />
-                    <input
-                        name="password"
-                        onChange={onChangeHandler}
-                        value={data.password}
-                        type="password"
-                        placeholder="Password"
-                        required
-                    />
+                    <div className="password-input-container position-relative">
+                        <input
+                            name="password"
+                            onChange={onChangeHandler}
+                            value={data.password}
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Password"
+                            required
+                        />
+                        <button
+                            type="button"
+                            className="password-toggle-button"
+                            onClick={togglePasswordVisibility}
+                        >
+                            {showPassword ? <FaEyeSlash className='text-muted' /> : <FaEye className='text-muted' />}
+                        </button>
+                    </div>
+
                     {otpState && (
                         <input
                             name="otp"
