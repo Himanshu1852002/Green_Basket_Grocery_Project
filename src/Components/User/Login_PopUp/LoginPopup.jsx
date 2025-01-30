@@ -8,6 +8,7 @@ import { setToken, loadCartData } from '../../../Store/cartSlice';
 import { setWishToken, fetchWishlist } from '../../../Store/wishlistSlice';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const LoginPopup = ({ setShowLogin }) => {
     const dispatch = useDispatch();
@@ -46,7 +47,7 @@ const LoginPopup = ({ setShowLogin }) => {
                 const { token, user } = response.data;
                 if (currState === "Sign Up" && !otpState) {
                     setOtpState(true);
-
+                    toast.info("OTP Sent Successfully !", { autoClose: 1000 });
                 } else if (otpState) {
                     dispatch(setToken(token));
                     localStorage.setItem('token', token);
