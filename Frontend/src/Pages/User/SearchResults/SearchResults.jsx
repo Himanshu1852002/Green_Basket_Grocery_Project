@@ -15,7 +15,7 @@ const SearchResults = () => {
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
     const query = searchParams.get("q");
-
+   
     console.log(query)
     useEffect(() => {
         if (query) {
@@ -75,13 +75,12 @@ const SearchResults = () => {
             {loading ? (
                 <p>Loading...</p>
             ) : Array.isArray(results) && results.length > 0 ? (
-                <div className="row product_row">
+                    <div className="row product_row">
                     {results.map((product) => {
-                        const imageurl = `${url}/uploads/${product.image}`;
                         return (
                             <div key={product._id} className="col-12 col-lg-4 col-md-6 mb-3">
                                 <div className="card search_card position-relative">
-                                    <img src={imageurl} className="card-img-top" alt={product.name} />
+                                    <img src={product.image} className="card-img-top" alt={product.name} />
                                     <span
                                         className="wishlist-icon position-absolute top-0 end-0 p-2"
                                         onClick={() => toggleWishlist(product._id)}
