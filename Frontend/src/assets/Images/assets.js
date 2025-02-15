@@ -3,7 +3,7 @@ import menu2 from './Images/vege_card.png';
 import menu3 from './Images/chocolate.png';
 import menu4 from './Images/dring_card.png';
 import menu5 from './Images/snacks_card.png';
-import menu6 from './Images/grocery_card.png'
+import menu6 from './Images/grocery_card.png';
 
 export const menuItems_list = [
     { imgSrc: menu1, altText: "Fruits", menu_name: "Fruits" },
