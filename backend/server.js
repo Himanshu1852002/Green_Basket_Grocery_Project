@@ -19,7 +19,11 @@ const PORT = 3000;
 
 // middlewares
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: ["https://green-basket-grocery-project.vercel.app"], // Vercel Frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
 
 
 
