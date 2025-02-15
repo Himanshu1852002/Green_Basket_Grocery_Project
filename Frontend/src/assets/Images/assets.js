@@ -1,6 +1,6 @@
 import menu1 from './Images/fruits_card.png';
 import menu2 from './Images/vege_card.png';
-import menu3 from './Images/Chocolate.png';
+import menu3 from './Images/chocolate.png';
 import menu4 from './Images/dring_card.png';
 import menu5 from './Images/snacks_card.png';
 import menu6 from './Images/grocery_card.png'
