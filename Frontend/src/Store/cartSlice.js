@@ -1,8 +1,7 @@
-/* eslint-disable no-undef */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const url = process.env.REACT_APP_API_BASE_URL;
+const url = import.meta.env.REACT_APP_API_BASE_URL;
 
 // Async thunks
 export const fetchProductList = createAsyncThunk('cart/fetchProductList', async () => {

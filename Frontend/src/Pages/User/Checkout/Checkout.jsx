@@ -19,8 +19,7 @@ const Checkout = () => {
         country: "",
         phone: "",
     });
-    // eslint-disable-next-line no-undef
-    const url = process.env.REACT_APP_API_BASE_URL;
+    const url = import.meta.env.REACT_APP_API_BASE_URL;
     const navigate = useNavigate();
 
     const onChangeHandler = (event) => {

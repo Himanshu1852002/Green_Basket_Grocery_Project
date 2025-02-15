@@ -13,8 +13,7 @@ const Wishlist = () => {
     const { items, product_list } = useSelector((state) => state.wishlist);
     const token = useSelector((state) => state.wishlist.token);
     const dispatch = useDispatch();
-    // eslint-disable-next-line no-undef
-    const url = process.env.REACT_APP_API_BASE_URL;
+    const url = import.meta.env.REACT_APP_API_BASE_URL;
 
     useEffect(() => {
         dispatch(fetchProductList());

@@ -14,8 +14,7 @@ const SearchResults = () => {
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
     const query = searchParams.get("q");
-    // eslint-disable-next-line no-undef
-    const url = process.env.REACT_APP_API_BASE_URL;
+    const url = import.meta.env.REACT_APP_API_BASE_URL;
     console.log(query)
     useEffect(() => {
         if (query) {

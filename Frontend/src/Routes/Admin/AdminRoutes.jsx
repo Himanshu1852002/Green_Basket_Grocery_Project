@@ -9,8 +9,7 @@ import "./AdminRoutes.css"; // Add custom styles
 import Dashboard from "../../Pages/Admin/Dashboard/Dashboard";
 
 const AdminRoutes = () => {
-    // eslint-disable-next-line no-undef
-    const url = process.env.REACT_APP_API_BASE_URL;
+    const url = import.meta.env.REACT_APP_API_BASE_URL;
 
     return (
         <div className="admin-layout">

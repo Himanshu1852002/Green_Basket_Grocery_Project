@@ -2,8 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 
-// eslint-disable-next-line no-undef
-const url = process.env.REACT_APP_API_BASE_URL;
+const url = import.meta.env.REACT_APP_API_BASE_URL;
 
 const initialState = {
     products: [],

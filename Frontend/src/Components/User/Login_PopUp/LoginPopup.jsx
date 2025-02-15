@@ -33,8 +33,7 @@ const LoginPopup = ({ setShowLogin }) => {
         setData((prev) => ({ ...prev, [name]: value }));
     };
 
-    // eslint-disable-next-line no-undef
-    const url = process.env.REACT_APP_API_BASE_URL;
+    const url = import.meta.env.REACT_APP_API_BASE_URL;
     const onLogin = async (event) => {
         event.preventDefault();
 
