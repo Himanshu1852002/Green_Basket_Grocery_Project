@@ -57,7 +57,7 @@ const OrderDetails = () => {
                         orders.map((order) => (
                             <div
                                 key={order._id}
-                                className={`order-card  rounded mb-4 p-3 shadow-sm ${order.orderStatus === "Cancelled" ? "disabled-card" : ""}`}
+                                className={`user-order-card  rounded mb-4 p-3 shadow-sm ${order.orderStatus === "Cancelled" ? "disabled-card" : ""}`}
                             >
                                 <div className="row align-items-center">
                                     <div className="col-12 col-md-6 mb-2 mb-md-0">
