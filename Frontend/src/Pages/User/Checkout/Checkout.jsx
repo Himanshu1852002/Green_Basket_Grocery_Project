@@ -19,7 +19,7 @@ const Checkout = () => {
         country: "",
         phone: "",
     });
-    const url = import.meta.env.REACT_APP_API_BASE_URL;
+    const url = import.meta.env.VITE_API_BASE_URL;
     const navigate = useNavigate();
 
     const onChangeHandler = (event) => {
