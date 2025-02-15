@@ -5,8 +5,10 @@ import { FaArrowDown, FaArrowUp,} from "react-icons/fa";
 
 const Orders = () => {
     const [orders, setOrders] = useState([]);
-    const [expandedOrder, setExpandedOrder] = useState(null); // Track the expanded order
+    const [expandedOrder, setExpandedOrder] = useState(null);
+    
     const url = "https://green-basket-grocery-project.onrender.com"
+
     const fetchAllOrders = async () => {
         axios.get(`${url}/api/orders/fetchAllOrders`)
             .then((response) => {
