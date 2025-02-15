@@ -13,7 +13,7 @@ const Wishlist = () => {
     const { items, product_list } = useSelector((state) => state.wishlist);
     const token = useSelector((state) => state.wishlist.token);
     const dispatch = useDispatch();
-    const url = import.meta.env.VITE_API_BASE_URL;
+    const url = "https://green-basket-grocery-project.onrender.com"
 
     useEffect(() => {
         dispatch(fetchProductList());

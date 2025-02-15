@@ -14,7 +14,7 @@ const SearchResults = () => {
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
     const query = searchParams.get("q");
-    const url = import.meta.env.VITE_API_BASE_URL;
+    const url = "https://green-basket-grocery-project.onrender.com"
     console.log(query)
     useEffect(() => {
         if (query) {

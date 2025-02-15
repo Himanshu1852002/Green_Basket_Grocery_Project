@@ -9,7 +9,7 @@ import "./AdminRoutes.css"; // Add custom styles
 import Dashboard from "../../Pages/Admin/Dashboard/Dashboard";
 
 const AdminRoutes = () => {
-    const url = import.meta.env.VITE_API_BASE_URL;
+    const url = "https://green-basket-grocery-project.onrender.com"
 
     return (
         <div className="admin-layout">

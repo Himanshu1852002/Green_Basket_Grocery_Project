@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const url = import.meta.env.VITE_API_BASE_URL;
+// const url = import.meta.env.VITE_API_BASE_URL;
+const url = "https://green-basket-grocery-project.onrender.com"
 
 // Async Thunks for API Calls
 export const fetchUserCount = createAsyncThunk('dashboard/fetchUserCount', async () => {

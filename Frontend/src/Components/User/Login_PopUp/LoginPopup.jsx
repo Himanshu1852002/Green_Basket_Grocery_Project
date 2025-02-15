@@ -33,7 +33,7 @@ const LoginPopup = ({ setShowLogin }) => {
         setData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const url = import.meta.env.VITE_API_BASE_URL;
+    const url = "https://green-basket-grocery-project.onrender.com"
     const onLogin = async (event) => {
         event.preventDefault();
 
