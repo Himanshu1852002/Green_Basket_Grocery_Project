@@ -15,10 +15,10 @@ const search = async (req, res) => {
         if (results.length === 0) {
             return res.status(404).json({ message: "No products found" });
         }
-
+        const url = "https://green-basket-grocery-project.onrender.com";
         const resultsWithFullImageUrl = results.map(product => ({
             ...product.toObject(),
-            image: `http://localhost:3000/uploads/${product.image}`
+            image: `${url}/uploads/${product.image}`
         }));
 
         res.status(200).json({ success: true, results: resultsWithFullImageUrl })
