@@ -14,7 +14,7 @@ const SearchResults = () => {
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
     const query = searchParams.get("q");
-    const url = "https://green-basket-grocery-project.onrender.com"
+    const url = "https://green-basket-grocery-project.onrender.com";
     console.log(query)
     useEffect(() => {
         if (query) {
