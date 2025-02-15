@@ -2,7 +2,7 @@ import Hero from "../../../Components/User/Hero_Banner/Hero";
 import ExploreMenu from '../../../Components/User/Explore_Menu/Explore_Menu';
 import FeaturedProduct from "../../../Components/User/Featured_Product/FeaturedProduct";
 import Testimonial from '../../../Components/User/Testimonial/Testimonial';
-import Support_Banner from "../../../Components/User/Support_Banner/Support_Banner";
+import SupportBanner from "../../../Components/User/Support_Banner/SupportBanner";
 import Delivery_Banner from "../../../Components/User/Delivery_Banner/Delivery_Banner";
 import { useState } from "react";
 
@@ -18,7 +18,7 @@ const Home = () => {
                 <FeaturedProduct />
                 <Testimonial />
                 <Delivery_Banner />
-                <Support_Banner />
+                <SupportBanner />
             </div>
         </>
     );

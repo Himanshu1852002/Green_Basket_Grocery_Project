@@ -1,4 +1,4 @@
-import Support_Banner from '../../../Components/User/Support_Banner/Support_Banner';
+import SupportBanner from '../../../Components/User/Support_Banner/SupportBanner';
 import './About.css';
 
 const About = () => {
@@ -17,7 +17,7 @@ const About = () => {
                     </div>
                 </div>
             </div>
-            <Support_Banner />
+            <SupportBanner />
         </>
     )
 }
