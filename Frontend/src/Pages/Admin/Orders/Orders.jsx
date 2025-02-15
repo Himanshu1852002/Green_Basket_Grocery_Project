@@ -6,7 +6,8 @@ import { FaArrowDown, FaArrowUp,} from "react-icons/fa";
 const Orders = () => {
     const [orders, setOrders] = useState([]);
     const [expandedOrder, setExpandedOrder] = useState(null); // Track the expanded order
-    const url = "http://localhost:3000";
+    // eslint-disable-next-line no-undef
+    const url = process.env.REACT_APP_API_BASE_URL;
 
     const fetchAllOrders = async () => {
         axios.get(`${url}/api/orders/fetchAllOrders`)

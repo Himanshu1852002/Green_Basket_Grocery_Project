@@ -13,7 +13,8 @@ const Wishlist = () => {
     const { items, product_list } = useSelector((state) => state.wishlist);
     const token = useSelector((state) => state.wishlist.token);
     const dispatch = useDispatch();
-    const url = "http://localhost:3000";
+    // eslint-disable-next-line no-undef
+    const url = process.env.REACT_APP_API_BASE_URL;
 
     useEffect(() => {
         dispatch(fetchProductList());

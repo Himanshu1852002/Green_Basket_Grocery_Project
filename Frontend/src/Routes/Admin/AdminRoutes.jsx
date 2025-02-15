@@ -9,7 +9,8 @@ import "./AdminRoutes.css"; // Add custom styles
 import Dashboard from "../../Pages/Admin/Dashboard/Dashboard";
 
 const AdminRoutes = () => {
-    const url = "http://localhost:3000";
+    // eslint-disable-next-line no-undef
+    const url = process.env.REACT_APP_API_BASE_URL;
 
     return (
         <div className="admin-layout">

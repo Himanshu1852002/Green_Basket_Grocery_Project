@@ -14,12 +14,14 @@ const SearchResults = () => {
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
     const query = searchParams.get("q");
+    // eslint-disable-next-line no-undef
+    const url = process.env.REACT_APP_API_BASE_URL;
     console.log(query)
     useEffect(() => {
         if (query) {
             setLoading(true);
             axios
-                .get(`http://localhost:3000/api/search/searchItem?q=${query}`)
+                .get(`${url}/api/search/searchItem?q=${query}`)
                 .then((response) => {
                     console.log('API Response:', response.data);
                     if (response.data && Array.isArray(response.data.results)) {

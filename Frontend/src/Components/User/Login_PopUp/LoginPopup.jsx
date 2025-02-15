@@ -33,7 +33,8 @@ const LoginPopup = ({ setShowLogin }) => {
         setData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const url = "http://localhost:3000";
+    // eslint-disable-next-line no-undef
+    const url = process.env.REACT_APP_API_BASE_URL;
     const onLogin = async (event) => {
         event.preventDefault();
 
