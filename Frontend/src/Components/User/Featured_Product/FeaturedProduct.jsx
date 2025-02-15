@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import './FeaturedProduct.css';
 import appleimg from '../../../assets/Images/Images/apple.png';
 import strawberry from '../../../assets/Images/Images/Strawberry.png';
-import chocolateimg from '../../../assets/Images/Images/Chocolate.png';
+import chocolateimg from '../../../assets/Images/Images/chocolate.png';
 import popcornimg from '../../../assets/Images/Images/popcorn,png.png';
 import tomatoimg from '../../../assets/Images/Vegetables_Images/Tomato.png';
 import cocacolaimg from '../../../assets/Images/Images/coca-cola.png';
