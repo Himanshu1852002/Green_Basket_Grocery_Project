@@ -7,13 +7,14 @@ const Product_Item_List = ({ items = [] }) => {
     for (let i = 0; i < items.length; i += 4) {
         rows.push(items.slice(i, i + 4));
     }
+    const url = "https://green-basket-grocery-project.onrender.com"
 
     return (
         <div className="container product_container">
             {rows.map((row, rowIndex) => (
                 <div className="row" key={rowIndex}>
                     {row.map((item, index) => {
-                        const imageUrl = `http://localhost:3000/uploads/${item.image}`;
+                        const imageUrl = `${url}/uploads/${item.image}`;
                         return (
                             <Card
                                 key={index}
