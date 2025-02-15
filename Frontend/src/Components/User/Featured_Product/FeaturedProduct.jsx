@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import './Featured_Product.css';
-import apple_img from '../../../assets/Images/Images/apple.png';
+import './FeaturedProduct.css';
+import appleimg from '../../../assets/Images/Images/apple.png';
 import strawberry from '../../../assets/Images/Images/Strawberry.png';
 import chocolateimg from '../../../assets/Images/Images/Chocolate.png';
 import popcornimg from '../../../assets/Images/Images/popcorn,png.png';
@@ -45,7 +45,7 @@ const Featured_Product = () => {
     const [popupData, setPopupData] = useState(null);
 
     const cards = [
-        { imgSrc: apple_img, title: "Apple", description: "An apple a day keeps the doctor away is not just an old saying rooted  truth Apples are packed with fiber antioxidants and awealth of vitamins that support your overall health Their naturalsweetness makes them a satisfying snack while their low calorie count ensures they fit perfectly into any diet plan " },
+        { imgSrc: appleimg, title: "Apple", description: "An apple a day keeps the doctor away is not just an old saying rooted  truth Apples are packed with fiber antioxidants and awealth of vitamins that support your overall health Their naturalsweetness makes them a satisfying snack while their low calorie count ensures they fit perfectly into any diet plan " },
         { imgSrc: strawberry, title: "Strawberry", description: "Strawberries are not only delicious but also packed with vitamin C and antioxidants.Their sweet and tangy flavor makes them a favorite in smoothies, desserts, or as a refreshing snack.Low in calories and high in fiber, strawberries offer numerous health benefits while satisfying your taste buds." },
         { imgSrc: chocolateimg, title: "DairyMilk", description: "Indulge in the rich, velvety taste of chocolate—a timeless treat loved by all! Packed with antioxidants and a hint of sweetness, chocolate not only satisfies your cravings but also uplifts your mood. Whether it's a creamy milk chocolate bar or decadent dark chocolate, this delicacy is perfect for every occasion. A bite of joy in every piece!" },
         { imgSrc: popcornimg, title: "Popcorn", description: "Popcorn is a light and crunchy snack that is perfect for movie nights or anytime you need a quick, satisfying bite. High in fiber and low in calories, it's a healthier snack choice compared to other processed treats. Whether flavored with butter, cheese, or spices, popcorn is a versatile snack that everyone can enjoy." },
