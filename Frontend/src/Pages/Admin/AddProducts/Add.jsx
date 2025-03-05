@@ -144,6 +144,11 @@ const Add = ({ url }) => {
                     <label>Product Price</label>
                     <input
                         type="number"
+                        style={{
+                            appearance: "textfield",
+                            MozAppearance: "textfield",
+                            WebkitAppearance: "none",
+                        }}
                         className="form-control border-3"
                         name="price"
                         value={data.price}
