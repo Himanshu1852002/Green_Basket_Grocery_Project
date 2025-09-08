@@ -6,7 +6,6 @@ const ScrollToTop = () => {
     const location = useLocation();
 
     useEffect(() => {
-        console.log("main chala")
         window.scrollTo(0, 0);
     }, [location.pathname]);
     return null;
