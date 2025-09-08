@@ -127,6 +127,7 @@ const LoginPopup = ({ setShowLogin }) => {
                         type="email"
                         placeholder="Email"
                         required
+                         autoComplete="current-email"
                     />
                     <div className="password-input-container position-relative">
                         <input
@@ -136,6 +137,7 @@ const LoginPopup = ({ setShowLogin }) => {
                             type={showPassword ? "text" : "password"}
                             placeholder="Password"
                             required
+                            autoComplete="current-password"
                         />
                         <button
                             type="button"
