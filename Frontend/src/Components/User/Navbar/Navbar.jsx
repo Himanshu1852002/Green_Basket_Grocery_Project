@@ -35,9 +35,16 @@ const Navbar = ({ setShowLogin }) => {
         ? cartItems.length
         : Object.values(cartItems).reduce((total, qty) => total + qty, 0);
 
-    const toggleDropdown = () => {
+    const toggleDropdown = (e) => {
+        e.stopPropagation();
         setShowDropdown((prevState) => !prevState);
     };
+
+    useEffect(() => {
+        const handleOutsideClick = () => setShowDropdown(false);
+        if (showDropdown) document.addEventListener('click', handleOutsideClick);
+        return () => document.removeEventListener('click', handleOutsideClick);
+    }, [showDropdown]);
 
     const handleLogOut = async () => {
         dispatch(clearToken());
@@ -200,25 +207,20 @@ const Navbar = ({ setShowLogin }) => {
                                     onClick={toggleDropdown}
                                 />
                                 {showDropdown && (
-                                    <div
-                                        className="dropdown-menu show position-absolute"
-                                        style={{
-                                            top: '35px',
-                                            right: '0',
-                                            minWidth: '150px',
-                                            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                                        }}
-                                    >
-                                        <Link to="/user/myorders" className="dropdown-item" onClick={() => setShowDropdown(false)}>Orders</Link>
-                                        {/* <Link to="/user/saved-address" className="dropdown-item" onClick={() => setShowDropdown(false)}>Saved Address</Link> */}
-                                        <button
-                                            className="dropdown-item"
-                                            onClick={() => {
-                                                handleLogOut();
-                                                setShowDropdown(false);
-                                            }}
+                                    <div className="user-dropdown position-absolute">
+                                        <Link
+                                            to="/user/myorders"
+                                            className="user-dropdown-item"
+                                            onClick={() => setShowDropdown(false)}
                                         >
-                                            Log Out
+                                            📦 My Orders
+                                        </Link>
+                                        <hr className="user-dropdown-divider" />
+                                        <button
+                                            className="user-dropdown-item logout"
+                                            onClick={() => { handleLogOut(); setShowDropdown(false); }}
+                                        >
+                                            🚪 Log Out
                                         </button>
                                     </div>
                                 )}
