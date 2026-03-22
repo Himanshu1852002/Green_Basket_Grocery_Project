@@ -1,163 +1,174 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import no_order_img from "../../../assets/Images/Images/order_no.png";
 import { fetchOrders, cancelOrder } from "../../../Store/orderSlice";
+import { FaChevronDown, FaChevronUp, FaBoxOpen, FaShoppingBag } from "react-icons/fa";
+import { MdCancel } from "react-icons/md";
 import "./MyOrders.css";
+
+const STATUS_CONFIG = {
+    "Pending":       { color: "#f59e0b", bg: "#fffbeb", border: "#fde68a" },
+    "Processing":    { color: "#3b82f6", bg: "#eff6ff", border: "#bfdbfe" },
+    "Out for Delivery": { color: "#8b5cf6", bg: "#f5f3ff", border: "#ddd6fe" },
+    "Delivered":     { color: "#059212", bg: "#f0faf0", border: "#c8e6c9" },
+    "Cancelled":     { color: "#e53935", bg: "#fde8e8", border: "#ffcdd2" },
+};
 
 const OrderDetails = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { orders } = useSelector((state) => state.order);
     const [expandedOrder, setExpandedOrder] = useState(null);
     const [cancelOrderId, setCancelOrderId] = useState(null);
     const [cancelReason, setCancelReason] = useState("");
-    const role = localStorage.getItem('role');
+    const role = localStorage.getItem("role");
+    const url = "https://green-basket-grocery-project.onrender.com";
 
-    useEffect(() => {
-        dispatch(fetchOrders());
-    }, [dispatch]);
-
-    const toggleOrderDetails = (orderId) => {
-        setExpandedOrder(expandedOrder === orderId ? null : orderId);
-    };
-
-    const handleCancelOrder = (orderId) => {
-        setCancelOrderId(orderId);
-    };
+    useEffect(() => { dispatch(fetchOrders()); }, [dispatch]);
 
     const submitCancelReason = () => {
-        if (cancelReason.trim()) {
-            dispatch(cancelOrder({ orderId: cancelOrderId, cancelReason, cancelledBy: role }))
-                .then(() => {
-                    setCancelOrderId(null);
-                    setCancelReason("");
-                })
-                .catch((error) => console.error("Failed to cancel order:", error));
-        } else {
-            alert("Please provide a cancellation reason.");
-        }
+        if (!cancelReason.trim()) { alert("Please provide a cancellation reason."); return; }
+        dispatch(cancelOrder({ orderId: cancelOrderId, cancelReason, cancelledBy: role }))
+            .then(() => { setCancelOrderId(null); setCancelReason(""); })
+            .catch((err) => console.error("Failed to cancel order:", err));
+    };
+
+    const formatDate = (dateStr) => {
+        if (!dateStr) return "—";
+        return new Date(dateStr).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
     };
 
     return (
-        <>
-            <div className="container-fluid py-3" style={{ backgroundColor: "#263d2f", color: "#fff" }}>
-                <div className="d-flex justify-content-center align-items-center flex-column">
-                    <p className="text-white">Home &gt; My Orders</p>
-                    <h1 className="text-center text-white fw-bold">My Orders</h1>
-                </div>
+        <div className="mo-page">
+
+            {/* Hero banner */}
+            <div className="mo-banner">
+                <p className="mo-breadcrumb">Home › My Orders</p>
+                <h1 className="mo-banner-title">My Orders</h1>
+                <p className="mo-banner-sub">Track and manage all your orders</p>
             </div>
 
-            <div className="order-details container py-5" style={{ marginTop: "40px" }}>
-                <div className="order-list">
-                    {orders.length === 0 ? (
-                        <div className="d-flex flex-column align-items-center justify-content-center py-5">
-                            <img src={no_order_img} alt="No Orders" className="img-fluid order-no-img" />
-                            <h2 className="text-center">No Orders Found!</h2>
-                        </div>
-                    ) : (
-                        orders.map((order) => (
-                            <div
-                                key={order._id}
-                                className={`user-order-card  rounded mb-4 p-3 shadow-sm ${order.orderStatus === "Cancelled" ? "disabled-card" : ""}`}
-                            >
-                                <div className="row align-items-center">
-                                    <div className="col-12 col-md-6 mb-2 mb-md-0">
-                                        <p className="mb-1 text-muted">
-                                            <strong>Items:</strong>
-                                        </p>
-                                        <p className="mb-0">
-                                            {order.items.map((item, i) => (
-                                                <span key={i} className="d-block">
-                                                    <strong>{item.name}</strong> x {item.quantity} = &#8377;{item.price * item.quantity}
-                                                </span>
-                                            ))}
-                                        </p>
-                                    </div>
-                                    <div className="col-6 col-md-3 text-center">
-                                        <p className="mb-1 text-muted">
-                                            <strong>Total Amount:</strong>
-                                        </p>
-                                        <p className="mb-0">&#8377;{order.amount}</p>
-                                    </div>
-                                    <div className="col-6 col-md-3 text-center">
-                                        <button
-                                            className="btn btn-success w-100"
-                                            onClick={() => toggleOrderDetails(order._id)}
-                                        >
-                                            {expandedOrder === order._id ? "Hide Details" : "View Details"}
-                                        </button>
-                                    </div>
-                                </div>
+            <div className="mo-container">
+                {orders.length === 0 ? (
+                    <div className="mo-empty">
+                        <img src={no_order_img} alt="No Orders" className="mo-empty-img" />
+                        <h3 className="mo-empty-title">No Orders Yet!</h3>
+                        <p className="mo-empty-sub">Looks like you haven't placed any orders yet.</p>
+                        <button className="mo-shop-btn" onClick={() => navigate("/")}>
+                            <FaShoppingBag size={14} /> Start Shopping
+                        </button>
+                    </div>
+                ) : (
+                    <div className="mo-list">
+                        {orders.map((order) => {
+                            const status = order.orderStatus || "Pending";
+                            const cfg = STATUS_CONFIG[status] || STATUS_CONFIG["Pending"];
+                            const isExpanded = expandedOrder === order._id;
+                            const isCancelled = status === "Cancelled";
 
-                                {expandedOrder === order._id && (
-                                    <div className="order-details-popup mt-3 p-3 border rounded bg-light">
-                                        <h5 className="mb-3">Order Details</h5>
-                                        <p className="mb-1 text-muted">
-                                            <strong>Order ID:</strong> {order._id}
-                                        </p>
-                                        <p className={`mb-1 ${order.orderStatus === "Cancelled" ? "text-danger" : ""}`}>
-                                            <strong>Order Status:</strong> {order.orderStatus}
-                                        </p>
-                                        <p className="mb-3 text-muted">
-                                            <strong>Placed On:</strong> {order.date}
-                                        </p>
-                                        <div>
-                                            <p className="mb-1 text-muted">
-                                                <strong>Items:</strong>
-                                            </p>
-                                            {order.items.map((item, i) => (
-                                                <div key={i} className="d-flex align-items-center mb-2">
-                                                    <img
-                                                        src={`http://localhost:3000/uploads/${item.image}`}
-                                                        alt={item.name}
-                                                        className="img-thumbnail me-2"
-                                                        style={{ width: "50px", height: "50px", objectFit: "cover" }}
-                                                    />
-                                                    <p className="mb-0">
-                                                        {item.name} - Quantity: {item.quantity}, Price: &#8377;{item.price}
-                                                    </p>
-                                                </div>
-                                            ))}
+                            return (
+                                <div key={order._id} className={`mo-card${isCancelled ? " mo-card-cancelled" : ""}`}>
+
+                                    {/* Card header */}
+                                    <div className="mo-card-header">
+                                        <div className="mo-card-left">
+                                            <div className="mo-order-icon">
+                                                <FaBoxOpen size={16} />
+                                            </div>
+                                            <div>
+                                                <p className="mo-order-id">#{order._id.slice(-8).toUpperCase()}</p>
+                                                <p className="mo-order-date">{formatDate(order.date)}</p>
+                                            </div>
                                         </div>
-
-                                        {order.orderStatus !== "Cancelled" && (
-                                            <button
-                                                className="btn btn-danger mt-3"
-                                                onClick={() => handleCancelOrder(order._id)}
-                                            >
-                                                Cancel Order
-                                            </button>
-                                        )}
+                                        <div className="mo-card-right">
+                                            <span className="mo-status-badge" style={{ color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.border}` }}>
+                                                {status}
+                                            </span>
+                                            <span className="mo-amount">₹{order.amount}</span>
+                                        </div>
                                     </div>
-                                )}
-                            </div>
-                        ))
-                    )}
-                </div>
+
+                                    {/* Items preview */}
+                                    <div className="mo-items-preview">
+                                        {order.items.map((item, i) => (
+                                            <span key={i} className="mo-item-chip">
+                                                {item.name} × {item.quantity}
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    {/* Toggle button */}
+                                    <button className="mo-toggle-btn" onClick={() => setExpandedOrder(isExpanded ? null : order._id)}>
+                                        {isExpanded ? <><FaChevronUp size={12} /> Hide Details</> : <><FaChevronDown size={12} /> View Details</>}
+                                    </button>
+
+                                    {/* Expanded details */}
+                                    {isExpanded && (
+                                        <div className="mo-expanded">
+                                            <div className="mo-expanded-items">
+                                                {order.items.map((item, i) => (
+                                                    <div key={i} className="mo-exp-item">
+                                                        <div className="mo-exp-img-wrap">
+                                                            <img src={`${url}/uploads/${item.image}`} alt={item.name} className="mo-exp-img" />
+                                                        </div>
+                                                        <div className="mo-exp-info">
+                                                            <p className="mo-exp-name">{item.name}</p>
+                                                            <p className="mo-exp-meta">Qty: {item.quantity} · ₹{item.price} each</p>
+                                                        </div>
+                                                        <span className="mo-exp-total">₹{item.price * item.quantity}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+
+                                            <div className="mo-exp-footer">
+                                                <div className="mo-exp-meta-row">
+                                                    <span className="mo-exp-label">Payment</span>
+                                                    <span className="mo-exp-val">{order.paymentMethod || "—"}</span>
+                                                </div>
+                                                <div className="mo-exp-meta-row">
+                                                    <span className="mo-exp-label">Total</span>
+                                                    <span className="mo-exp-val mo-exp-total-amt">₹{order.amount}</span>
+                                                </div>
+                                                {!isCancelled && (
+                                                    <button className="mo-cancel-btn" onClick={() => setCancelOrderId(order._id)}>
+                                                        <MdCancel size={14} /> Cancel Order
+                                                    </button>
+                                                )}
+                                                {isCancelled && order.cancelReason && (
+                                                    <p className="mo-cancel-reason">Reason: {order.cancelReason}</p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
             </div>
 
-            {/* Cancel Order Popup */}
+            {/* Cancel modal */}
             {cancelOrderId && (
-                <div className="order-popup-overlay">
-                    <div className="order-popup-content">
-                        <h5 className="mb-3">Cancel Order</h5>
+                <div className="mo-overlay" onClick={() => setCancelOrderId(null)}>
+                    <div className="mo-modal" onClick={(e) => e.stopPropagation()}>
+                        <h5 className="mo-modal-title">Cancel Order</h5>
+                        <p className="mo-modal-sub">Please tell us why you want to cancel this order.</p>
                         <textarea
-                            className="form-control mb-3"
-                            placeholder="Enter cancellation reason"
+                            className="mo-modal-textarea"
+                            rows={4}
+                            placeholder="Enter cancellation reason..."
                             value={cancelReason}
                             onChange={(e) => setCancelReason(e.target.value)}
-                        ></textarea>
-                        <div className="d-flex justify-content-end">
-                            <button className="btn btn-secondary me-2" onClick={() => setCancelOrderId(null)}>
-                                Close
-                            </button>
-                            <button className="btn btn-danger" onClick={submitCancelReason}>
-                                Done
-                            </button>
+                        />
+                        <div className="mo-modal-actions">
+                            <button className="mo-modal-close" onClick={() => setCancelOrderId(null)}>Go Back</button>
+                            <button className="mo-modal-confirm" onClick={submitCancelReason}>Confirm Cancel</button>
                         </div>
                     </div>
                 </div>
             )}
-        </>
+        </div>
     );
 };
 

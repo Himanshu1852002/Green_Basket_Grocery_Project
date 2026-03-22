@@ -1,69 +1,406 @@
-.order-details {
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-    background-color: #fff;
-    border-radius: 8px;
+/* Page */
+.mo-page {
+    min-height: 100vh;
+    background: #f7fbf7;
 }
 
-.order-img {
-    max-height: 70px;
-    max-width: 120px;
+/* Banner */
+.mo-banner {
+    background: linear-gradient(135deg, #1a4d2e, #059212);
+    color: #fff;
+    text-align: center;
+    padding: 36px 16px 32px;
 }
 
-.order-no-img {
-    max-height: 200px;
-    margin-top: 20px;
+.mo-breadcrumb {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 8px;
 }
 
-.user-order-card {
-    background-color: #D9DFC6;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
-    border: 1px solid black;
+.mo-banner-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0 0 6px;
 }
 
-/* MyOrders.css */
-.order-popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.mo-banner-sub {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.8);
+    margin: 0;
 }
 
-.order-popup-content {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 20px;
-    max-width: 500px;
-    width: 90%;
+/* Container */
+.mo-container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 32px 16px 60px;
+}
+
+/* Empty state */
+.mo-empty {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    align-items: center;
+    text-align: center;
+    padding: 48px 16px;
 }
 
-.order-popup-content textarea {
-    resize: vertical;
+.mo-empty-img {
+    width: 160px;
+    margin-bottom: 20px;
+    opacity: 0.85;
 }
 
-.order-popup-content button {
+.mo-empty-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1a4d2e;
+    margin-bottom: 8px;
+}
+
+.mo-empty-sub {
+    font-size: 0.88rem;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.mo-shop-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 24px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #059212, #1a4d2e);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.mo-shop-btn:hover { opacity: 0.9; }
+
+/* Orders list */
+.mo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Order card */
+.mo-card {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #e8f5e9;
+    box-shadow: 0 2px 12px rgba(5, 146, 18, 0.07);
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+}
+
+.mo-card:hover {
+    box-shadow: 0 4px 20px rgba(5, 146, 18, 0.13);
+}
+
+.mo-card-cancelled {
+    opacity: 0.75;
+    border-color: #ffcdd2;
+}
+
+/* Card header */
+.mo-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px;
+    border-bottom: 1px solid #f0faf0;
+}
+
+.mo-card-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mo-order-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #f0faf0;
+    border: 1px solid #c8e6c9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #059212;
+    flex-shrink: 0;
+}
+
+.mo-order-id {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 2px;
+}
+
+.mo-order-date {
+    font-size: 0.75rem;
+    color: #999;
+    margin: 0;
+}
+
+.mo-card-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mo-status-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.mo-amount {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a4d2e;
+}
+
+/* Items preview chips */
+.mo-items-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 12px 18px;
+}
+
+.mo-item-chip {
+    font-size: 0.75rem;
+    color: #555;
+    background: #f7fbf7;
+    border: 1px solid #e8f5e9;
+    border-radius: 20px;
+    padding: 3px 10px;
+}
+
+/* Toggle button */
+.mo-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 18px 14px;
+    padding: 7px 14px;
+    border: 1.5px solid #c8e6c9;
+    border-radius: 8px;
+    background: #f0faf0;
+    color: #059212;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.mo-toggle-btn:hover { background: #c8e6c9; }
+
+/* Expanded section */
+.mo-expanded {
+    border-top: 1px solid #e8f5e9;
+    padding: 16px 18px;
+    background: #fafffe;
+}
+
+.mo-expanded-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.mo-exp-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #e8f5e9;
+}
+
+.mo-exp-img-wrap {
+    width: 50px;
+    height: 50px;
+    background: #f0faf0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 4px;
+    border: 1px solid #e8f5e9;
+}
+
+.mo-exp-img { width: 100%; height: 100%; object-fit: contain; }
+
+.mo-exp-info { flex: 1; }
+
+.mo-exp-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 3px;
+}
+
+.mo-exp-meta {
+    font-size: 0.75rem;
+    color: #888;
+    margin: 0;
+}
+
+.mo-exp-total {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #059212;
+    white-space: nowrap;
+}
+
+/* Expanded footer */
+.mo-exp-footer {
+    border-top: 1px dashed #c8e6c9;
+    padding-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mo-exp-meta-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+}
+
+.mo-exp-label { color: #888; }
+.mo-exp-val { font-weight: 600; color: #1a1a1a; }
+.mo-exp-total-amt { color: #059212; font-size: 0.95rem; }
+
+.mo-cancel-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 16px;
+    border: 1.5px solid #ffcdd2;
+    border-radius: 8px;
+    background: #fde8e8;
+    color: #e53935;
+    font-size: 0.83rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: fit-content;
+    margin-top: 4px;
+    transition: background 0.2s;
+}
+
+.mo-cancel-btn:hover { background: #e53935; color: #fff; border-color: #e53935; }
+
+.mo-cancel-reason {
+    font-size: 0.78rem;
+    color: #e53935;
+    background: #fde8e8;
+    padding: 6px 10px;
+    border-radius: 8px;
+    margin: 0;
+}
+
+/* Cancel modal */
+.mo-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.mo-modal {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 24px;
     width: 100%;
+    max-width: 440px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
 }
 
-@media (min-width: 768px) {
-    .order-popup-content {
-        flex-direction: column;
-        height: 250px;
-        justify-content: space-between;
-    }
+.mo-modal-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+}
 
-    .order-popup-content textarea {
-        height: 100px;
-    }
+.mo-modal-sub {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 16px;
+}
 
-    .order-popup-content button {
-        width: 48%;
-    }
+.mo-modal-textarea {
+    width: 100%;
+    padding: 10px 13px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 0.87rem;
+    outline: none;
+    resize: vertical;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    margin-bottom: 16px;
+}
+
+.mo-modal-textarea:focus {
+    border-color: #059212;
+    box-shadow: 0 0 0 3px rgba(5,146,18,0.1);
+}
+
+.mo-modal-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.mo-modal-close {
+    flex: 1;
+    padding: 11px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    background: #fff;
+    color: #555;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.mo-modal-close:hover { background: #f5f5f5; }
+
+.mo-modal-confirm {
+    flex: 1;
+    padding: 11px;
+    border: none;
+    border-radius: 10px;
+    background: #e53935;
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.mo-modal-confirm:hover { background: #c62828; }
+
+@media (max-width: 480px) {
+    .mo-card-header { flex-wrap: wrap; gap: 10px; }
+    .mo-banner-title { font-size: 1.6rem; }
 }

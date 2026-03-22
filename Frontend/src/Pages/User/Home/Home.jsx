@@ -12,7 +12,7 @@ const Home = () => {
 
     return (
         <>
-            <div>
+            <div style={{ background: '#f7fbf7' }}>
                 <Hero />
                 <ExploreMenu category={category} setCategory={setCategory} />
                 <FeaturedProduct />

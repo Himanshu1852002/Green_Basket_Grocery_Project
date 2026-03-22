@@ -9,93 +9,82 @@ import cocacolaimg from '../../../assets/Images/Images/coca-cola.png';
 import termaricimg from '../../../assets/Images/Images/termaric.png';
 import riceimg from '../../../assets/Images/Images/rice.png';
 import { useState } from 'react';
+import { MdClose } from 'react-icons/md';
+import { FaLeaf } from 'react-icons/fa';
 
+const cards = [
+    { imgSrc: appleimg, title: "Apple", category: "Fruits", description: "An apple a day keeps the doctor away! Apples are packed with fiber, antioxidants, and vitamins that support your overall health. Their natural sweetness makes them a satisfying snack while their low calorie count ensures they fit perfectly into any diet plan." },
+    { imgSrc: strawberry, title: "Strawberry", category: "Fruits", description: "Strawberries are not only delicious but also packed with vitamin C and antioxidants. Their sweet and tangy flavor makes them a favorite in smoothies, desserts, or as a refreshing snack. Low in calories and high in fiber." },
+    { imgSrc: chocolateimg, title: "Dairy Milk", category: "Chocolates", description: "Indulge in the rich, velvety taste of chocolate — a timeless treat loved by all! Packed with antioxidants and a hint of sweetness, chocolate not only satisfies your cravings but also uplifts your mood." },
+    { imgSrc: popcornimg, title: "Popcorn", category: "Snacks", description: "Popcorn is a light and crunchy snack perfect for movie nights or anytime you need a quick, satisfying bite. High in fiber and low in calories, it's a healthier snack choice compared to other processed treats." },
+    { imgSrc: tomatoimg, title: "Tomato", category: "Vegetables", description: "Tomatoes are a vibrant and versatile ingredient, packed with vitamins, minerals, and antioxidants. Whether fresh in salads, blended into sauces, or roasted to perfection, tomatoes add a burst of flavor to any dish." },
+    { imgSrc: cocacolaimg, title: "Coca-Cola", category: "Drinks", description: "Quench your thirst with the fizzy delight of cold drinks! Perfect for hot days or lively gatherings, these refreshing beverages add a sparkling touch to any moment. Every sip is a burst of coolness and flavor." },
+    { imgSrc: termaricimg, title: "Turmeric", category: "Grocery", description: "Turmeric, the golden spice, is celebrated for its powerful anti-inflammatory and antioxidant properties. Its active compound curcumin promotes healthy digestion, improves skin health, and boosts immunity." },
+    { imgSrc: riceimg, title: "Rice", category: "Grocery", description: "Rice is a staple food in many cultures around the world. Packed with carbohydrates, it provides a quick energy boost. Whether white, brown, or wild, rice is a versatile ingredient used in countless dishes." },
+];
 
-const Cards = ({ imgSrc, title, description, onSeeMore }) => {
-    return (
-        <>
-            <div className="col">
-                <div className="featured-card card d-flex flex-column justify-content-center align-items-center cursor-pointer rounded-3 position-relative">
-                    <img src={imgSrc} className="card-img-top" alt={`${title} Image`} />
-                    <span className="badge position-absolute top-0 start-0 m-2">
-                        Featured
-                    </span>
-                    <div className="card-body">
-                        <h5 className="card-title">{title}</h5>
-                        <p className="card-text">{description}</p>
-                        <button className="btn- btn btn-success" onClick={onSeeMore}>See more</button>
-                    </div>
-                </div>
-            </div>
+const FeaturedCard = ({ imgSrc, title, category, description, onSeeMore }) => (
+    <div className="fp-card" onClick={onSeeMore}>
+        <span className="fp-badge"><FaLeaf size={9} /> {category}</span>
+        <div className="fp-img-wrap">
+            <img src={imgSrc} alt={title} className="fp-img" />
+        </div>
+        <div className="fp-info">
+            <h5 className="fp-title">{title}</h5>
+            <p className="fp-desc">{description}</p>
+            <button className="fp-btn">See More →</button>
+        </div>
+    </div>
+);
 
-        </>
-    );
-};
-
-// PropTypes for validation
-Cards.propTypes = {
+FeaturedCard.propTypes = {
     imgSrc: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     onSeeMore: PropTypes.func.isRequired,
 };
 
 const Featured_Product = () => {
-
     const [popupData, setPopupData] = useState(null);
 
-    const cards = [
-        { imgSrc: appleimg, title: "Apple", description: "An apple a day keeps the doctor away is not just an old saying rooted  truth Apples are packed with fiber antioxidants and awealth of vitamins that support your overall health Their naturalsweetness makes them a satisfying snack while their low calorie count ensures they fit perfectly into any diet plan " },
-        { imgSrc: strawberry, title: "Strawberry", description: "Strawberries are not only delicious but also packed with vitamin C and antioxidants.Their sweet and tangy flavor makes them a favorite in smoothies, desserts, or as a refreshing snack.Low in calories and high in fiber, strawberries offer numerous health benefits while satisfying your taste buds." },
-        { imgSrc: chocolateimg, title: "DairyMilk", description: "Indulge in the rich, velvety taste of chocolate—a timeless treat loved by all! Packed with antioxidants and a hint of sweetness, chocolate not only satisfies your cravings but also uplifts your mood. Whether it's a creamy milk chocolate bar or decadent dark chocolate, this delicacy is perfect for every occasion. A bite of joy in every piece!" },
-        { imgSrc: popcornimg, title: "Popcorn", description: "Popcorn is a light and crunchy snack that is perfect for movie nights or anytime you need a quick, satisfying bite. High in fiber and low in calories, it's a healthier snack choice compared to other processed treats. Whether flavored with butter, cheese, or spices, popcorn is a versatile snack that everyone can enjoy." },
-        { imgSrc: tomatoimg, title: "Tomato", description: "Tomatoes are a vibrant and versatile ingredient, packed with vitamins, minerals, and antioxidants. Whether fresh in salads, blended into sauces, or roasted to perfection, tomatoes add a burst of flavor and a healthy boost to any dish. Their rich red color is a sign of their nutritious value, making them an essential part of a balanced diet." },
-        { imgSrc: cocacolaimg, title: "Coca-Cola", description: "Quench your thirst with the fizzy delight of cold drinks! Perfect for hot days or lively gatherings, these refreshing beverages add a sparkling touch to any moment.From classic cola to fruity flavors, every sip is a burst of coolness and flavor that leaves you wanting more.Chill out and enjoy the effervescence" },
-        { imgSrc: termaricimg, title: "Termaric", description: "Turmeric, often referred to as 'golden spice,' is celebrated for its powerful anti-inflammatory and antioxidant properties. Used in cooking, medicine, and beauty treatments, turmeric adds a warm, earthy flavor to dishes and supports overall health. Its active compound, curcumin, is believed to promote healthy digestion, improve skin health, and boost immunity." },
-        { imgSrc: riceimg, title: "Rice", description: "Rice is a staple food in many cultures around the world. Packed with carbohydrates, it provides a quick energy boost. Whether white, brown, or wild, rice is a versatile ingredient used in countless dishes. Brown rice, in particular, offers more fiber and nutrients, making it a healthier option for those looking to maintain a balanced diet." }
-    ];
-    const handleSeeMore = (card) => {
-        setPopupData(card);
-    }
-    const closePopup = () => {
-        setPopupData(null);
-    }
-
-
     return (
-        <div className="feature_product container my-5">
-            <h1>Featured <span>Products</span></h1>
-            {/* First row of cards */}
-            <div className="row row-cols-1 row-cols-s-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4 mt-3">
-                {cards.slice(0, 4).map((card, index) => (
-                    <Cards key={index} imgSrc={card.imgSrc} title={card.title} description={card.description} onSeeMore={() => handleSeeMore(card)} />
+        <div className="fp-section">
+            <div className="fp-header">
+                <span className="fp-tag"><FaLeaf size={12} /> Featured</span>
+                <h2 className="fp-section-title">Featured <span>Products</span></h2>
+                <p className="fp-section-sub">Handpicked fresh items just for you</p>
+            </div>
+
+            <div className="fp-grid">
+                {cards.map((card, i) => (
+                    <FeaturedCard key={i} {...card} onSeeMore={() => setPopupData(card)} />
                 ))}
             </div>
 
-            {/* Second row of cards */}
-            <div className="row row-cols-1 row-cols-s-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4 mt-4">
-                {cards.slice(4).map((card, index) => (
-                    <Cards key={index} imgSrc={card.imgSrc} title={card.title} description={card.description} onSeeMore={() => handleSeeMore(card)} />
-                ))}
-            </div>
-
-
-            {/* Popup modal */}
+            {/* Popup */}
             {popupData && (
-                <div className="popup-overlay">
-                    <div className="popup-content row">
-                        <button className="btn-close" aria-label="Close" onClick={closePopup}></button>
-                        <div className="popup-left">
-                            <img className='main_img' src={popupData.imgSrc} alt={`${popupData.title} Main`} />
-                            <div className="collage-row">
-                                <img src={popupData.imgSrc} alt={`${popupData.title} Collage 1`} />
-                                <img src={popupData.imgSrc} alt={`${popupData.title} Collage 2`} />
-                                <img src={popupData.imgSrc} alt={`${popupData.title} Collage 3`} />
+                <div className="fp-overlay" onClick={() => setPopupData(null)}>
+                    <div className="fp-popup" onClick={(e) => e.stopPropagation()}>
+
+                        {/* Left */}
+                        <div className="fp-popup-left">
+                            <img src={popupData.imgSrc} alt={popupData.title} className="fp-popup-main-img" />
+                            <div className="fp-popup-thumbs">
+                                {[1, 2, 3].map((i) => (
+                                    <img key={i} src={popupData.imgSrc} alt={`${popupData.title} ${i}`} className="fp-popup-thumb" />
+                                ))}
                             </div>
                         </div>
-                        <div className="popup-right">
-                            <h2>{popupData.title}</h2>
-                            <p>{popupData.description}</p>
+
+                        {/* Right */}
+                        <div className="fp-popup-right">
+                            <button className="fp-popup-close" onClick={() => setPopupData(null)}>
+                                <MdClose size={18} />
+                            </button>
+                            <span className="fp-popup-category"><FaLeaf size={11} /> {popupData.category}</span>
+                            <h2 className="fp-popup-title">{popupData.title}</h2>
+                            <p className="fp-popup-desc">{popupData.description}</p>
                         </div>
                     </div>
                 </div>
