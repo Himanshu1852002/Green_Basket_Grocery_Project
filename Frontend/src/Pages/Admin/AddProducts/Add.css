@@ -1,54 +1,151 @@
-.add-item {
-    color: #495057;
+.ap-page { padding: 8px 4px; }
+
+.ap-header { margin-bottom: 24px; }
+.ap-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1a4d2e;
+    margin: 0 0 4px;
+}
+.ap-sub { font-size: 0.88rem; color: #888; margin: 0; }
+
+.ap-form {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid #f0f0f0;
+    padding: 28px;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
 }
 
-.add form {
-    margin-top: 10px;
+/* Upload */
+.ap-upload-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
 }
 
-.add-img-upload img {
-    max-width: 100px;
-    height: auto;
+.ap-upload {
+    width: 160px;
+    height: 160px;
+    border: 2px dashed #b2dfdb;
+    border-radius: 14px;
+    background: #f0faf0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    border: 2px dashed #6c757d;
+    transition: border-color 0.2s, background 0.2s;
+    overflow: hidden;
+}
+.ap-upload:hover { border-color: #059212; background: #e8f5e9; }
+
+.ap-upload-icon { width: 60px; opacity: 0.5; }
+.ap-upload-text {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 8px;
+    text-align: center;
+    padding: 0 10px;
+}
+
+.ap-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ap-remove-img {
+    background: none;
+    border: 1px solid #ffcdd2;
+    color: #e53935;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.ap-remove-img:hover { background: #ffebee; }
+
+/* Fields */
+.ap-fields { flex: 1; display: flex; flex-direction: column; gap: 16px; }
+
+.ap-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+}
+
+.ap-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.ap-field label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.ap-field input,
+.ap-field select,
+.ap-field textarea {
+    border: 1.5px solid #e0e0e0;
     border-radius: 10px;
-    padding: 5px;
-    background-color: #f8f9fa;
-    transition: all 0.3s;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    color: #333;
+    outline: none;
+    transition: border-color 0.2s;
+    background: #fafafa;
+    resize: none;
+}
+.ap-field input:focus,
+.ap-field select:focus,
+.ap-field textarea:focus {
+    border-color: #059212;
+    background: #fff;
 }
 
-.add-img-upload img:hover {
-    border-color: #28a745;
-}
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button { -webkit-appearance: none; }
+input[type='number'] { -moz-appearance: textfield; }
 
-.add label {
-    font-weight: bold;
-    color: #6c757d;
+.ap-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #059212;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 13px 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    margin-top: 4px;
 }
+.ap-submit:hover { background: #1a4d2e; transform: translateY(-1px); }
 
-.add button {
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 8px;
+@media (max-width: 768px) {
+    .ap-form { flex-direction: column; align-items: stretch; }
+    .ap-upload-wrap { flex-direction: row; align-items: center; }
+    .ap-upload { width: 120px; height: 120px; }
 }
-
-.add button:hover {
-    background-color: #218838;
-}
-
-.add input:focus,
-.add select:focus{
-    border-color: #218838;
-}
-
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Firefox */
-input[type="number"] {
-    -moz-appearance: textfield;
-}
-

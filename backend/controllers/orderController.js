@@ -217,4 +217,35 @@ const orderCancel = async (req, res) => {
     }
 }
 
-export { createOrder, verifyOrder, userOrders, fetchAllOrders, updateStatus, orderCount, orderCancel }
+const getTrendingProducts = async (req, res) => {
+    try {
+        const orders = await orderModel.find({ payment: true });
+
+        const productMap = {};
+        orders.forEach(order => {
+            order.items.forEach(item => {
+                const key = item.name;
+                if (!productMap[key]) {
+                    productMap[key] = {
+                        name: item.name,
+                        image: item.image,
+                        price: item.price,
+                        itemId: item.itemId || null,
+                        totalSold: 0
+                    };
+                }
+                productMap[key].totalSold += item.quantity;
+            });
+        });
+
+        const trending = Object.values(productMap)
+            .sort((a, b) => b.totalSold - a.totalSold)
+            .slice(0, 8);
+
+        return res.status(200).json({ success: true, data: trending });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: 'Server Error', error });
+    }
+};
+
+export { createOrder, verifyOrder, userOrders, fetchAllOrders, updateStatus, orderCount, orderCancel, getTrendingProducts }

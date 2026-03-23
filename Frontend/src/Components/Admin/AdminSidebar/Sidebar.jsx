@@ -1,33 +1,39 @@
-import './Sidebar.css'
-import { MdLibraryAdd, MdDashboardCustomize } from "react-icons/md";
-import { FaListAlt } from "react-icons/fa";
-import { AiFillProduct } from "react-icons/ai";
-import { Link } from 'react-router-dom'
+import './Sidebar.css';
+import { MdLibraryAdd, MdDashboardCustomize, MdShoppingBag } from 'react-icons/md';
+import { FaListAlt, FaUsers } from 'react-icons/fa';
+import { NavLink } from 'react-router-dom';
+
+const navItems = [
+    { to: '/admin/dashboard', icon: <MdDashboardCustomize size={20} />, label: 'Dashboard' },
+    { to: '/admin/add',       icon: <MdLibraryAdd size={20} />,         label: 'Add Product' },
+    { to: '/admin/list',      icon: <FaListAlt size={18} />,            label: 'Products' },
+    { to: '/admin/orders',    icon: <MdShoppingBag size={20} />,        label: 'Orders' },
+    { to: '/admin/users',     icon: <FaUsers size={18} />,              label: 'Users' },
+];
 
 const Sidebar = () => {
     return (
-        <div className='sidebar position-fixed'>
-            <div className="sidebar-options">
-                <Link to='/admin/dashboard' className="sidebar-option">
-                    <MdDashboardCustomize size={25} />
-                    <span className='d-none d-md-flex'>Dashboard</span>
-                </Link>
-                <Link to='/admin/add' className="sidebar-option">
-                    <MdLibraryAdd size={25} />
-                    <span className='d-none d-md-flex'> Add Items</span>
-                </Link>
-                <Link to='/admin/list' className="sidebar-option">
-                    <FaListAlt size={25} />
-                    <span className='d-none d-md-flex'>List Items</span>
-                </Link>
-                <Link to='/admin/orders' className="sidebar-option">
-                    <AiFillProduct size={25} />
-                    <span className='d-none d-md-flex'>Orders</span>
-                </Link>
+        <aside className="as-sidebar">
+            <nav className="as-nav">
+                {navItems.map(item => (
+                    <NavLink
+                        key={item.to}
+                        to={item.to}
+                        className={({ isActive }) => `as-link ${isActive ? 'as-active' : ''}`}
+                    >
+                        <span className="as-icon">{item.icon}</span>
+                        <span className="as-label">{item.label}</span>
+                        <span className="as-active-bar" />
+                    </NavLink>
+                ))}
+            </nav>
+
+            {/* Bottom version tag */}
+            <div className="as-footer">
+                <span className="as-version">v1.0.0</span>
             </div>
-        </div>
-    )
-}
+        </aside>
+    );
+};
 
-export default Sidebar
-
+export default Sidebar;

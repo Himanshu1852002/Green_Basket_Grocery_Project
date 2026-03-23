@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
 import cors from 'cors'
+import { registerAdmin } from './controllers/userController.js';
 import 'dotenv/config';
 import productRouter from './routes/productRoute.js';
 import cartRouter from './routes/cartRoute.js';
@@ -24,7 +25,9 @@ app.use(cors());
 
 
 // database connection
-connectDataBase();
+connectDataBase().then(() => {
+    // registerAdmin();
+});
 
 
 const __filename = fileURLToPath(import.meta.url);

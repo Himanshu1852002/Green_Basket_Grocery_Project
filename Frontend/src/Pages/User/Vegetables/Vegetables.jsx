@@ -1,7 +1,7 @@
-import Banners from "../../../Components/User/Banners/Banners"
-import ExploreMenu from "../../../Components/User/Explore_Menu/Explore_Menu"
-import Product_Item_List from "../../../Components/User/Product_Item_List/Product_Item_List"
-import veges_img from '../../../assets/Images/Images/veges.png'
+import veges_img from '../../../assets/Images/Images/veges.png';
+import Banners from "../../../Components/User/Banners/Banners";
+import ExploreMenu from "../../../Components/User/Explore_Menu/Explore_Menu";
+import Product_Item_List from "../../../Components/User/Product_Item_List/Product_Item_List";
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductsByCategory, getProductsError, getProductsStatus, selectAllProducts } from '../../../Store/productsSlice';
@@ -9,36 +9,34 @@ import { fetchProductsByCategory, getProductsError, getProductsStatus, selectAll
 const Vegetables = () => {
     const [category, setCategory] = useState("Vegetables");
     const dispatch = useDispatch();
-
     const products = useSelector(selectAllProducts);
     const status = useSelector(getProductsStatus);
     const error = useSelector(getProductsError);
 
     useEffect(() => {
-        // Fetch products whenever category changes
-        const timer = setTimeout(() => {
-            dispatch(fetchProductsByCategory(category));
-        }, 300); // Small delay for better UX
-
+        const timer = setTimeout(() => { dispatch(fetchProductsByCategory(category)); }, 300);
         return () => clearTimeout(timer);
-    }, [dispatch, category]); // Remove `status` dependency
-
+    }, [dispatch, category]);
 
     return (
         <>
             <Banners
+                tag="🥦 Farm Fresh"
                 title1="Green &"
                 title2="Fresh Vegetables"
-                heading="CHOOSE FRESH AND GREEN VEGETABLES FOR HEALTH"
+                subtitle="Sourced directly from local farms. Crisp, nutritious, and delivered fresh every morning."
                 item_img={veges_img}
-                backgroundColor="linear-gradient(to bottom,#0f2a1d,#375534,#6b9071,#aec3b0,#e3eed4)"
+                stats={[
+                    { value: '40+', label: 'Varieties' },
+                    { value: 'Daily', label: 'Fresh Stock' },
+                    { value: '100%', label: 'Organic' },
+                ]}
             />
             <ExploreMenu category={category} setCategory={setCategory} />
-            {status === "loading" && <p>Loading products...</p>}
-            {status === "failed" && <p>Error: {error}</p>}
-            {status === "succeeded" && <Product_Item_List items={products} />}
+            {status === "failed" && <p className="text-center py-5 text-danger">Error: {error}</p>}
+            <Product_Item_List items={status === "succeeded" ? products : []} loading={status === "loading"} />
         </>
-    )
-}
+    );
+};
 
-export default Vegetables
+export default Vegetables;

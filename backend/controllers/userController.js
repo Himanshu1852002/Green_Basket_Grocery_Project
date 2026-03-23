@@ -21,31 +21,29 @@ const transporter = nodemailer.createTransport({
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000);
 
 
-// const registerAdmin = async () => {
-//     try {
-//         const adminExists = await userModel.findOne({ email: 'admin@greenBasket.com' });
-//         if (adminExists) {
-//             console.log('Admin already exists');
-//             return;
-//         }
+const registerAdmin = async () => {
+    try {
+        const adminExists = await userModel.findOne({ email: 'admin@greenBasket.com' });
+        if (adminExists) {
+            console.log('Admin already exists');
+            return;
+        }
 
-//         const hashedPassword = await bcrypt.hash('admin@1234', 10);
+        const hashedPassword = await bcrypt.hash('admin@1234', 10);
 
-//         const admin = new userModel({
-//             name: 'Admin',
-//             email: 'admin@greenBasket.com',
-//             password: hashedPassword,
-//             role: 'admin'
-//         })
+        const admin = new userModel({
+            name: 'Admin',
+            email: 'admin@greenBasket.com',
+            password: hashedPassword,
+            role: 'admin'
+        })
 
-//         await admin.save();
-//         console.log('Admin registered successfully');
-//     } catch (error) {
-//         console.error('Error registering admin:', error);
-//     }
-// }
-
-// registerAdmin();
+        await admin.save();
+        console.log('Admin registered successfully');
+    } catch (error) {
+        console.error('Error registering admin:', error);
+    }
+}
 
 // login user
 const loginUser = async (req, res) => {
@@ -63,7 +61,7 @@ const loginUser = async (req, res) => {
             return res.json({ success: false, message: 'Invalid password' });
         }
 
-        const token = createToken(user._id,);
+        const token = createToken(user._id, user.role);
 
         if (user.role === 'admin') {
             return res.status(200).json({
@@ -216,4 +214,28 @@ const getUserCount = async (req, res) => {
 };
 
 
-export { loginUser, registerUser, verifyOtp, getUserCount };
+// Get all users
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await userModel.find({ role: 'user' }).select('-password').sort({ createdAt: -1 });
+        res.status(200).json({ success: true, data: users });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+// Block / Unblock user
+const blockUnblockUser = async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const user = await userModel.findById(userId);
+        if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+        user.isBlocked = !user.isBlocked;
+        await user.save();
+        res.status(200).json({ success: true, message: user.isBlocked ? 'User blocked' : 'User unblocked', isBlocked: user.isBlocked });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+export { loginUser, registerUser, verifyOtp, getUserCount, registerAdmin, getAllUsers, blockUnblockUser };

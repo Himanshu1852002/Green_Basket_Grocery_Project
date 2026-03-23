@@ -183,6 +183,7 @@ const Navbar = ({ setShowLogin }) => {
                 {menuOpen && (
                     <div className="nb-mobile-menu">
                         <Link to="/" className="nb-mobile-link" onClick={() => setMenuOpen(false)}>🏠 Home</Link>
+                        <Link to="/user/blog" className="nb-mobile-link" onClick={() => setMenuOpen(false)}>📝 Blog</Link>
                         <Link to="/user/wishlist" className="nb-mobile-link" onClick={() => setMenuOpen(false)}>
                             ❤️ Wishlist {wishlistCount > 0 && <span className="nb-mobile-badge">{wishlistCount}</span>}
                         </Link>

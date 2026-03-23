@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './Checkout.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { addToCartAPI, removeFromCartAPI } from '../../../Store/cartSlice';
+import { addToCartAPI, removeFromCartAPI, clearCartData } from '../../../Store/cartSlice';
 import {
     FaMapMarkerAlt, FaShoppingBag, FaTruck, FaMoneyBillWave,
     FaCreditCard, FaTag, FaCheck, FaSpinner, FaTrash, FaUser
@@ -139,6 +139,7 @@ const Checkout = () => {
             const result = await response.json();
             if (response.ok) {
                 if (paymentMethod === 'cod') {
+                    dispatch(clearCartData());
                     navigate('/user/verify');
                 } else {
                     handlePayment(result.data);
@@ -174,8 +175,10 @@ const Checkout = () => {
                         }),
                     });
                     const result = await verificationResponse.json();
-                    if (verificationResponse.ok) navigate('/user/verify');
-                    else alert(result.message || 'Payment verification failed.');
+                    if (verificationResponse.ok) {
+                        dispatch(clearCartData());
+                        navigate('/user/verify');
+                    } else alert(result.message || 'Payment verification failed.');
                 } catch (error) {
                     console.error('Error verifying payment:', error);
                     alert('Something went wrong. Please try again.');

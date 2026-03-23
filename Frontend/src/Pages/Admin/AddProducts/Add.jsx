@@ -4,191 +4,107 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { FaCloudUploadAlt } from 'react-icons/fa';
+import { MdLibraryAdd } from 'react-icons/md';
+
+const CATEGORIES = ['Fruits', 'Vegetables', 'Chocolates', 'Snacks', 'Coldrinks', 'Grocery'];
+const UNITS = ['kg', 'g', 'liters', 'ml', 'pieces'];
 
 const Add = ({ url }) => {
-    const [image, setImage] = useState(false);
+    const [image, setImage] = useState(null);
     const [data, setData] = useState({
-        name: "",
-        unit: "",
-        description: "",
-        price: "",
-        sellingPrice: "",
-        quantity: "",
-        category: "Fruits",
+        name: '', unit: '', description: '',
+        price: '', sellingPrice: '', quantity: '', category: 'Fruits',
     });
 
-    const onChangeHandler = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setData((data) => ({ ...data, [name]: value }));
+    const onChange = (e) => {
+        const { name, value } = e.target;
+        setData(prev => ({ ...prev, [name]: value }));
     };
 
-    const onSubmitHandler = async (event) => {
-        event.preventDefault();
-
+    const onSubmit = async (e) => {
+        e.preventDefault();
         const formData = new FormData();
-        formData.append("name", data.name);
-        formData.append("unit", data.unit);
-        formData.append("description", data.description);
-        formData.append("price", Number(data.price));
-        formData.append("sellingPrice", Number(data.sellingPrice));
-        formData.append("category", data.category);
-        formData.append("image", image);
-        formData.append("quantity", Number(data.quantity));
-
-        const response = await axios.post(`${url}/api/product/add`, formData);
-        if (response.data.success) {
-            setData({
-                name: "",
-                unit: "",
-                description: "",
-                price: "",
-                sellingPrice: "",
-                category: "Fruits",
-                quantity: "",
-            });
-            setImage(false);
-            toast.success(response.data.message);
+        Object.entries(data).forEach(([k, v]) => formData.append(k, k === 'price' || k === 'sellingPrice' || k === 'quantity' ? Number(v) : v));
+        formData.append('image', image);
+        const res = await axios.post(`${url}/api/product/add`, formData);
+        if (res.data.success) {
+            setData({ name: '', unit: '', description: '', price: '', sellingPrice: '', quantity: '', category: 'Fruits' });
+            setImage(null);
+            toast.success(res.data.message);
         } else {
-            toast.error(response.data.message);
+            toast.error(res.data.message);
         }
     };
 
     return (
-        <div className="container mt-5 d-flex justify-content-center align-items-center flex-column add-item">
-            <h1 className='add-text mt-5 text-center'>Add Products</h1>
-            <form className="row w-75 g-4" onSubmit={onSubmitHandler}>
-                <div className="col-md-3 text-center">
-                    <label htmlFor="image" className="add-img-upload">
-                        <img
-                            className="w-100 h-auto"
-                            src={image ? URL.createObjectURL(image) : upload_img}
-                            alt="Upload"
-                        />
+        <div className="ap-page">
+            <div className="ap-header">
+                <h1 className="ap-title"><MdLibraryAdd size={22} /> Add Product</h1>
+                <p className="ap-sub">Fill in the details to add a new product</p>
+            </div>
+
+            <form className="ap-form" onSubmit={onSubmit}>
+
+                {/* Image Upload */}
+                <div className="ap-upload-wrap">
+                    <label htmlFor="ap-image" className="ap-upload">
+                        {image
+                            ? <img src={URL.createObjectURL(image)} alt="preview" className="ap-preview" />
+                            : <>
+                                <img src={upload_img} alt="upload" className="ap-upload-icon" />
+                                <span className="ap-upload-text"><FaCloudUploadAlt size={18} /> Click to upload image</span>
+                              </>
+                        }
                     </label>
-                    <input
-                        onChange={(e) => setImage(e.target.files[0])}
-                        type="file"
-                        id="image"
-                        hidden
-                        required
-                    />
+                    <input type="file" id="ap-image" hidden required onChange={e => setImage(e.target.files[0])} />
+                    {image && <button type="button" className="ap-remove-img" onClick={() => setImage(null)}>✕ Remove</button>}
                 </div>
 
-                {/* Product Name */}
-                <div className="col-md-6">
-                    <label>Product Name</label>
-                    <input
-                        type="text"
-                        className="form-control border-3"
-                        name="name"
-                        value={data.name}
-                        onChange={onChangeHandler}
-                        placeholder="Type here"
-                        required
-                    />
-                </div>
+                {/* Fields */}
+                <div className="ap-fields">
+                    <div className="ap-row">
+                        <div className="ap-field">
+                            <label>Product Name</label>
+                            <input name="name" value={data.name} onChange={onChange} placeholder="e.g. Fresh Apple" required />
+                        </div>
+                        <div className="ap-field">
+                            <label>Unit</label>
+                            <select name="unit" value={data.unit} onChange={onChange} required>
+                                <option value="">-- Select unit --</option>
+                                {UNITS.map(u => <option key={u} value={u}>{u}</option>)}
+                            </select>
+                        </div>
+                    </div>
 
-                {/* Product Unit */}
-                <div className="col-md-3">
-                    <label>Product Unit</label>
-                    <select
-                        className="form-select border-3"
-                        name="unit"
-                        value={data.unit}
-                        onChange={onChangeHandler}
-                        required
-                    >
-                        <option value="">--Select unit--</option>
-                        <option value="kg">kg</option>
-                        <option value="g">g</option>
-                        <option value="liters">liters</option>
-                        <option value="ml">ml</option>
-                        <option value="pieces">pieces</option>
-                    </select>
-                </div>
+                    <div className="ap-field">
+                        <label>Description</label>
+                        <textarea name="description" value={data.description} onChange={onChange} rows={3} placeholder="Write product description..." required />
+                    </div>
 
-                {/* Product Description */}
-                <div className="col-md-12">
-                    <label>Product Description</label>
-                    <textarea
-                        className="form-control border-3"
-                        name="description"
-                        value={data.description}
-                        onChange={onChangeHandler}
-                        rows="4"
-                        placeholder="Write description"
-                        required
-                    ></textarea>
-                </div>
+                    <div className="ap-row">
+                        <div className="ap-field">
+                            <label>Category</label>
+                            <select name="category" value={data.category} onChange={onChange}>
+                                {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                            </select>
+                        </div>
+                        <div className="ap-field">
+                            <label>MRP Price (₹)</label>
+                            <input type="number" name="price" value={data.price} onChange={onChange} placeholder="e.g. 100" required />
+                        </div>
+                        <div className="ap-field">
+                            <label>Selling Price (₹)</label>
+                            <input type="number" name="sellingPrice" value={data.sellingPrice} onChange={onChange} placeholder="e.g. 80" required />
+                        </div>
+                        <div className="ap-field">
+                            <label>Quantity</label>
+                            <input type="number" name="quantity" value={data.quantity} onChange={onChange} placeholder="e.g. 50" required />
+                        </div>
+                    </div>
 
-                {/* Category and Price */}
-                <div className="col-md-4">
-                    <label>Product Category</label>
-                    <select
-                        className="form-select border-3"
-                        name="category"
-                        value={data.category}
-                        onChange={onChangeHandler}
-                    >
-                        <option value="Fruits">Fruits</option>
-                        <option value="Vegetables">Vegetables</option>
-                        <option value="Chocolates">Chocolates</option>
-                        <option value="Snacks">Snacks</option>
-                        <option value="Coldrinks">Coldrinks</option>
-                        <option value="Grocery">Grocery</option>
-                    </select>
-                </div>
-
-                <div className="col-md-4">
-                    <label>Product Price</label>
-                    <input
-                        type="number"
-                        style={{
-                            appearance: "textfield",
-                            MozAppearance: "textfield",
-                            WebkitAppearance: "none",
-                        }}
-                        className="form-control border-3"
-                        name="price"
-                        value={data.price}
-                        onChange={onChangeHandler}
-                        placeholder="₹10"
-                        required
-                    />
-                </div>
-
-                {/* Selling Price */}
-                <div className="col-md-4">
-                    <label>Selling Price</label>
-                    <input
-                        type="number"
-                        className="form-control border-3"
-                        name="sellingPrice"
-                        value={data.sellingPrice}
-                        onChange={onChangeHandler}
-                        placeholder="₹15"
-                        required
-                    />
-                </div>
-
-                {/* Quantity */}
-                <div className="col-md-4">
-                    <label>Quantity</label>
-                    <input
-                        type="number"
-                        className="form-control border-3"
-                        name="quantity"
-                        value={data.quantity}
-                        onChange={onChangeHandler}
-                        placeholder="Enter quantity"
-                        required
-                    />
-                </div>
-
-                <div className="col-md-12 text-center">
-                    <button type="submit" className="btn btn-success w-50">
-                        Add Product
+                    <button type="submit" className="ap-submit">
+                        <MdLibraryAdd size={18} /> Add Product
                     </button>
                 </div>
             </form>
@@ -196,9 +112,5 @@ const Add = ({ url }) => {
     );
 };
 
-Add.propTypes = {
-    url: PropTypes.string.isRequired,
-};
-
+Add.propTypes = { url: PropTypes.string.isRequired };
 export default Add;
-

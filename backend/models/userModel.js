@@ -25,6 +25,14 @@ const userSchema = new mongoose.Schema({
     wishlistData: {
         type: Object,
         default: {}
+    },
+    isBlocked: {
+        type: Boolean,
+        default: false
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 }, { minimize: false });
 

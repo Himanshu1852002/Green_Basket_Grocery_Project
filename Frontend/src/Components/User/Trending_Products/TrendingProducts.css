@@ -1,0 +1,215 @@
+.tp-section {
+    background: #f7fbf7;
+    padding: 60px 24px;
+}
+
+/* Header */
+.tp-header {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.tp-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff3e0;
+    color: #e65100;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    border: 1px solid #ffe0b2;
+}
+
+.tp-title {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #1a4d2e;
+    margin: 0 0 8px;
+    line-height: 1.2;
+}
+.tp-title span { color: #059212; }
+
+.tp-sub {
+    font-size: 0.9rem;
+    color: #777;
+    margin: 0;
+}
+
+/* Grid */
+.tp-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+/* Card */
+.tp-card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #e8f5e9;
+    box-shadow: 0 3px 14px rgba(5,146,18,0.07);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.22s, box-shadow 0.22s;
+}
+.tp-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(5,146,18,0.14);
+}
+
+/* Rank badge */
+.tp-rank {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 20px;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+
+/* Sold badge */
+.tp-sold {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #e8f5e9;
+    color: #2e7d32;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    z-index: 2;
+}
+
+/* Image */
+.tp-img-wrap {
+    width: 100%;
+    height: 160px;
+    background: #f0faf0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.tp-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+}
+.tp-card:hover .tp-img { transform: scale(1.07); }
+
+.tp-img-fallback {
+    display: none;
+    font-size: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Info */
+.tp-info {
+    padding: 14px 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.tp-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1a4d2e;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tp-price {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #059212;
+    margin: 0;
+}
+
+.tp-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    background: #059212;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 9px 0;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    margin-top: auto;
+}
+.tp-btn:hover { background: #1a4d2e; transform: scale(1.02); }
+.tp-btn-added { background: #2e7d32 !important; }
+
+/* Skeleton */
+.tp-skeleton { pointer-events: none; }
+
+.tp-sk-img {
+    width: 100%;
+    height: 160px;
+    background: linear-gradient(90deg, #e8f5e9 25%, #d0ebd0 50%, #e8f5e9 75%);
+    background-size: 200% 100%;
+    animation: tp-shimmer 1.4s infinite;
+}
+
+.tp-sk-body {
+    padding: 14px 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tp-sk-line {
+    border-radius: 6px;
+    background: linear-gradient(90deg, #e8f5e9 25%, #d0ebd0 50%, #e8f5e9 75%);
+    background-size: 200% 100%;
+    animation: tp-shimmer 1.4s infinite;
+}
+.tp-sk-title { height: 14px; width: 75%; }
+.tp-sk-price { height: 14px; width: 40%; }
+.tp-sk-btn { height: 34px; width: 100%; border-radius: 10px; margin-top: 4px; }
+
+@keyframes tp-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .tp-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 700px) {
+    .tp-grid { grid-template-columns: repeat(2, 1fr); }
+    .tp-title { font-size: 1.6rem; }
+}
+@media (max-width: 420px) {
+    .tp-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+}

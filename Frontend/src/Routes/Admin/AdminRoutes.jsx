@@ -6,7 +6,8 @@ import { ToastContainer } from "react-toastify";
 import Navbar from "../../Components/Admin/AdminNavbar/Navbar";
 import Sidebar from "../../Components/Admin/AdminSidebar/Sidebar";
 import "./AdminRoutes.css"; // Add custom styles
-import Dashboard from "../../Pages/Admin/Dashboard/Dashboard";
+import Dashboard from '../../Pages/Admin/Dashboard/Dashboard';
+import Users from '../../Pages/Admin/Users/Users';
 
 const AdminRoutes = () => {
     const url = "https://green-basket-grocery-project.onrender.com"
@@ -24,6 +25,7 @@ const AdminRoutes = () => {
                         <Route path="add" element={<Add url={url} />} />
                         <Route path="list" element={<List url={url} />} />
                         <Route path="orders" element={<Orders url={url} />} />
+                        <Route path="users" element={<Users />} />
                     </Routes>
                 </div>
             </div>

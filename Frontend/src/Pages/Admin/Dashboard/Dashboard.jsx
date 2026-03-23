@@ -1,54 +1,63 @@
-import { Bar } from "react-chartjs-2";
-import "bootstrap/dist/css/bootstrap.min.css";
-import user_svg from '../../../assets/Images/Images/user_svg.svg'
-import product_svg from '../../../assets/Images/Images/product_svg.svg'
-import order_svg from '../../../assets/Images/Images/order_svg.svg'
-import { useEffect } from "react";
+import { Bar } from 'react-chartjs-2';
+import { useEffect } from 'react';
 import './Dashboard.css';
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUserCount, fetchProductCount, fetchOrderCount } from '../../../Store/adminDashSlice'; // Path to your slice
-
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserCount, fetchProductCount, fetchOrderCount, fetchOrdersData, fetchLowStock } from '../../../Store/adminDashSlice';
+import { FaUsers, FaBoxOpen, FaShoppingBag, FaRupeeSign, FaCalendarDay, FaExclamationTriangle } from 'react-icons/fa';
+import { MdTrendingUp } from 'react-icons/md';
 import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-} from "chart.js";
+    Chart as ChartJS, CategoryScale, LinearScale,
+    BarElement, Title, Tooltip, Legend,
+} from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
+const URL = 'https://green-basket-grocery-project.onrender.com';
+
+const STATUS_COLORS = {
+    Processing: { bg: '#fff3e0', color: '#e65100' },
+    Shipped:    { bg: '#e3f2fd', color: '#1565c0' },
+    Delivered:  { bg: '#e8f5e9', color: '#2e7d32' },
+    Cancelled:  { bg: '#ffebee', color: '#c62828' },
+};
+
 const Dashboard = () => {
     const dispatch = useDispatch();
-    const { userCount, productCount, orderCount, status } = useSelector((state) => state.dashboard);
+    const { userCount, productCount, orderCount, totalRevenue, todayOrders, recentOrders, monthlyData, lowStock, status } = useSelector(s => s.dashboard);
 
     useEffect(() => {
-        if (status === 'idle') {
-            dispatch(fetchUserCount());
-            dispatch(fetchProductCount());
-            dispatch(fetchOrderCount());
-        }
-    }, [dispatch, status]);
+        dispatch(fetchUserCount());
+        dispatch(fetchProductCount());
+        dispatch(fetchOrderCount());
+        dispatch(fetchOrdersData());
+        dispatch(fetchLowStock());
+    }, [dispatch]);
 
-    // Chart Data
+    const stats = [
+        { label: 'Total Users',    value: userCount,                          icon: <FaUsers size={20} />,       color: '#059212', bg: '#e8f5e9' },
+        { label: 'Total Products', value: productCount,                       icon: <FaBoxOpen size={20} />,     color: '#1565c0', bg: '#e3f2fd' },
+        { label: 'Total Orders',   value: orderCount,                         icon: <FaShoppingBag size={20} />, color: '#e65100', bg: '#fff3e0' },
+        { label: 'Total Revenue',  value: `₹${totalRevenue.toLocaleString('en-IN')}`, icon: <FaRupeeSign size={20} />,   color: '#6a1b9a', bg: '#f3e5f5' },
+        { label: "Today's Orders", value: todayOrders,                        icon: <FaCalendarDay size={20} />, color: '#00838f', bg: '#e0f7fa' },
+    ];
+
+    const chartLabels = Object.keys(monthlyData);
     const chartData = {
-        labels: ["January", "February", "March", "April", "May", "June"],
+        labels: chartLabels,
         datasets: [
             {
-                label: "Sales",
-                data: [3000, 4000, 3500, 5000, 7000, 8000],
-                backgroundColor: "rgba(75, 192, 192, 0.6)",
-                borderColor: "rgba(75, 192, 192, 1)",
-                borderWidth: 1,
+                label: 'Orders',
+                data: chartLabels.map(k => monthlyData[k]?.orders || 0),
+                backgroundColor: 'rgba(5,146,18,0.75)',
+                borderRadius: 6,
+                yAxisID: 'y',
             },
             {
-                label: "Revenue",
-                data: [10000, 12000, 9000, 15000, 20000, 25000],
-                backgroundColor: "rgba(255, 99, 132, 0.6)",
-                borderColor: "rgba(255, 99, 132, 1)",
-                borderWidth: 1,
+                label: 'Revenue (₹)',
+                data: chartLabels.map(k => monthlyData[k]?.revenue || 0),
+                backgroundColor: 'rgba(106,27,154,0.55)',
+                borderRadius: 6,
+                yAxisID: 'y1',
             },
         ],
     };
@@ -56,63 +65,132 @@ const Dashboard = () => {
     const chartOptions = {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: "top",
-            },
+        interaction: { mode: 'index', intersect: false },
+        plugins: { legend: { position: 'top' } },
+        scales: {
+            y:  { type: 'linear', position: 'left',  grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { stepSize: 1 } },
+            y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false }, ticks: { callback: v => `₹${v}` } },
+            x:  { grid: { display: false } },
         },
     };
 
     return (
-        <div className="container mt-5 pt-5 d-flex justify-content-center align-items-center flex-column">
-            <h1 className="text-center mb-4">Admin Dashboard</h1>
+        <div className="db-page">
 
-            {/* Cards Section */}
-            <div className="row dashboard-row w-100 justify-content-center align-items-center">
-                <div className="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-                    <div className="dashboard-card card shadow text-center">
-                        <div className="card-body d-flex justify-content-center flex-column align-items-center">
-                            <div className="w-75 h-75">
-                                <img className="w-75 h-75" src={user_svg} />
-                            </div>
-                            <h5 className="card-title text-black">Total Users</h5>
-                            <p className="card-text fs-4 text-black">{userCount}</p>
-                        </div>
-                    </div>
+            {/* Header */}
+            <div className="db-header">
+                <div>
+                    <h1 className="db-title">Dashboard</h1>
+                    <p className="db-sub">Welcome back, Admin 👋</p>
                 </div>
-                <div className="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-                    <div className="dashboard-card card shadow text-center">
-                        <div className="card-body d-flex justify-content-center flex-column align-items-center">
-                            <div className="w-75 h-75">
-                                <img className="w-75 h-75 mb-2" src={product_svg} alt="" />
-                            </div>
-
-                            <h5 className="card-title text-black">Total Products</h5>
-                            <p className="card-text fs-4 text-black">{productCount}</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-                    <div className="dashboard-card card shadow text-center">
-                        <div className="card-body d-flex justify-content-center flex-column align-items-center">
-                            <div className="w-75 h-75">
-                                <img className="w-75 h-75" src={order_svg} alt="" />
-                            </div>
-
-                            <h5 className="card-title text-black">Total Orders</h5>
-                            <p className="card-text fs-4 text-black">{orderCount}</p>
-                        </div>
-                    </div>
-                </div>
+                <span className="db-date">
+                    {new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+                </span>
             </div>
 
-            {/* Chart Section */}
-            <div className="mt-5 d-flex justify-content-center align-items-center flex-column w-100">
-                <h3 className="text-center mb-4">Sales and Revenue Chart</h3>
-                <div className="chart-container">
+            {/* Stat Cards */}
+            <div className="db-cards">
+                {stats.map((s, i) => (
+                    <div className="db-card" key={i}>
+                        <div className="db-card-icon" style={{ background: s.bg, color: s.color }}>{s.icon}</div>
+                        <div className="db-card-info">
+                            <span className="db-card-label">{s.label}</span>
+                            <span className="db-card-value">
+                                {status === 'loading' ? <span className="db-sk-val" /> : s.value}
+                            </span>
+                        </div>
+                        <MdTrendingUp size={16} style={{ color: s.color, opacity: 0.4, flexShrink: 0 }} />
+                    </div>
+                ))}
+            </div>
+
+            {/* Chart — full width */}
+            <div className="db-chart-wrap">
+                <div className="db-section-header">
+                    <h3 className="db-section-title">Orders & Revenue</h3>
+                    <span className="db-section-sub">Last 6 months</span>
+                </div>
+                <div className="db-chart">
                     <Bar data={chartData} options={chartOptions} />
                 </div>
             </div>
+
+            {/* Low Stock — full width grid */}
+            {lowStock.length > 0 && (
+                <div className="db-lowstock-wrap">
+                    <div className="db-section-header">
+                        <h3 className="db-section-title">
+                            <FaExclamationTriangle size={14} color="#e65100" /> Low Stock Alert
+                        </h3>
+                        <span className="db-section-sub">{lowStock.length} items need restocking</span>
+                    </div>
+                    <div className="db-lowstock-grid">
+                        {lowStock.map((p, i) => (
+                            <div key={i} className="db-ls-card">
+                                <img src={`${URL}/uploads/${p.image}`} alt={p.name} className="db-ls-img" />
+                                <div className="db-ls-info">
+                                    <span className="db-ls-name">{p.name}</span>
+                                    <span className="db-ls-cat">{p.category}</span>
+                                </div>
+                                <span className={`db-ls-qty ${p.quantity <= 3 ? 'db-ls-critical' : 'db-ls-warn'}`}>
+                                    {p.quantity} left
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* Recent Orders */}
+            <div className="db-recent-wrap">
+                <div className="db-section-header">
+                    <h3 className="db-section-title">Recent Orders</h3>
+                    <span className="db-section-sub">Latest 5</span>
+                </div>
+                <div className="db-recent-table-wrap">
+                    <table className="db-recent-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Amount</th>
+                                <th>Payment</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {recentOrders.map((o, i) => {
+                                const sc = STATUS_COLORS[o.orderStatus] || STATUS_COLORS.Processing;
+                                return (
+                                    <tr key={i}>
+                                        <td className="db-order-id">#{o._id.slice(-8).toUpperCase()}</td>
+                                        <td>{o.address?.firstName} {o.address?.lastName}</td>
+                                        <td className="db-order-amt">₹{o.amount}</td>
+                                        <td>
+                                            <span className={`db-pay-badge ${o.payment ? 'db-paid' : 'db-unpaid'}`}>
+                                                {o.payment ? 'Paid' : 'Pending'}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span className="db-status-badge" style={{ background: sc.bg, color: sc.color }}>
+                                                {o.orderStatus}
+                                            </span>
+                                        </td>
+                                        <td className="db-order-date">
+                                            {new Date(o.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: '2-digit' })}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                            {recentOrders.length === 0 && (
+                                <tr><td colSpan={6} className="db-empty">No orders yet</td></tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     );
 };
