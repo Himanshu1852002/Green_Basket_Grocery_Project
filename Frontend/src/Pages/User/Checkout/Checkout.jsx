@@ -8,6 +8,7 @@ import {
     FaCreditCard, FaTag, FaCheck, FaSpinner, FaTrash, FaUser
 } from 'react-icons/fa';
 import { MdStickyNote2 } from 'react-icons/md';
+import { toast } from 'react-toastify';
 
 const Field = ({ name, type = 'text', placeholder, value, error, onChange }) => (
     <div className="co-field">
@@ -123,7 +124,13 @@ const Checkout = () => {
         const storedToken = localStorage.getItem('token');
         const itemsWithDetails = Object.entries(cartItems).map(([id, quantity]) => {
             const item = product_list.find((p) => p._id === id);
-            return { image: item?.image || 'image.png', name: item?.name || 'Unknown', price: item?.sellingPrice || 0, quantity };
+            return {
+                itemId: id,
+                image: item?.image || 'image.png',
+                name: item?.name || 'Unknown',
+                price: item?.sellingPrice || 0,
+                quantity
+            };
         });
 
         try {
@@ -145,11 +152,11 @@ const Checkout = () => {
                     handlePayment(result.data);
                 }
             } else {
-                alert(result.message || 'Failed to place order.');
+                toast.error(result.message || 'Failed to place order.');
             }
         } catch (error) {
             console.error('Error placing order:', error);
-            alert('Something went wrong. Please try again.');
+            toast.error('Something went wrong. Please try again.');
         } finally {
             setLoading(false);
         }

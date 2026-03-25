@@ -1,11 +1,32 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaBell, FaChevronDown, FaSignOutAlt, FaUserShield } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchOrdersData, fetchLowStock } from '../../../Store/adminDashSlice';
+import { FaBell, FaChevronDown, FaSignOutAlt, FaUserShield, FaBoxOpen, FaShoppingBag, FaExclamationTriangle } from 'react-icons/fa';
 import './Navbar.css';
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [showDropdown, setShowDropdown] = useState(false);
+    const [showNotif, setShowNotif]       = useState(false);
+    const notifRef = useRef(null);
+
+    const { recentOrders, lowStock } = useSelector(s => s.dashboard);
+
+    useEffect(() => {
+        dispatch(fetchOrdersData());
+        dispatch(fetchLowStock());
+    }, [dispatch]);
+
+    // Close notif panel on outside click
+    useEffect(() => {
+        const handler = (e) => { if (notifRef.current && !notifRef.current.contains(e.target)) setShowNotif(false); };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, []);
+
+    const totalNotifs = recentOrders.length + lowStock.length;
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -38,10 +59,57 @@ const Navbar = () => {
             {/* Right */}
             <div className="an-right">
                 {/* Notification */}
-                <button className="an-icon-btn">
-                    <FaBell size={16} />
-                    <span className="an-notif-dot" />
-                </button>
+                <div className="an-notif-wrap" ref={notifRef}>
+                    <button className="an-icon-btn" onClick={() => setShowNotif(p => !p)}>
+                        <FaBell size={16} />
+                        {totalNotifs > 0 && <span className="an-notif-dot">{totalNotifs}</span>}
+                    </button>
+
+                    {showNotif && (
+                        <div className="an-notif-panel">
+                            <div className="an-notif-header">
+                                <span>Notifications</span>
+                                <span className="an-notif-count">{totalNotifs}</span>
+                            </div>
+
+                            {/* New Orders */}
+                            {recentOrders.length > 0 && (
+                                <div className="an-notif-section">
+                                    <span className="an-notif-section-label"><FaShoppingBag size={10} /> Recent Orders</span>
+                                    {recentOrders.map((o, i) => (
+                                        <div key={i} className="an-notif-item">
+                                            <div className="an-notif-icon an-notif-order"><FaShoppingBag size={12} /></div>
+                                            <div className="an-notif-text">
+                                                <span className="an-notif-title">{o.address?.firstName} {o.address?.lastName}</span>
+                                                <span className="an-notif-sub">₹{o.amount} · {o.paymentMethod} · <span className={`an-notif-status an-ns-${o.orderStatus?.toLowerCase()}`}>{o.orderStatus}</span></span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {/* Low Stock */}
+                            {lowStock.length > 0 && (
+                                <div className="an-notif-section">
+                                    <span className="an-notif-section-label"><FaExclamationTriangle size={10} /> Low Stock</span>
+                                    {lowStock.map((p, i) => (
+                                        <div key={i} className="an-notif-item">
+                                            <div className="an-notif-icon an-notif-stock"><FaBoxOpen size={12} /></div>
+                                            <div className="an-notif-text">
+                                                <span className="an-notif-title">{p.name}</span>
+                                                <span className="an-notif-sub">Only <strong>{p.quantity}</strong> left in stock</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {totalNotifs === 0 && (
+                                <div className="an-notif-empty">No notifications</div>
+                            )}
+                        </div>
+                    )}
+                </div>
 
                 {/* Admin profile */}
                 <div className="an-profile" onClick={() => setShowDropdown(p => !p)}>

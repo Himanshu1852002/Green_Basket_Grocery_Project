@@ -17,6 +17,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ScrollToTop from '../Pages/User/ScrollToTop/ScrollToTop';
 import Home from '../Pages/User/Home/Home';
+import PrivacyPolicy from '../Pages/User/PrivacyPolicy/PrivacyPolicy';
+import TermsOfService from '../Pages/User/TermsOfService/TermsOfService';
+import RefundPolicy from '../Pages/User/RefundPolicy/RefundPolicy';
 
 const UserRoutes = () => {
   return (
@@ -40,6 +43,9 @@ const UserRoutes = () => {
           <Route path="checkout" element={<Checkout />} />
           <Route path="verify" element={<Verify />} />
           <Route path="myorders" element={<MyOrders />} />
+          <Route path="privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="terms-of-service" element={<TermsOfService />} />
+          <Route path="refund-policy" element={<RefundPolicy />} />
         </Routes>
       </div>
     </>

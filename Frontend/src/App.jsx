@@ -7,6 +7,7 @@ import LoginPopup from './Components/User/Login_PopUp/LoginPopup';
 import Navbar from './Components/User/Navbar/Navbar';
 import AdminProtectedRoutes from './Shared/AdminProtectedRoutes';
 import Footer from './Components/User/Footer/Footer';
+import NotFound from './Pages/User/NotFound/NotFound';
 
 const App = () => {
 
@@ -17,10 +18,13 @@ const App = () => {
     document.body.style.overflow = showLogin ? 'hidden' : 'auto';
   }, [showLogin]);
 
-
-  const getRoutes = () => {
-    if (role === 'admin') {
-      return (
+  return (
+    <>
+      {role !== 'admin' && <Navbar setShowLogin={setShowLogin} />}
+      {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
+      <Routes>
+        <Route path="/" element={<Home setShowLogin={setShowLogin} />} />
+        <Route path="/login" element={<LoginPopup setShowLogin={setShowLogin} />} />
         <Route
           path="/admin/*"
           element={
@@ -29,28 +33,10 @@ const App = () => {
             </AdminProtectedRoutes>
           }
         />
-      );
-    } else {
-      return (
-        <Route
-          path="/user/*"
-          element={<UserRoutes />}
-        />
-      );
-    }
-  };
-
-  return (
-    <>
-      {role !== 'admin' && <Navbar setShowLogin={setShowLogin} />}
-      {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
-      <Routes>
-        <Route path="/" element={<Home setShowLogin={setShowLogin} />} />
-        <Route path="/login" element={<LoginPopup setShowLogin={setShowLogin} />} />
-        {getRoutes()}
+        <Route path="/user/*" element={<UserRoutes />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       {role !== 'admin' && <Footer />}
-
     </>
   );
 };

@@ -122,7 +122,7 @@ const SearchResults = () => {
                                     {/* Image */}
                                     <div className="sr-img-wrap">
                                         <img
-                                            src={`${BASE_URL}/uploads/${product.image}`}
+                                            src={product.image}
                                             alt={product.name}
                                             className="sr-img"
                                         />

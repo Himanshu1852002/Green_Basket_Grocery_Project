@@ -93,9 +93,9 @@ const Footer = () => {
             <div className="ft-bottom">
                 <p>© {new Date().getFullYear()} Green Basket. All rights reserved.</p>
                 <div className="ft-bottom-links">
-                    <Link to="/">Privacy Policy</Link>
-                    <Link to="/">Terms of Service</Link>
-                    <Link to="/">Refund Policy</Link>
+                    <Link to="/user/privacy-policy">Privacy Policy</Link>
+                    <Link to="/user/terms-of-service">Terms of Service</Link>
+                    <Link to="/user/refund-policy">Refund Policy</Link>
                 </div>
             </div>
         </footer>

@@ -5,7 +5,7 @@ import './Users.css';
 import { FaUsers, FaSearch, FaUserCheck, FaUserSlash, FaUserShield } from 'react-icons/fa';
 import { MdClose, MdRefresh, MdBlock } from 'react-icons/md';
 
-const URL = 'https://green-basket-grocery-project.onrender.com';
+const URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 
 const SkeletonRow = () => (
     <tr className="um-sk-row">

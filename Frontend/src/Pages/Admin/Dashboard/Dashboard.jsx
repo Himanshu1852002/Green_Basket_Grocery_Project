@@ -12,7 +12,7 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const URL = 'https://green-basket-grocery-project.onrender.com';
+const URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 
 const STATUS_COLORS = {
     Processing: { bg: '#fff3e0', color: '#e65100' },

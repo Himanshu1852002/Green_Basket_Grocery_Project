@@ -199,6 +199,7 @@ const Product_Item_List = ({ items = [], loading = false }) => {
                             image={`${BASE_URL}/uploads/${item.image}`}
                             unit={item.unit}
                             description={item.description}
+                            quantity={item.quantity}
                         />
                     ))}
                 </div>

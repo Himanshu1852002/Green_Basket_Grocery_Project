@@ -70,10 +70,11 @@
     border-radius: 16px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.06);
     border: 1px solid #f0f0f0;
-    overflow: hidden;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
-.lp-table { width: 100%; border-collapse: collapse; }
+.lp-table { width: 100%; min-width: 780px; border-collapse: collapse; }
 .lp-table thead tr { background: #f8fdf8; border-bottom: 2px solid #e8f5e9; }
 .lp-table th {
     padding: 12px 14px;

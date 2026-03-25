@@ -4,7 +4,7 @@ import './Orders.css';
 import { FaChevronDown, FaChevronUp, FaShoppingBag, FaSearch, FaRupeeSign } from 'react-icons/fa';
 import { MdLocationOn, MdPhone, MdClose, MdRefresh } from 'react-icons/md';
 
-const URL = 'https://green-basket-grocery-project.onrender.com';
+const URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 
 const STATUS_COLORS = {
     Processing: { bg: '#fff3e0', color: '#e65100' },

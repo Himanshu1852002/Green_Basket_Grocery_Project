@@ -11,11 +11,12 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Product_Item_List.css";
 
-const Card = ({ _id, name, price, image, sellingPrice, unit, description }) => {
+const Card = ({ _id, name, price, image, sellingPrice, unit, description, quantity }) => {
     const dispatch = useDispatch();
     const token = useSelector((state) => state.cart.token);
     const wishlist = useSelector((state) => state.wishlist.items);
     const isWishlisted = wishlist[_id] !== undefined;
+    const isOutOfStock = quantity === 0;
 
     const [showModal, setShowModal] = useState(false);
     const [added, setAdded] = useState(false);
@@ -32,6 +33,7 @@ const Card = ({ _id, name, price, image, sellingPrice, unit, description }) => {
     };
 
     const handleAddToCart = () => {
+        if (isOutOfStock) return;
         if (!token) { toast.error("Please log in to add items to the cart.", { autoClose: 2000 }); return; }
         dispatch(addToCartAPI({ itemId: _id, token }));
         toast.success("Added to cart!", { autoClose: 2000 });
@@ -44,11 +46,14 @@ const Card = ({ _id, name, price, image, sellingPrice, unit, description }) => {
     return (
         <>
             <div className="col-lg-3 col-md-4 col-6 mb-3">
-                <div className="pc-card">
+                <div className={`pc-card${isOutOfStock ? ' pc-out-of-stock' : ''}`}>
 
                     {/* Image */}
                     <div className="pc-img-wrap">
-                        {discount > 0 && <span className="pc-badge">{discount}% OFF</span>}
+                        {isOutOfStock
+                            ? <span className="pc-oos-badge">Out of Stock</span>
+                            : discount > 0 && <span className="pc-badge">{discount}% OFF</span>
+                        }
                         <img src={image} className="pc-img" alt={name} />
                         <div className="pc-actions">
                             <button className="pc-action-btn" onClick={toggleWishlist} title="Wishlist">
@@ -76,10 +81,13 @@ const Card = ({ _id, name, price, image, sellingPrice, unit, description }) => {
                             <del className="pc-original">₹{price}</del>
                             <span className="pc-unit">/ {unit}</span>
                         </div>
-                        <button className={`pc-cart-btn${added ? ' pc-added' : ''}`} onClick={handleAddToCart}>
-                            {added
-                                ? <><FaCheck size={11} /> Added!</>
-                                : <><FaShoppingCart size={11} /> Add to Cart</>}
+                        <button className={`pc-cart-btn${added ? ' pc-added' : ''}${isOutOfStock ? ' pc-cart-btn-oos' : ''}`} onClick={handleAddToCart} disabled={isOutOfStock}>
+                            {isOutOfStock
+                                ? <>Out of Stock</>
+                                : added
+                                    ? <><FaCheck size={11} /> Added!</>
+                                    : <><FaShoppingCart size={11} /> Add to Cart</>
+                            }
                         </button>
                     </div>
                 </div>
@@ -133,8 +141,14 @@ const Card = ({ _id, name, price, image, sellingPrice, unit, description }) => {
 
                             <div className="pc-modal-actions">
                                 <button className="pc-modal-close-btn" onClick={() => setShowModal(false)}>Close</button>
-                                <button className="pc-modal-cart-btn" onClick={() => { handleAddToCart(); setShowModal(false); }}>
-                                    <FaShoppingCart size={13} /> Add to Cart
+                                <button
+                                    className={`pc-modal-cart-btn${isOutOfStock ? ' pc-modal-cart-oos' : ''}`}
+                                    onClick={() => { if (!isOutOfStock) { handleAddToCart(); setShowModal(false); } }}
+                                    disabled={isOutOfStock}
+                                >
+                                    {isOutOfStock
+                                        ? <>Out of Stock</>
+                                        : <><FaShoppingCart size={13} /> Add to Cart</>}
                                 </button>
                             </div>
                         </div>
@@ -153,6 +167,7 @@ Card.propTypes = {
     sellingPrice: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     unit: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
+    quantity: PropTypes.number,
 };
 
 export default Card;

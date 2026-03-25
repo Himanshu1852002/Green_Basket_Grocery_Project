@@ -5,6 +5,13 @@
     background: #f4f6f8;
 }
 
+/* Reset Bootstrap interference in admin */
+.admin-layout *, .admin-layout *::before, .admin-layout *::after {
+    box-sizing: border-box;
+}
+
+.admin-layout .row { --bs-gutter-x: 0; margin: 0; }
+
 .admin-layout .display-flex {
     display: flex;
     min-height: calc(100vh - 64px);
