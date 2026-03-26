@@ -285,3 +285,11 @@
 .an-dropdown-item:hover { background: #f5f5f5; }
 .an-logout { color: #e53935; }
 .an-logout:hover { background: #fff5f5; }
+
+/* Responsive */
+@media (max-width: 600px) {
+    .an-navbar { padding: 0 14px; }
+    .an-profile-info { display: none; }
+    .an-logo-sub { display: none; }
+    .an-notif-panel { width: 280px; right: -40px; }
+}

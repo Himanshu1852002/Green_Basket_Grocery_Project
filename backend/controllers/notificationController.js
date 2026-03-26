@@ -1,4 +1,5 @@
 import notificationModel from '../models/notificationModel.js';
+import userModel from '../models/userModel.js';
 
 // Get user notifications
 const getNotifications = async (req, res) => {
@@ -41,4 +42,22 @@ const createNotification = async (userId, title, message, type = 'info') => {
     } catch { /* silent */ }
 };
 
-export { getNotifications, markAllRead, markOneRead, createNotification };
+// Admin: Send notification to all users or specific user
+const sendNotification = async (req, res) => {
+    const { target, title, message, type } = req.body;
+    try {
+        let userIds = [];
+        if (target === 'all') {
+            const users = await userModel.find({ role: 'user' }).select('_id');
+            userIds = users.map(u => u._id.toString());
+        } else {
+            userIds = [target];
+        }
+        await notificationModel.insertMany(userIds.map(userId => ({ userId, title, message, type })));
+        res.json({ success: true, count: userIds.length });
+    } catch {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+export { getNotifications, markAllRead, markOneRead, createNotification, sendNotification };

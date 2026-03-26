@@ -24,17 +24,23 @@ const Add = ({ url }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
+        if (!image) { toast.error('Please upload a product image'); return; }
+        if (Number(data.sellingPrice) > Number(data.price)) { toast.error('Selling price cannot be greater than MRP'); return; }
+        if (Number(data.sellingPrice) <= 0 || Number(data.price) <= 0) { toast.error('Price must be greater than 0'); return; }
+        if (Number(data.quantity) < 0) { toast.error('Quantity cannot be negative'); return; }
         const formData = new FormData();
         Object.entries(data).forEach(([k, v]) => formData.append(k, k === 'price' || k === 'sellingPrice' || k === 'quantity' ? Number(v) : v));
         formData.append('image', image);
-        const res = await axios.post(`${url}/api/product/add`, formData);
-        if (res.data.success) {
-            setData({ name: '', unit: '', description: '', price: '', sellingPrice: '', quantity: '', category: 'Fruits' });
-            setImage(null);
-            toast.success(res.data.message);
-        } else {
-            toast.error(res.data.message);
-        }
+        try {
+            const res = await axios.post(`${url}/api/product/add`, formData);
+            if (res.data.success) {
+                setData({ name: '', unit: '', description: '', price: '', sellingPrice: '', quantity: '', category: 'Fruits' });
+                setImage(null);
+                toast.success(res.data.message);
+            } else {
+                toast.error(res.data.message);
+            }
+        } catch { toast.error('Failed to add product'); }
     };
 
     return (
@@ -94,8 +100,10 @@ const Add = ({ url }) => {
                             <input type="number" name="price" value={data.price} onChange={onChange} placeholder="e.g. 100" required />
                         </div>
                         <div className="ap-field">
-                            <label>Selling Price (₹)</label>
-                            <input type="number" name="sellingPrice" value={data.sellingPrice} onChange={onChange} placeholder="e.g. 80" required />
+                            <label>Selling Price (₹) {data.price && data.sellingPrice && Number(data.sellingPrice) > Number(data.price) && <span style={{color:'#e53935', fontSize:'0.75rem'}}>⚠ Cannot exceed MRP</span>}</label>
+                            <input type="number" name="sellingPrice" value={data.sellingPrice} onChange={onChange} placeholder="e.g. 80" required
+                                style={data.price && data.sellingPrice && Number(data.sellingPrice) > Number(data.price) ? {borderColor:'#e53935'} : {}}
+                            />
                         </div>
                         <div className="ap-field">
                             <label>Quantity</label>
