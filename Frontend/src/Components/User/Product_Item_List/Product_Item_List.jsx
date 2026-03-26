@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import { FaSort, FaFilter, FaTimes, FaSearch } from "react-icons/fa";
 import './Product_Item_List.css';
 
-const BASE_URL = "https://green-basket-grocery-project.onrender.com";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://green-basket-grocery-project.onrender.com";
 
 /* ── Skeleton Card ── */
 const SkeletonCard = () => (
@@ -200,6 +200,8 @@ const Product_Item_List = ({ items = [], loading = false }) => {
                             unit={item.unit}
                             description={item.description}
                             quantity={item.quantity}
+                            category={item.category}
+                            index={index}
                         />
                     ))}
                 </div>

@@ -9,7 +9,25 @@ import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import "./Product_Item_List.css";
 
-const Card = ({ _id, name, price, image, sellingPrice, unit, description, quantity }) => {
+// Smart badge logic
+const getSmartBadge = (product, index) => {
+    const discount = Math.round(((product.price - product.sellingPrice) / product.price) * 100);
+    if (product.quantity === 0) return null;
+    if (discount >= 30) return { label: '🔥 Hot Deal', cls: 'pc-smart-hot' };
+    if (['Fruits', 'Vegetables'].includes(product.category)) return { label: '🌿 Organic', cls: 'pc-smart-organic' };
+    if (index < 2) return { label: '⭐ Best Seller', cls: 'pc-smart-best' };
+    if (product.sellingPrice <= 30) return { label: '💰 Budget Pick', cls: 'pc-smart-budget' };
+    return null;
+};
+
+// Stock urgency
+const getStockUrgency = (qty) => {
+    if (qty === 0 || qty > 10) return null;
+    if (qty <= 3) return { label: `⚠️ Only ${qty} left!`, cls: 'pc-urgency-low' };
+    return { label: `🕐 Only ${qty} left`, cls: 'pc-urgency-mid' };
+};
+
+const Card = ({ _id, name, price, image, sellingPrice, unit, description, quantity, category, index }) => {
     const dispatch = useDispatch();
     const token = useSelector((state) => state.cart.token);
     const wishlist = useSelector((state) => state.wishlist.items);
@@ -40,9 +58,10 @@ const Card = ({ _id, name, price, image, sellingPrice, unit, description, quanti
 
     const discount = Math.round(((price - sellingPrice) / price) * 100);
     const navigate = useNavigate();
+    const smartBadge = getSmartBadge({ price, sellingPrice, quantity, category }, index || 0);
+    const urgency = getStockUrgency(quantity);
 
     const handleCardClick = (e) => {
-        // buttons pe click hone par navigate mat karo
         if (e.target.closest('button')) return;
         navigate(`/user/product/${_id}`);
     };
@@ -56,7 +75,9 @@ const Card = ({ _id, name, price, image, sellingPrice, unit, description, quanti
                     <div className="pc-img-wrap">
                         {isOutOfStock
                             ? <span className="pc-oos-badge">Out of Stock</span>
-                            : discount > 0 && <span className="pc-badge">{discount}% OFF</span>
+                            : discount > 0
+                                ? <span className="pc-badge">{discount}% OFF</span>
+                                : smartBadge && <span className={`pc-smart-badge ${smartBadge.cls}`}>{smartBadge.label}</span>
                         }
                         <img src={image} className="pc-img" alt={name} />
                         <div className="pc-actions">
@@ -82,6 +103,9 @@ const Card = ({ _id, name, price, image, sellingPrice, unit, description, quanti
                             <del className="pc-original">₹{price}</del>
                             <span className="pc-unit">/ {unit}</span>
                         </div>
+                        {urgency && !isOutOfStock && (
+                            <span className={`pc-urgency ${urgency.cls}`}>{urgency.label}</span>
+                        )}
                         <button className={`pc-cart-btn${added ? ' pc-added' : ''}${isOutOfStock ? ' pc-cart-btn-oos' : ''}`} onClick={handleAddToCart} disabled={isOutOfStock}>
                             {isOutOfStock
                                 ? <>Out of Stock</>
@@ -93,7 +117,6 @@ const Card = ({ _id, name, price, image, sellingPrice, unit, description, quanti
                     </div>
                 </div>
             </div>
-
         </>
     );
 };
@@ -107,6 +130,8 @@ Card.propTypes = {
     unit: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     quantity: PropTypes.number,
+    category: PropTypes.string,
+    index: PropTypes.number,
 };
 
 export default Card;

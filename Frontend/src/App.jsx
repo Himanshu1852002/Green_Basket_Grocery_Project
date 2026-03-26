@@ -8,6 +8,7 @@ import Navbar from './Components/User/Navbar/Navbar';
 import AdminProtectedRoutes from './Shared/AdminProtectedRoutes';
 import Footer from './Components/User/Footer/Footer';
 import NotFound from './Pages/User/NotFound/NotFound';
+import PageLoader from './Components/User/PageLoader/PageLoader';
 
 const App = () => {
 
@@ -20,6 +21,7 @@ const App = () => {
 
   return (
     <>
+      <PageLoader />
       {role !== 'admin' && <Navbar setShowLogin={setShowLogin} />}
       {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
       <Routes>
