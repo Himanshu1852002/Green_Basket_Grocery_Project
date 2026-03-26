@@ -22,7 +22,18 @@ const PORT = 3000;
 
 // middlewares
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: [
+        'http://localhost:5173',
+        'http://localhost:3000',
+        'https://green-basket-grocery-project.vercel.app',
+        /\.vercel\.app$/,
+    ],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
+app.options('*', cors());
 
 
 
@@ -50,6 +61,11 @@ app.use('/api/notifications', notificationRouter);
 
 app.get("/", (req, res) => {
     res.send("API Working");
+})
+
+// Keep-alive ping for Render free tier
+app.get("/ping", (req, res) => {
+    res.json({ status: 'ok', time: new Date().toISOString() });
 })
 
 app.listen(PORT, () => {
