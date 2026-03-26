@@ -38,6 +38,26 @@ const userSchema = new mongoose.Schema({
         type: Object,
         default: {}
     },
+    dob: {
+        type: String,
+        default: ''
+    },
+    gender: {
+        type: String,
+        default: ''
+    },
+    avatar: {
+        type: String,
+        default: ''
+    },
+    addresses: {
+        type: Array,
+        default: []
+    },
+    preferences: {
+        type: Object,
+        default: { emailNotifications: true, defaultAddressIndex: 0 }
+    },
     createdAt: {
         type: Date,
         default: Date.now

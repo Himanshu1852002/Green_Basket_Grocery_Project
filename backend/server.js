@@ -12,6 +12,8 @@ import cartRouter from './routes/cartRoute.js';
 import wishlistRouter from './routes/wishlistRoute.js'
 import orderRouter from './routes/orderRoute.js';
 import searchRouter from './routes/searchRoute.js'
+import reviewRouter from './routes/reviewRoute.js'
+import notificationRouter from './routes/notificationRoute.js'
 
 
 // app config
@@ -42,6 +44,8 @@ app.use('/api/cart', cartRouter);
 app.use('/api/wishlist', wishlistRouter);
 app.use('/api/orders', orderRouter);
 app.use('/api/search', searchRouter);
+app.use('/api/reviews', reviewRouter);
+app.use('/api/notifications', notificationRouter);
 
 
 app.get("/", (req, res) => {

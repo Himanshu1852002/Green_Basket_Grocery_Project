@@ -3,6 +3,19 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
 import nodemailer from 'nodemailer';
+import multer from 'multer';
+import path from 'path';
+import { existsSync, mkdirSync } from 'fs';
+
+const avatarStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const dir = 'uploads/avatars';
+        if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+        cb(null, dir);
+    },
+    filename: (req, file, cb) => cb(null, `${Date.now()}${path.extname(file.originalname)}`)
+});
+const uploadAvatar = multer({ storage: avatarStorage, limits: { fileSize: 2 * 1024 * 1024 } });
 
 const otpStore = {};
 
@@ -251,17 +264,60 @@ const getProfile = async (req, res) => {
 
 // Update profile
 const updateProfile = async (req, res) => {
-    const { userId, name, phone, address } = req.body;
+    const { userId, name, phone, address, dob, gender, addresses, preferences } = req.body;
     try {
-        const user = await userModel.findByIdAndUpdate(
-            userId,
-            { name, phone, address },
-            { new: true }
-        ).select('-password');
+        const updateData = { name, phone, address, dob, gender };
+        if (addresses !== undefined) updateData.addresses = typeof addresses === 'string' ? JSON.parse(addresses) : addresses;
+        if (preferences !== undefined) updateData.preferences = typeof preferences === 'string' ? JSON.parse(preferences) : preferences;
+        const user = await userModel.findByIdAndUpdate(userId, updateData, { new: true }).select('-password');
         res.json({ success: true, user });
     } catch (error) {
         res.status(500).json({ success: false, message: 'Server error' });
     }
 };
 
-export { loginUser, registerUser, verifyOtp, getUserCount, registerAdmin, getAllUsers, blockUnblockUser, getProfile, updateProfile };
+// Upload avatar
+const updateAvatar = async (req, res) => {
+    try {
+        if (!req.file) return res.status(400).json({ success: false, message: 'No file uploaded' });
+        const avatarUrl = `/uploads/avatars/${req.file.filename}`;
+        const user = await userModel.findByIdAndUpdate(req.body.userId, { avatar: avatarUrl }, { new: true }).select('-password');
+        res.json({ success: true, avatar: user.avatar });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+// Change password
+const changePassword = async (req, res) => {
+    const { userId, oldPassword, newPassword } = req.body;
+    try {
+        const user = await userModel.findById(userId);
+        if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+        const isMatch = await bcrypt.compare(oldPassword, user.password);
+        if (!isMatch) return res.json({ success: false, message: 'Current password is incorrect' });
+        if (newPassword.length < 8) return res.json({ success: false, message: 'Password must be at least 8 characters' });
+        user.password = await bcrypt.hash(newPassword, 10);
+        await user.save();
+        res.json({ success: true, message: 'Password changed successfully' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+// Delete account
+const deleteAccount = async (req, res) => {
+    const { userId, password } = req.body;
+    try {
+        const user = await userModel.findById(userId);
+        if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) return res.json({ success: false, message: 'Incorrect password' });
+        await userModel.findByIdAndDelete(userId);
+        res.json({ success: true, message: 'Account deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+export { loginUser, registerUser, verifyOtp, getUserCount, registerAdmin, getAllUsers, blockUnblockUser, getProfile, updateProfile, updateAvatar, uploadAvatar, changePassword, deleteAccount };

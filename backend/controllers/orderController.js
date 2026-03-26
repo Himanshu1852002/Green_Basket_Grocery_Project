@@ -3,6 +3,7 @@ import Razorpay from 'razorpay';
 import crypto from 'crypto';
 import orderModel from '../models/orderModel.js';
 import userModel from '../models/userModel.js';
+import { createNotification } from './notificationController.js';
 
 const RAZORPAY_KEY_ID = process.env.RAZORPAY_ID;
 const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY;
@@ -41,6 +42,9 @@ const createOrder = async (req, res) => {
             });
 
             await newOrder.save();
+
+            // Notification
+            await createNotification(userId, '🛒 Order Placed!', `Your order of ₹${amount} has been placed successfully.`, 'order');
 
             if (paymentMethod === "Cash on Delivery") {
                 const user = await userModel.findByIdAndUpdate(
@@ -133,6 +137,18 @@ const updateStatus = async (req, res) => {
     const { orderId, orderStatus, cancelReason, cancelledBy } = req.body;
     try {
         await orderModel.findByIdAndUpdate(orderId, { orderStatus, cancelReason, cancelledBy });
+
+        // Notification on status change
+        const order = await orderModel.findById(orderId);
+        if (order) {
+            const msgs = {
+                'Out for Delivery': { title: '🚚 Out for Delivery!', msg: 'Your order is on the way!' },
+                'Delivered': { title: '✅ Order Delivered!', msg: 'Your order has been delivered. Enjoy!' },
+                'Cancelled': { title: '❌ Order Cancelled', msg: `Your order was cancelled. Reason: ${cancelReason || 'N/A'}` },
+            };
+            if (msgs[orderStatus]) await createNotification(order.userId, msgs[orderStatus].title, msgs[orderStatus].msg, 'order');
+        }
+
         res.status(200).json({ success: true, message: "Status updated successfully" });
     } catch (error) {
         res.status(500).json({ success: false, message: error });

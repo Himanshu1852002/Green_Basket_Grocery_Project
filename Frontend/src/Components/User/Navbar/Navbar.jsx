@@ -9,6 +9,7 @@ import { clearWishlistData, clearWishToken } from '../../../Store/wishlistSlice'
 import { clearCartData, clearToken } from '../../../Store/cartSlice';
 import PropTypes from 'prop-types';
 import CartSidebar from "../../../Pages/User/Cart/CartSidebar";
+import NotificationBell from './NotificationBell';
 import './Navbar.css';
 
 const placeholderTexts = [
@@ -123,6 +124,9 @@ const Navbar = ({ setShowLogin }) => {
 
                     {/* Right actions */}
                     <div className="nb-actions">
+
+                        {/* Notification Bell */}
+                        {token && <NotificationBell />}
 
                         {/* Wishlist — hide on mobile */}
                         <Link to="/user/wishlist" className="nb-icon-btn nb-hide-mobile" title="Wishlist">

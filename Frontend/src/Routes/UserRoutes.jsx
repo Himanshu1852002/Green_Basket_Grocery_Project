@@ -22,6 +22,7 @@ import TermsOfService from '../Pages/User/TermsOfService/TermsOfService';
 import RefundPolicy from '../Pages/User/RefundPolicy/RefundPolicy';
 import Profile from '../Pages/User/Profile/Profile';
 import ProductDetail from '../Pages/User/ProductDetail/ProductDetail';
+import UserProtectedRoute from '../Shared/UserProtectedRoute';
 
 const UserRoutes = () => {
   return (
@@ -40,15 +41,15 @@ const UserRoutes = () => {
           <Route path="about" element={<About />} />
           <Route path="blog" element={<Blog />} />
           <Route path="contact" element={<Contact />} />
-          <Route path="wishlist" element={<Wishlist />} />
+          <Route path="wishlist" element={<UserProtectedRoute><Wishlist /></UserProtectedRoute>} />
           <Route path="search" element={<SearchResults />} />
-          <Route path="checkout" element={<Checkout />} />
-          <Route path="verify" element={<Verify />} />
-          <Route path="myorders" element={<MyOrders />} />
+          <Route path="checkout" element={<UserProtectedRoute><Checkout /></UserProtectedRoute>} />
+          <Route path="verify" element={<UserProtectedRoute><Verify /></UserProtectedRoute>} />
+          <Route path="myorders" element={<UserProtectedRoute><MyOrders /></UserProtectedRoute>} />
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
           <Route path="terms-of-service" element={<TermsOfService />} />
           <Route path="refund-policy" element={<RefundPolicy />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path="profile" element={<UserProtectedRoute><Profile /></UserProtectedRoute>} />
           <Route path="product/:id" element={<ProductDetail />} />
         </Routes>
       </div>

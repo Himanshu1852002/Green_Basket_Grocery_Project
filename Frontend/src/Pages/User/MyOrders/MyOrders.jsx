@@ -47,6 +47,13 @@ const OrderDetails = () => {
         return new Date(dateStr).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
     };
 
+    const getEstimatedDelivery = (orderDate) => {
+        if (!orderDate) return '—';
+        const d = new Date(orderDate);
+        d.setDate(d.getDate() + 3);
+        return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    };
+
     const filteredOrders = activeFilter === "All"
         ? orders
         : orders.filter(o => o.orderStatus === activeFilter);
@@ -191,6 +198,13 @@ const OrderDetails = () => {
                                                                     </div>
                                                                 );
                                                             })}
+                                                        </div>
+                                                    )}
+
+                                                    {/* Estimated Delivery */}
+                                                    {!isCancelled && !isDelivered && (
+                                                        <div className="mo-est-delivery">
+                                                            📦 Estimated Delivery: <strong>{getEstimatedDelivery(order.date)}</strong>
                                                         </div>
                                                     )}
 

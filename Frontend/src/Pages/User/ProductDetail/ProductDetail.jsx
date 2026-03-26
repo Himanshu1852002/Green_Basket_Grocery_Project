@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import {
-    FaShoppingCart, FaHeart, FaRegHeart, FaStar, FaTruck,
+    FaShoppingCart, FaHeart, FaRegHeart, FaStar, FaRegStar, FaTruck,
     FaLeaf, FaArrowLeft, FaCheck, FaShieldAlt, FaUndo, FaTag
 } from 'react-icons/fa';
 import { MdLocalOffer, MdVerified } from 'react-icons/md';
@@ -37,15 +37,58 @@ const ProductDetail = () => {
     const [added, setAdded] = useState(false);
     const [qty, setQty] = useState(1);
 
+    // Reviews state
+    const [reviews, setReviews] = useState([]);
+    const [reviewStats, setReviewStats] = useState({ avg: 0, total: 0 });
+    const [canReview, setCanReview] = useState(false);
+    const [existingReview, setExistingReview] = useState(null);
+    const [reviewForm, setReviewForm] = useState({ rating: 5, comment: '' });
+    const [reviewSubmitting, setReviewSubmitting] = useState(false);
+    const [showReviewForm, setShowReviewForm] = useState(false);
+
     const isWishlisted = product ? !!wishlist[product._id] : false;
     const isOutOfStock = product?.quantity === 0;
     const cartQty = product ? (cartItems[product._id] || 0) : 0;
 
+    const fetchReviews = async (productId) => {
+        try {
+            const res = await axios.get(`${BASE_URL}/api/reviews/product/${productId}`);
+            if (res.data.success) {
+                setReviews(res.data.reviews);
+                setReviewStats({ avg: res.data.avg, total: res.data.total });
+            }
+        } catch { /* silent */ }
+    };
+
+    const checkCanReview = async (productId) => {
+        if (!token) return;
+        try {
+            const res = await axios.post(`${BASE_URL}/api/reviews/canReview`,
+                { productId }, { headers: { Authorization: `Bearer ${token}` } }
+            );
+            if (res.data.success) {
+                setCanReview(res.data.canReview);
+                setExistingReview(res.data.existing);
+                if (res.data.existing) setReviewForm({ rating: res.data.existing.rating, comment: res.data.existing.comment });
+            }
+        } catch { /* silent */ }
+    };
+
     useEffect(() => {
         const stored = product_list?.find(p => p._id === id);
-        if (stored) { setProduct(stored); setLoading(false); return; }
+        if (stored) {
+            setProduct(stored);
+            setLoading(false);
+            fetchReviews(id);
+            checkCanReview(id);
+            return;
+        }
         axios.get(`${BASE_URL}/api/product/list`)
-            .then(res => setProduct(res.data.data?.find(p => p._id === id) || null))
+            .then(res => {
+                const found = res.data.data?.find(p => p._id === id) || null;
+                setProduct(found);
+                if (found) { fetchReviews(id); checkCanReview(id); }
+            })
             .finally(() => setLoading(false));
     }, [id, product_list]);
 
@@ -67,6 +110,24 @@ const ProductDetail = () => {
             dispatch(addToWishlistAPI({ token, itemId: product._id }));
             toast.success('Added to Wishlist', { autoClose: 2000 });
         }
+    };
+
+    const submitReview = async () => {
+        if (!reviewForm.comment.trim()) { toast.error('Please write a comment'); return; }
+        setReviewSubmitting(true);
+        try {
+            const res = await axios.post(`${BASE_URL}/api/reviews/add`,
+                { productId: product._id, rating: reviewForm.rating, comment: reviewForm.comment },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            if (res.data.success) {
+                toast.success(existingReview ? 'Review updated!' : 'Review submitted!', { autoClose: 2000 });
+                setShowReviewForm(false);
+                fetchReviews(product._id);
+                checkCanReview(product._id);
+            } else toast.error(res.data.message);
+        } catch { toast.error('Failed to submit review'); }
+        finally { setReviewSubmitting(false); }
     };
 
     if (loading) return <div className="pd-loading"><div className="pd-spinner" /></div>;
@@ -121,9 +182,9 @@ const ProductDetail = () => {
                     {/* Stars */}
                     <div className="pd-stars-row">
                         {Array.from({ length: 5 }).map((_, i) => (
-                            <FaStar key={i} size={14} color={i < 4 ? '#f59e0b' : '#e0e0e0'} />
+                            <FaStar key={i} size={14} color={i < Math.round(reviewStats.avg) ? '#f59e0b' : '#e0e0e0'} />
                         ))}
-                        <span className="pd-rating-text">4.0 · 120 reviews</span>
+                        <span className="pd-rating-text">{reviewStats.avg > 0 ? `${reviewStats.avg} · ${reviewStats.total} review${reviewStats.total !== 1 ? 's' : ''}` : 'No reviews yet'}</span>
                     </div>
 
                     {/* Price */}
@@ -199,6 +260,84 @@ const ProductDetail = () => {
                         <div className="pd-delivery-item"><FaShieldAlt size={13} /> 100% secure & safe checkout</div>
                     </div>
                 </div>
+            </div>
+
+            {/* ── Reviews Section ── */}
+            <div className="pd-reviews-section">
+                <div className="pd-reviews-header">
+                    <h3 className="pd-reviews-title">Customer Reviews</h3>
+                    {reviewStats.total > 0 && (
+                        <div className="pd-reviews-avg">
+                            <span className="pd-avg-num">{reviewStats.avg}</span>
+                            <div className="pd-avg-stars">
+                                {Array.from({ length: 5 }).map((_, i) => (
+                                    <FaStar key={i} size={16} color={i < Math.round(reviewStats.avg) ? '#f59e0b' : '#e0e0e0'} />
+                                ))}
+                            </div>
+                            <span className="pd-avg-total">({reviewStats.total} reviews)</span>
+                        </div>
+                    )}
+                    {canReview && (
+                        <button className="pd-write-review-btn" onClick={() => setShowReviewForm(p => !p)}>
+                            {existingReview ? '✏️ Edit Your Review' : '⭐ Write a Review'}
+                        </button>
+                    )}
+                </div>
+
+                {/* Review Form */}
+                {showReviewForm && canReview && (
+                    <div className="pd-review-form">
+                        <p className="pd-review-form-title">{existingReview ? 'Update Your Review' : 'Write a Review'}</p>
+                        <div className="pd-star-select">
+                            {Array.from({ length: 5 }).map((_, i) => (
+                                <button key={i} className="pd-star-btn" onClick={() => setReviewForm(p => ({ ...p, rating: i + 1 }))}>
+                                    {i < reviewForm.rating
+                                        ? <FaStar size={24} color="#f59e0b" />
+                                        : <FaRegStar size={24} color="#e0e0e0" />}
+                                </button>
+                            ))}
+                            <span className="pd-star-label">{reviewForm.rating}/5</span>
+                        </div>
+                        <textarea
+                            className="pd-review-textarea"
+                            rows={3}
+                            placeholder="Share your experience with this product..."
+                            value={reviewForm.comment}
+                            onChange={e => setReviewForm(p => ({ ...p, comment: e.target.value }))}
+                        />
+                        <div className="pd-review-form-actions">
+                            <button className="pd-review-submit" onClick={submitReview} disabled={reviewSubmitting}>
+                                {reviewSubmitting ? 'Submitting...' : existingReview ? 'Update Review' : 'Submit Review'}
+                            </button>
+                            <button className="pd-review-cancel" onClick={() => setShowReviewForm(false)}>Cancel</button>
+                        </div>
+                    </div>
+                )}
+
+                {/* Reviews List */}
+                {reviews.length === 0 ? (
+                    <p className="pd-no-reviews">No reviews yet. Be the first to review this product!</p>
+                ) : (
+                    <div className="pd-reviews-list">
+                        {reviews.map(r => (
+                            <div key={r._id} className="pd-review-card">
+                                <div className="pd-review-top">
+                                    <div className="pd-reviewer-avatar">{r.userName?.charAt(0).toUpperCase()}</div>
+                                    <div>
+                                        <p className="pd-reviewer-name">{r.userName}</p>
+                                        <div className="pd-review-stars">
+                                            {Array.from({ length: 5 }).map((_, i) => (
+                                                <FaStar key={i} size={12} color={i < r.rating ? '#f59e0b' : '#e0e0e0'} />
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <span className="pd-review-date">{new Date(r.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                                </div>
+                                <p className="pd-review-comment">{r.comment}</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );
