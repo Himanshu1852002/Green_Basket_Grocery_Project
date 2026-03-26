@@ -20,6 +20,8 @@ import Home from '../Pages/User/Home/Home';
 import PrivacyPolicy from '../Pages/User/PrivacyPolicy/PrivacyPolicy';
 import TermsOfService from '../Pages/User/TermsOfService/TermsOfService';
 import RefundPolicy from '../Pages/User/RefundPolicy/RefundPolicy';
+import Profile from '../Pages/User/Profile/Profile';
+import ProductDetail from '../Pages/User/ProductDetail/ProductDetail';
 
 const UserRoutes = () => {
   return (
@@ -46,6 +48,8 @@ const UserRoutes = () => {
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
           <Route path="terms-of-service" element={<TermsOfService />} />
           <Route path="refund-policy" element={<RefundPolicy />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="product/:id" element={<ProductDetail />} />
         </Routes>
       </div>
     </>

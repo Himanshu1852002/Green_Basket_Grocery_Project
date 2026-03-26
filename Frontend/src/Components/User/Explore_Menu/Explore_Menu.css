@@ -122,22 +122,51 @@
 }
 
 @media (max-width: 576px) {
+    .em-section {
+        padding: 32px 12px 28px;
+    }
+
     .em-grid {
         grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
+        gap: 10px;
+    }
+
+    .em-card {
+        padding: 14px 8px 12px;
+        gap: 8px;
+        border-radius: 12px;
     }
 
     .em-img-wrap {
-        width: 60px;
-        height: 60px;
+        width: 52px;
+        height: 52px;
     }
 
-    .em-img {
-        width: 38px;
-        height: 38px;
+    .em-img-wrap svg {
+        width: 34px;
+        height: 34px;
+    }
+
+    .em-name {
+        font-size: 0.75rem;
     }
 
     .em-title {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
+    }
+
+    .em-sub {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .em-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .em-card {
+        padding: 12px 8px;
     }
 }

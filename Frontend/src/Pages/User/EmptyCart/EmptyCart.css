@@ -1,0 +1,70 @@
+.ec-page {
+    min-height: 70vh; background: #f7fbf7;
+    display: flex; align-items: center; justify-content: center;
+    padding: 40px 16px;
+}
+
+.ec-card {
+    background: #fff; border-radius: 24px;
+    border: 1px solid #e8f5e9;
+    box-shadow: 0 8px 40px rgba(5,146,18,0.09);
+    padding: 52px 40px 44px;
+    max-width: 480px; width: 100%;
+    text-align: center;
+}
+
+.ec-icon-wrap { position: relative; display: inline-block; margin-bottom: 24px; }
+
+.ec-icon {
+    font-size: 4rem; width: 96px; height: 96px;
+    background: linear-gradient(135deg, #e8f5e9, #f0faf0);
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; margin: 0 auto;
+    animation: ec-bounce 2s ease-in-out infinite;
+}
+
+@keyframes ec-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.ec-ripple {
+    position: absolute; inset: -8px;
+    border-radius: 50%; border: 2px solid #c8e6c9;
+    animation: ec-ripple 2s ease-in-out infinite;
+}
+
+@keyframes ec-ripple {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.1); opacity: 0.2; }
+}
+
+.ec-title { font-size: 1.6rem; font-weight: 800; color: #1a4d2e; margin: 0 0 10px; }
+.ec-sub { font-size: 0.9rem; color: #777; line-height: 1.7; margin: 0 0 28px; }
+
+.ec-shop-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 32px; border-radius: 12px;
+    background: linear-gradient(135deg, #059212, #1a4d2e);
+    color: #fff; font-size: 0.92rem; font-weight: 700;
+    text-decoration: none; transition: opacity 0.2s, transform 0.15s;
+    margin-bottom: 32px;
+}
+.ec-shop-btn:hover { opacity: 0.9; transform: translateY(-2px); color: #fff; }
+
+.ec-links-wrap { border-top: 1px solid #e8f5e9; padding-top: 24px; }
+.ec-links-label { font-size: 0.82rem; color: #aaa; margin-bottom: 12px; }
+.ec-links { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+
+.ec-link {
+    padding: 7px 16px; border-radius: 20px;
+    background: #f0faf0; border: 1px solid #c8e6c9;
+    color: #1a4d2e; font-size: 0.82rem; font-weight: 600;
+    text-decoration: none; transition: background 0.2s, transform 0.15s;
+}
+.ec-link:hover { background: #e8f5e9; transform: translateY(-2px); color: #059212; }
+
+@media (max-width: 480px) {
+    .ec-card { padding: 36px 20px 32px; }
+    .ec-title { font-size: 1.3rem; }
+}

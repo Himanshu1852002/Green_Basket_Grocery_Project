@@ -131,14 +131,34 @@
     display: none;
     align-items: center;
     gap: 0;
-    background: #fff;
+    background: #f7fbf7;
     border-top: 1px solid #e8f5e9;
-    border-bottom: 1px solid #e8f5e9;
-    padding: 8px 16px;
+    padding: 10px 14px;
 }
 
-.nb-search-mobile .nb-search-icon { color: #aaa; margin-right: 8px; }
-.nb-search-mobile .nb-search-input { flex: 1; border: none; background: transparent; outline: none; font-size: 0.87rem; color: #1a1a1a; padding: 4px 0; }
+.nb-search-mobile-inner {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: #fff;
+    border: 1.5px solid #c8e6c9;
+    border-radius: 12px;
+    padding: 0 14px;
+    width: 100%;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.nb-search-mobile-inner:focus-within {
+    border-color: var(--nb-green);
+    box-shadow: 0 0 0 3px rgba(5, 146, 18, 0.1);
+}
+
+.nb-search-mobile .nb-search-icon { color: #aaa; margin-right: 8px; flex-shrink: 0; }
+.nb-search-mobile .nb-search-input {
+    flex: 1; border: none; background: transparent;
+    outline: none; font-size: 0.88rem; color: #1a1a1a;
+    padding: 11px 0;
+}
 .nb-search-mobile .nb-search-input::placeholder { color: #bbb; }
 
 /* Right actions */
@@ -233,7 +253,7 @@
 .nb-dropdown-item {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     padding: 9px 12px;
     border-radius: 8px;
     font-size: 0.87rem;
@@ -247,10 +267,9 @@
     transition: background 0.15s, color 0.15s;
 }
 
-.nb-dropdown-item:hover {
-    background: #f0faf0;
-    color: var(--nb-green);
-}
+.nb-dropdown-item svg { color: #059212; flex-shrink: 0; }
+.nb-dropdown-item:hover { background: #f0faf0; color: var(--nb-green); }
+.nb-dropdown-item:hover svg { color: var(--nb-green); }
 
 .nb-logout:hover {
     background: #fff0f0;
@@ -293,7 +312,7 @@
 .nb-mobile-link {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     padding: 11px 12px;
     border-radius: 10px;
     font-size: 0.9rem;
@@ -303,6 +322,7 @@
     transition: background 0.15s;
 }
 
+.nb-mobile-link svg { color: #059212; flex-shrink: 0; }
 .nb-mobile-link:hover { background: #f0faf0; color: var(--nb-green); }
 
 .nb-mobile-cart-btn {
@@ -330,6 +350,10 @@
 }
 
 .nb-mobile-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     padding: 11px;
     border-radius: 10px;
     border: 1.5px solid var(--nb-green);
@@ -344,6 +368,10 @@
 .nb-mobile-login:hover { background: var(--nb-green); color: #fff; }
 
 .nb-mobile-logout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     padding: 11px;
     border-radius: 10px;
     border: 1.5px solid #ffcdd2;

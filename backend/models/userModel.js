@@ -30,6 +30,14 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    phone: {
+        type: String,
+        default: ''
+    },
+    address: {
+        type: Object,
+        default: {}
+    },
     createdAt: {
         type: Date,
         default: Date.now

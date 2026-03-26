@@ -78,7 +78,7 @@ const CartSidebar = ({ show, onClose }) => {
                                 <div key={item._id} className="cs-item">
                                     <div className="cs-item-img-wrap">
                                         <img
-                                            src={`http://localhost:3000/uploads/${item.image}`}
+                                            src={`${import.meta.env.VITE_API_BASE_URL || 'https://green-basket-grocery-project.onrender.com'}/uploads/${item.image}`}
                                             alt={item.name}
                                             className="cs-item-img"
                                         />

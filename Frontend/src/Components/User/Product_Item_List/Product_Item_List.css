@@ -498,6 +498,12 @@
     overflow: hidden;
 }
 
+.pc-name-link {
+    color: inherit;
+    text-decoration: none;
+}
+.pc-name-link:hover { color: #059212; text-decoration: underline; }
+
 /* Price */
 .pc-price-row {
     display: flex;
@@ -553,6 +559,7 @@
 }
 
 /* Cart button */
+.pc-clickable { cursor: pointer; }
 .pc-cart-btn {
     display: flex;
     align-items: center;

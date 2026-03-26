@@ -9,6 +9,7 @@ import {
 } from 'react-icons/fa';
 import { MdStickyNote2 } from 'react-icons/md';
 import { toast } from 'react-toastify';
+import EmptyCart from '../EmptyCart/EmptyCart';
 
 const Field = ({ name, type = 'text', placeholder, value, error, onChange }) => (
     <div className="co-field">
@@ -48,7 +49,7 @@ const Checkout = () => {
         city: '', state: '', pincode: '', country: '', phone: '',
     });
 
-    const url = 'https://green-basket-grocery-project.onrender.com';
+    const url = import.meta.env.VITE_API_BASE_URL || 'https://green-basket-grocery-project.onrender.com';
 
     // Redirect if not logged in
     useEffect(() => {
@@ -59,12 +60,32 @@ const Checkout = () => {
         setDeliveryFee(totalCartAmount > 200 ? 0 : 25);
     }, [totalCartAmount]);
 
-    // Auto-fill email from localStorage
+    // Auto-fill email from localStorage + saved address from profile
     useEffect(() => {
         const savedEmail = localStorage.getItem('email');
         const savedName = localStorage.getItem('name');
         if (savedEmail) setData((prev) => ({ ...prev, email: savedEmail }));
         if (savedName) setData((prev) => ({ ...prev, firstName: savedName }));
+
+        // Load saved address from profile
+        const token = localStorage.getItem('token');
+        if (token) {
+            const BASE = import.meta.env.VITE_API_BASE_URL || 'https://green-basket-grocery-project.onrender.com';
+            fetch(`${BASE}/api/user/profile`, { method: 'POST', headers: { Authorization: `Bearer ${token}` } })
+                .then(r => r.json())
+                .then(res => {
+                    if (res.success && res.user?.address?.street) {
+                        const a = res.user.address;
+                        setData(prev => ({
+                            ...prev,
+                            phone: res.user.phone || prev.phone,
+                            street: a.street || '', city: a.city || '',
+                            state: a.state || '', pincode: a.pincode || '',
+                            country: prev.country
+                        }));
+                    }
+                }).catch(() => {});
+        }
     }, []);
 
     const onChangeHandler = (e) => {
@@ -203,6 +224,8 @@ const Checkout = () => {
         return item ? { ...item, qty } : null;
     }).filter(Boolean);
 
+    if (cartProductList.length === 0) return <EmptyCart />;
+
     return (
         <div className="co-page">
 
@@ -287,7 +310,7 @@ const Checkout = () => {
                         {cartProductList.map((item) => (
                             <div key={item._id} className="co-item">
                                 <div className="co-item-img-wrap">
-                                    <img src={`${url}/uploads/${item.image}`} alt={item.name} className="co-item-img" />
+                                    <img src={item.image?.startsWith('http') ? item.image : `${url}/uploads/${item.image}`} alt={item.name} className="co-item-img" />
                                 </div>
                                 <div className="co-item-info">
                                     <p className="co-item-name">{item.name}</p>
@@ -295,7 +318,15 @@ const Checkout = () => {
                                     <div className="co-item-qty">
                                         <button className="co-qty-btn" onClick={() => dispatch(removeFromCartAPI({ itemId: item._id, token }))}>−</button>
                                         <span className="co-qty-num">{item.qty}</span>
-                                        <button className="co-qty-btn" onClick={() => dispatch(addToCartAPI({ itemId: item._id, token }))}>+</button>
+                                        <button className="co-qty-btn"
+                                            onClick={() => {
+                                                if (item.qty >= item.quantity) {
+                                                    toast.error(`Only ${item.quantity} unit(s) available in stock`, { autoClose: 2000 });
+                                                    return;
+                                                }
+                                                dispatch(addToCartAPI({ itemId: item._id, token }));
+                                            }}
+                                        >+</button>
                                     </div>
                                 </div>
                                 <div className="co-item-right">

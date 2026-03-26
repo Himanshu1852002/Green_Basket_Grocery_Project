@@ -14,7 +14,7 @@ const Wishlist = () => {
     const token = useSelector((state) => state.wishlist.token);
     const cartToken = useSelector((state) => state.cart.token);
     const dispatch = useDispatch();
-    const url = "https://green-basket-grocery-project.onrender.com";
+    const url = import.meta.env.VITE_API_BASE_URL || "https://green-basket-grocery-project.onrender.com";
 
     useEffect(() => { dispatch(fetchProductList()); }, [dispatch]);
     useEffect(() => { if (token) dispatch(fetchWishlist(token)); }, [dispatch, token]);

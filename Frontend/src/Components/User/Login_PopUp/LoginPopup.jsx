@@ -11,7 +11,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
-const URL = "https://green-basket-grocery-project.onrender.com";
+const URL = import.meta.env.VITE_API_BASE_URL || "https://green-basket-grocery-project.onrender.com";
 
 const LoginPopup = ({ setShowLogin }) => {
     const dispatch = useDispatch();
@@ -65,7 +65,11 @@ const LoginPopup = ({ setShowLogin }) => {
                     setShowLogin(false);
                     toast.success('Logged in successfully!', { autoClose: 1500 });
                     if (user.role === 'admin') navigate('/admin');
-                    else navigate('/user');
+                    else {
+                        const redirect = localStorage.getItem('redirectAfterLogin');
+                        localStorage.removeItem('redirectAfterLogin');
+                        navigate(redirect || '/user');
+                    }
                 }
             } else {
                 toast.error(res.data.message || 'Something went wrong', { autoClose: 2000 });

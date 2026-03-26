@@ -238,4 +238,30 @@ const blockUnblockUser = async (req, res) => {
     }
 };
 
-export { loginUser, registerUser, verifyOtp, getUserCount, registerAdmin, getAllUsers, blockUnblockUser };
+// Get profile
+const getProfile = async (req, res) => {
+    try {
+        const user = await userModel.findById(req.body.userId).select('-password');
+        if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+        res.json({ success: true, user });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+// Update profile
+const updateProfile = async (req, res) => {
+    const { userId, name, phone, address } = req.body;
+    try {
+        const user = await userModel.findByIdAndUpdate(
+            userId,
+            { name, phone, address },
+            { new: true }
+        ).select('-password');
+        res.json({ success: true, user });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+export { loginUser, registerUser, verifyOtp, getUserCount, registerAdmin, getAllUsers, blockUnblockUser, getProfile, updateProfile };

@@ -35,13 +35,16 @@ const SearchResults = () => {
     useEffect(() => {
         if (!query) return;
         setLoading(true);
-        axios
-            .get(`${BASE_URL}/api/search/searchItem?q=${query}`)
-            .then((res) => {
-                setResults(Array.isArray(res.data?.results) ? res.data.results : []);
-                setLoading(false);
-            })
-            .catch(() => setLoading(false));
+        const timer = setTimeout(() => {
+            axios
+                .get(`${BASE_URL}/api/search/searchItem?q=${query}`)
+                .then((res) => {
+                    setResults(Array.isArray(res.data?.results) ? res.data.results : []);
+                    setLoading(false);
+                })
+                .catch(() => setLoading(false));
+        }, 400);
+        return () => clearTimeout(timer);
     }, [query]);
 
     const toggleWishlist = (productId) => {

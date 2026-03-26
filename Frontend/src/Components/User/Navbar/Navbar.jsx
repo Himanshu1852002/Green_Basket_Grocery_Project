@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { FaUser, FaBars, FaTimes, FaRegHeart, FaSearch, FaLeaf } from "react-icons/fa";
+import { FaUser, FaBars, FaTimes, FaRegHeart, FaSearch, FaHome, FaBlog, FaShoppingCart, FaBoxOpen, FaInfoCircle, FaPhoneAlt, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
+import { MdOutlineShoppingBag } from "react-icons/md";
 import { SlHandbag } from "react-icons/sl";
+import { RiUserSmileLine } from "react-icons/ri";
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 import { clearWishlistData, clearWishToken } from '../../../Store/wishlistSlice';
@@ -136,7 +138,10 @@ const Navbar = ({ setShowLogin }) => {
 
                         {/* User — hide on mobile */}
                         {!token ? (
-                            <button className="nb-login-btn nb-hide-mobile" onClick={() => setShowLogin(true)}>Login</button>
+                            <button className="nb-login-btn nb-hide-mobile" onClick={() => {
+                                localStorage.setItem('redirectAfterLogin', window.location.pathname);
+                                setShowLogin(true);
+                            }}>Login</button>
                         ) : (
                             <div className="nb-user-wrap nb-hide-mobile" ref={dropdownRef}>
                                 <button className="nb-icon-btn" onClick={() => setShowDropdown((p) => !p)} title="Account">
@@ -144,15 +149,18 @@ const Navbar = ({ setShowLogin }) => {
                                 </button>
                                 {showDropdown && (
                                     <div className="nb-dropdown">
+                                        <Link to="/user/profile" className="nb-dropdown-item" onClick={() => setShowDropdown(false)}>
+                                            <RiUserSmileLine size={16} /> My Profile
+                                        </Link>
                                         <Link to="/user/myorders" className="nb-dropdown-item" onClick={() => setShowDropdown(false)}>
-                                            📦 My Orders
+                                            <FaBoxOpen size={15} /> My Orders
                                         </Link>
                                         <Link to="/user/wishlist" className="nb-dropdown-item" onClick={() => setShowDropdown(false)}>
-                                            ❤️ Wishlist
+                                            <FaRegHeart size={15} /> Wishlist
                                         </Link>
                                         <hr className="nb-dropdown-divider" />
                                         <button className="nb-dropdown-item nb-logout" onClick={() => { handleLogOut(); setShowDropdown(false); }}>
-                                            🚪 Log Out
+                                            <FaSignOutAlt size={15} /> Log Out
                                         </button>
                                     </div>
                                 )}
@@ -168,36 +176,44 @@ const Navbar = ({ setShowLogin }) => {
 
                 {/* Search — mobile */}
                 <div className="nb-search-mobile">
-                    <FaSearch size={13} className="nb-search-icon" />
-                    <input
-                        className="nb-search-input"
-                        type="text"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        placeholder={placeholder}
-                        onKeyDown={(e) => e.key === "Enter" && query.trim() && navigate(`/user/search?q=${query}`)}
-                    />
+                    <div className="nb-search-mobile-inner">
+                        <FaSearch size={14} className="nb-search-icon" />
+                        <input
+                            className="nb-search-input"
+                            type="text"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            placeholder={placeholder}
+                            onKeyDown={(e) => e.key === "Enter" && query.trim() && navigate(`/user/search?q=${query}`)}
+                        />
+                    </div>
                 </div>
 
                 {/* Mobile menu */}
                 {menuOpen && (
                     <div className="nb-mobile-menu">
-                        <Link to="/" className="nb-mobile-link" onClick={() => setMenuOpen(false)}>🏠 Home</Link>
-                        <Link to="/user/blog" className="nb-mobile-link" onClick={() => setMenuOpen(false)}>📝 Blog</Link>
+                        <Link to="/" className="nb-mobile-link" onClick={() => setMenuOpen(false)}><FaHome size={15} /> Home</Link>
+                        <Link to="/user/blog" className="nb-mobile-link" onClick={() => setMenuOpen(false)}><MdOutlineShoppingBag size={16} /> Blog</Link>
                         <Link to="/user/wishlist" className="nb-mobile-link" onClick={() => setMenuOpen(false)}>
-                            ❤️ Wishlist {wishlistCount > 0 && <span className="nb-mobile-badge">{wishlistCount}</span>}
+                            <FaRegHeart size={15} /> Wishlist {wishlistCount > 0 && <span className="nb-mobile-badge">{wishlistCount}</span>}
                         </Link>
                         <button className="nb-mobile-link nb-mobile-cart-btn" onClick={() => { setShowCartSidebar(true); setMenuOpen(false); }}>
-                            🛒 Cart {cartItemCount > 0 && <span className="nb-mobile-badge">{cartItemCount}</span>}
+                            <FaShoppingCart size={15} /> Cart {cartItemCount > 0 && <span className="nb-mobile-badge">{cartItemCount}</span>}
                         </button>
-                        <Link to="/user/myorders" className="nb-mobile-link" onClick={() => setMenuOpen(false)}>📦 My Orders</Link>
-                        <Link to="/user/about" className="nb-mobile-link" onClick={() => setMenuOpen(false)}>ℹ️ About</Link>
-                        <Link to="/user/contact" className="nb-mobile-link" onClick={() => setMenuOpen(false)}>📞 Contact</Link>
+                        <Link to="/user/myorders" className="nb-mobile-link" onClick={() => setMenuOpen(false)}><FaBoxOpen size={15} /> My Orders</Link>
+                        <Link to="/user/about" className="nb-mobile-link" onClick={() => setMenuOpen(false)}><FaInfoCircle size={15} /> About</Link>
+                        <Link to="/user/contact" className="nb-mobile-link" onClick={() => setMenuOpen(false)}><FaPhoneAlt size={14} /> Contact</Link>
                         <hr className="nb-mobile-divider" />
                         {!token ? (
-                            <button className="nb-mobile-login" onClick={() => { setShowLogin(true); setMenuOpen(false); }}>Login / Sign Up</button>
+                            <button className="nb-mobile-login" onClick={() => {
+                                localStorage.setItem('redirectAfterLogin', window.location.pathname);
+                                setShowLogin(true); setMenuOpen(false);
+                            }}><FaUser size={14} /> Login / Sign Up</button>
                         ) : (
-                            <button className="nb-mobile-logout" onClick={() => { handleLogOut(); setMenuOpen(false); }}>🚪 Log Out</button>
+                            <>
+                                <Link to="/user/profile" className="nb-mobile-link" onClick={() => setMenuOpen(false)}><RiUserSmileLine size={16} /> My Profile</Link>
+                                <button className="nb-mobile-logout" onClick={() => { handleLogOut(); setMenuOpen(false); }}><FaSignOutAlt size={15} /> Log Out</button>
+                            </>
                         )}
                     </div>
                 )}
