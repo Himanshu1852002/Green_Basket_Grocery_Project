@@ -7,10 +7,10 @@ const search = async (req, res) => {
             name: { $regex: query, $options: 'i' }
         });
 
-        if (results.length === 0) {
-            return res.status(404).json({ message: "No products found" });
-        }
         const url = "https://green-basket-grocery-project.onrender.com";
+        if (results.length === 0) {
+            return res.status(200).json({ success: true, results: [] });
+        }
         const resultsWithFullImageUrl = results.map(product => ({
             ...product.toObject(),
             image: `${url}/uploads/${product.image}`

@@ -1,54 +1,365 @@
+/* Page */
+.ab-page {
+    min-height: 100vh;
+    background: #f7fbf7;
+}
 
-
-.about_row_1 {
-    height: 160px;
+/* Banner */
+.ab-banner {
+    background: linear-gradient(135deg, #1a4d2e, #059212);
     color: #fff;
-    background-color: #263d2f;
+    text-align: center;
+    padding: 52px 16px 44px;
 }
 
-.about_row_2 {
-    height: 200px;
+.ab-breadcrumb {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 10px;
 }
 
+.ab-banner-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    margin: 0 0 10px;
+}
 
-.about_col_2 h1 {
-    position: relative;
-    display: inline-block;
+.ab-banner-sub {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.85);
     margin: 0;
 }
 
-.about_col_2 h1::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: -20px;
-    transform: translateX(-50%);
-    width: 30%;
-    height: 5px;
-    background-color: orangered;
+/* Sections */
+.ab-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 20px;
 }
 
-@media (max-width:767px) {
-    .about_col_1 h1 {
-        font-size: 2.5rem;
-        font-weight: 800;
-    }
-
-    .about_col_2 h1 {
-        font-size: 2.5rem;
-        font-weight: 800;
-    }
+.ab-section-header {
+    text-align: center;
+    margin-bottom: 44px;
 }
 
-@media (max-width:575px) {
-    .about_col_1 h1 {
-        font-size: 2rem;
-        font-weight: 800;
-    }
+.ab-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #e8f5e9;
+    color: #059212;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+}
 
-    .about_col_2 h1 {
-        font-size: 2rem;
-        font-weight: 800;
-        text-align: center;
-    }
+.ab-section-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #1a4d2e;
+    margin: 0 0 12px;
+    line-height: 1.3;
+}
+
+.ab-section-sub {
+    font-size: 0.92rem;
+    color: #666;
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+.ab-section-desc {
+    font-size: 0.92rem;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 14px;
+}
+
+/* Mission */
+.ab-mission {
+    padding-bottom: 40px;
+}
+
+.ab-mission-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+}
+
+.ab-mission-text .ab-tag { margin-bottom: 16px; }
+
+.ab-cta-btn {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 11px 26px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #059212, #1a4d2e);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+}
+
+.ab-cta-btn:hover { opacity: 0.9; transform: translateY(-1px); color: #fff; }
+
+/* Visual cards grid */
+.ab-mission-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.ab-visual-card {
+    background: #fff;
+    border: 1px solid #e8f5e9;
+    border-radius: 16px;
+    padding: 28px 16px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(5,146,18,0.07);
+    transition: transform 0.2s;
+}
+
+.ab-visual-card:hover { transform: translateY(-4px); }
+
+.ab-visual-card-2 { background: #f0faf0; }
+.ab-visual-card-3 { background: #fff8e1; border-color: #ffe082; }
+.ab-visual-card-4 { background: #e8f5e9; }
+
+.ab-visual-icon { font-size: 2.2rem; margin-bottom: 10px; }
+
+.ab-visual-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1a4d2e;
+    margin: 0;
+}
+
+/* Stats */
+.ab-stats-section {
+    background: linear-gradient(135deg, #1a4d2e, #059212);
+    padding: 48px 20px;
+}
+
+.ab-stats-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.ab-stat-card {
+    text-align: center;
+    color: #fff;
+}
+
+.ab-stat-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+}
+
+.ab-stat-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0 0 4px;
+}
+
+.ab-stat-label {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.8);
+    margin: 0;
+}
+
+/* Values grid */
+.ab-values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.ab-value-card {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #e8f5e9;
+    padding: 24px 20px;
+    box-shadow: 0 2px 12px rgba(5,146,18,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.ab-value-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(5,146,18,0.13);
+}
+
+.ab-value-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: #e8f5e9;
+    color: #059212;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+}
+
+.ab-value-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1a4d2e;
+    margin-bottom: 8px;
+}
+
+.ab-value-desc {
+    font-size: 0.83rem;
+    color: #666;
+    line-height: 1.65;
+    margin: 0;
+}
+
+/* Team */
+.ab-team-section {
+    background: #fff;
+    max-width: 100%;
+    padding: 60px 20px;
+}
+
+.ab-team-section .ab-section-header {
+    max-width: 1100px;
+    margin: 0 auto 44px;
+}
+
+.ab-team-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.ab-team-card {
+    background: #f7fbf7;
+    border: 1px solid #e8f5e9;
+    border-radius: 16px;
+    padding: 28px 16px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.ab-team-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(5,146,18,0.12);
+}
+
+.ab-team-avatar {
+    font-size: 2.8rem;
+    margin-bottom: 12px;
+    width: 64px;
+    height: 64px;
+    background: #e8f5e9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px;
+}
+
+.ab-team-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1a4d2e;
+    margin-bottom: 4px;
+}
+
+.ab-team-role {
+    font-size: 0.78rem;
+    color: #059212;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* CTA Section */
+.ab-cta-section {
+    background: linear-gradient(135deg, #1a4d2e, #059212);
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.ab-cta-content { max-width: 600px; margin: 0 auto; }
+
+.ab-cta-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 12px;
+}
+
+.ab-cta-sub {
+    font-size: 0.92rem;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 28px;
+    line-height: 1.7;
+}
+
+.ab-cta-btns {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.ab-cta-primary {
+    padding: 12px 28px;
+    border-radius: 10px;
+    background: #fff;
+    color: #059212;
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+}
+
+.ab-cta-primary:hover { opacity: 0.92; transform: translateY(-1px); color: #059212; }
+
+.ab-cta-secondary {
+    padding: 12px 28px;
+    border-radius: 10px;
+    border: 2px solid rgba(255,255,255,0.6);
+    background: transparent;
+    color: #fff;
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.ab-cta-secondary:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+/* Responsive */
+@media (max-width: 900px) {
+    .ab-mission-content { grid-template-columns: 1fr; gap: 32px; }
+    .ab-stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .ab-values-grid { grid-template-columns: repeat(2, 1fr); }
+    .ab-team-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 576px) {
+    .ab-banner-title { font-size: 1.8rem; }
+    .ab-section-title { font-size: 1.5rem; }
+    .ab-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .ab-values-grid { grid-template-columns: 1fr; }
+    .ab-team-grid { grid-template-columns: repeat(2, 1fr); }
+    .ab-mission-visual { grid-template-columns: repeat(2, 1fr); }
+    .ab-cta-title { font-size: 1.6rem; }
 }

@@ -1,5 +1,5 @@
 import fruits_img from '../../../assets/Images/Images/fruits.jpg';
-import Banners from "../../../Components/User/Banners/Banners"
+import Banners from "../../../Components/User/Banners/Banners";
 import Product_Item_List from '../../../Components/User/Product_Item_List/Product_Item_List';
 import ExploreMenu from '../../../Components/User/Explore_Menu/Explore_Menu';
 import { useEffect, useState } from 'react';
@@ -9,36 +9,34 @@ import { fetchProductsByCategory, getProductsError, getProductsStatus, selectAll
 const Fruits = () => {
     const [category, setCategory] = useState("Fruits");
     const dispatch = useDispatch();
-
     const products = useSelector(selectAllProducts);
     const status = useSelector(getProductsStatus);
     const error = useSelector(getProductsError);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-                dispatch(fetchProductsByCategory(category));
-        }, 300); 
-
+        const timer = setTimeout(() => { dispatch(fetchProductsByCategory(category)); }, 300);
         return () => clearTimeout(timer);
     }, [dispatch, category]);
-
 
     return (
         <>
             <Banners
+                tag="🍎 Fresh Picks"
                 title1="Fresh &"
-                title2="The Juicy Fruits"
-                heading="CHOOSE FROM OUR BEST ITEMS"
+                title2="Juicy Fruits"
+                subtitle="Handpicked seasonal fruits delivered fresh to your doorstep. Rich in vitamins, bursting with flavor."
                 item_img={fruits_img}
-                backgroundColor="linear-gradient(to top,#FFC800, #FF8F00,#FF7200,#FF5500,#FF0000"
+                stats={[
+                    { value: '50+', label: 'Varieties' },
+                    { value: '100%', label: 'Fresh' },
+                    { value: '4.9★', label: 'Rated' },
+                ]}
             />
             <ExploreMenu category={category} setCategory={setCategory} />
-            {status === "loading" && <p>Loading products...</p>}
-            {status === "failed" && <p>Error: {error}</p>}
-            {status === "succeeded" && <Product_Item_List items={products} />}
+            {status === "failed" && <p className="text-center py-5 text-danger">Error: {error}</p>}
+            <Product_Item_List items={status === "succeeded" ? products : []} loading={status === "loading"} />
         </>
     );
 };
 
-
-export default Fruits
+export default Fruits;

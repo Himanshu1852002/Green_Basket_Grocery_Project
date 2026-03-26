@@ -2,7 +2,8 @@
 import Razorpay from 'razorpay';
 import crypto from 'crypto';
 import orderModel from '../models/orderModel.js';
-import userModel from '../models/userModel.js'
+import userModel from '../models/userModel.js';
+import { createNotification } from './notificationController.js';
 
 const RAZORPAY_KEY_ID = process.env.RAZORPAY_ID;
 const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY;
@@ -31,7 +32,6 @@ const createOrder = async (req, res) => {
                 return res.status(500).json({ success: false, message: "Something went wrong" });
             }
 
-            // Save order to database
             const newOrder = new orderModel({
                 userId,
                 items,
@@ -43,6 +43,8 @@ const createOrder = async (req, res) => {
 
             await newOrder.save();
 
+            // Notification
+            await createNotification(userId, '🛒 Order Placed!', `Your order of ₹${amount} has been placed successfully.`, 'order');
 
             if (paymentMethod === "Cash on Delivery") {
                 const user = await userModel.findByIdAndUpdate(
@@ -50,7 +52,6 @@ const createOrder = async (req, res) => {
                     { cartData: {} },
                     { new: true }
                 );
-
                 if (!user) {
                     return res.status(404).json({ success: false, message: "User not found" });
                 }
@@ -88,14 +89,12 @@ const verifyOrder = async (req, res) => {
             }
             const user = await userModel.findOneAndUpdate(
                 { _id: updatedOrder.userId },
-                { cartData: {} }, // Assuming cart is an array in user model
+                { cartData: {} },
                 { new: true }
             );
-
             if (!user) {
                 return res.status(404).json({ success: false, message: "User not found" });
             }
-
             return res.status(200).json({ success: true, message: "Payment verified successfully", data: updatedOrder });
         } else {
             return res.status(400).json({ success: false, message: "Payment verification failed" });
@@ -108,11 +107,9 @@ const verifyOrder = async (req, res) => {
 
 const userOrders = async (req, res) => {
     const { userId } = req.body;
-
     if (!userId) {
         return res.status(400).json({ success: false, message: "User ID is required" });
     }
-
     try {
         const orders = await orderModel.find({ userId });
         if (!orders.length) {
@@ -128,93 +125,87 @@ const fetchAllOrders = async (req, res) => {
     try {
         const orders = await orderModel.find();
         if (!orders.length) {
-            return res.status(404).json({
-                success: false,
-                message: "Order Not Found"
-            })
+            return res.status(404).json({ success: false, message: "Order Not Found" });
         }
         return res.status(200).json({ success: true, data: orders });
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Server Error",
-            error
-        })
+        return res.status(500).json({ success: false, message: "Server Error", error });
     }
-}
+};
 
 const updateStatus = async (req, res) => {
     const { orderId, orderStatus, cancelReason, cancelledBy } = req.body;
-
     try {
-        await orderModel.findByIdAndUpdate(orderId, { orderStatus: orderStatus, cancelReason: cancelReason, cancelledBy: cancelledBy });
-        res.status(200).json({
-            success: true,
-            message: "Status update succeefully"
-        })
+        await orderModel.findByIdAndUpdate(orderId, { orderStatus, cancelReason, cancelledBy });
+
+        // Notification on status change
+        const order = await orderModel.findById(orderId);
+        if (order) {
+            const msgs = {
+                'Out for Delivery': { title: '🚚 Out for Delivery!', msg: 'Your order is on the way!' },
+                'Delivered': { title: '✅ Order Delivered!', msg: 'Your order has been delivered. Enjoy!' },
+                'Cancelled': { title: '❌ Order Cancelled', msg: `Your order was cancelled. Reason: ${cancelReason || 'N/A'}` },
+            };
+            if (msgs[orderStatus]) await createNotification(order.userId, msgs[orderStatus].title, msgs[orderStatus].msg, 'order');
+        }
+
+        res.status(200).json({ success: true, message: "Status updated successfully" });
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error
-        })
+        res.status(500).json({ success: false, message: error });
     }
-}
+};
 
 const orderCount = async (req, res) => {
     try {
         const totalOrders = await orderModel.countDocuments();
-
-        return res.status(200).json({
-            success: true,
-            totalOrders,
-        });
+        return res.status(200).json({ success: true, totalOrders });
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Server Error",
-            error,
-        });
+        return res.status(500).json({ success: false, message: "Server Error", error });
     }
 };
 
 const orderCancel = async (req, res) => {
     const { orderId } = req.params;
     const { cancelReason, cancelledBy } = req.body;
-
     try {
-
         const order = await orderModel.findById(orderId);
-
         if (!order) {
-            return res.status(404).json({
-                success: false,
-                message: "Order Not Found"
-            })
+            return res.status(404).json({ success: false, message: "Order Not Found" });
         }
-
         if (order.orderStatus === "Cancelled") {
-            return res.status(400).json({
-                success: false,
-                message: 'Order is already cancelled'
-            });
+            return res.status(400).json({ success: false, message: 'Order is already cancelled' });
         }
-
         order.orderStatus = "Cancelled";
         order.cancelReason = cancelReason;
         order.cancelledBy = cancelledBy;
         await order.save();
-
-        return res.status(200).json({
-            message: 'Order cancelled successfully',
-            updatedOrder: order
-        });
-
+        return res.status(200).json({ message: 'Order cancelled successfully', updatedOrder: order });
     } catch (error) {
         console.error('Error cancelling order:', error);
-        return res.status(500).json({
-            message: 'Internal server error'
-        });
+        return res.status(500).json({ message: 'Internal server error' });
     }
-}
+};
 
-export { createOrder, verifyOrder, userOrders, fetchAllOrders, updateStatus, orderCount, orderCancel }
+const getTrendingProducts = async (req, res) => {
+    try {
+        const orders = await orderModel.find({ payment: true });
+        const productMap = {};
+        orders.forEach(order => {
+            order.items.forEach(item => {
+                const key = item.name;
+                if (!productMap[key]) {
+                    productMap[key] = { name: item.name, image: item.image, price: item.price, itemId: item.itemId || null, totalSold: 0 };
+                }
+                productMap[key].totalSold += item.quantity;
+            });
+        });
+        const trending = Object.values(productMap)
+            .sort((a, b) => b.totalSold - a.totalSold)
+            .slice(0, 8);
+        return res.status(200).json({ success: true, data: trending });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: 'Server Error', error });
+    }
+};
+
+export { createOrder, verifyOrder, userOrders, fetchAllOrders, updateStatus, orderCount, orderCancel, getTrendingProducts };

@@ -1,0 +1,102 @@
+/* Overlay */
+.pgl-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(247, 251, 247, 0.85);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pgl-fade-in 0.15s ease;
+}
+
+@keyframes pgl-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Center box */
+.pgl-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+/* Basket bounce */
+.pgl-basket-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.pgl-basket-bounce {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, #e8f5e9, #f0faf0);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(5, 146, 18, 0.2);
+    animation: pgl-bounce 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes pgl-bounce {
+    from { transform: translateY(0px); }
+    to   { transform: translateY(-12px); }
+}
+
+/* Shadow that shrinks when basket goes up */
+.pgl-shadow {
+    width: 40px;
+    height: 8px;
+    background: rgba(5, 146, 18, 0.15);
+    border-radius: 50%;
+    animation: pgl-shadow 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes pgl-shadow {
+    from { transform: scale(1);   opacity: 0.4; }
+    to   { transform: scale(0.5); opacity: 0.15; }
+}
+
+/* Brand */
+.pgl-brand {
+    display: flex;
+    gap: 4px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: 0.3px;
+}
+
+.pgl-green { color: #059212; }
+.pgl-dark  { color: #1a4d2e; }
+
+/* Dots */
+.pgl-dots {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.pgl-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #059212;
+    animation: pgl-dot-pulse 1s ease-in-out infinite;
+}
+
+.pgl-dot:nth-child(1) { animation-delay: 0s;    opacity: 0.3; }
+.pgl-dot:nth-child(2) { animation-delay: 0.2s;  opacity: 0.3; }
+.pgl-dot:nth-child(3) { animation-delay: 0.4s;  opacity: 0.3; }
+
+@keyframes pgl-dot-pulse {
+    0%, 100% { transform: scale(1);   opacity: 0.3; }
+    50%       { transform: scale(1.4); opacity: 1;   }
+}

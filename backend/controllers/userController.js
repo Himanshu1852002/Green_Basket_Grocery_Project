@@ -3,6 +3,19 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
 import nodemailer from 'nodemailer';
+import multer from 'multer';
+import path from 'path';
+import { existsSync, mkdirSync } from 'fs';
+
+const avatarStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const dir = 'uploads/avatars';
+        if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+        cb(null, dir);
+    },
+    filename: (req, file, cb) => cb(null, `${Date.now()}${path.extname(file.originalname)}`)
+});
+const uploadAvatar = multer({ storage: avatarStorage, limits: { fileSize: 2 * 1024 * 1024 } });
 
 const otpStore = {};
 
@@ -21,31 +34,29 @@ const transporter = nodemailer.createTransport({
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000);
 
 
-// const registerAdmin = async () => {
-//     try {
-//         const adminExists = await userModel.findOne({ email: 'admin@greenBasket.com' });
-//         if (adminExists) {
-//             console.log('Admin already exists');
-//             return;
-//         }
+const registerAdmin = async () => {
+    try {
+        const adminExists = await userModel.findOne({ email: 'admin@greenBasket.com' });
+        if (adminExists) {
+            console.log('Admin already exists');
+            return;
+        }
 
-//         const hashedPassword = await bcrypt.hash('admin@1234', 10);
+        const hashedPassword = await bcrypt.hash('admin@1234', 10);
 
-//         const admin = new userModel({
-//             name: 'Admin',
-//             email: 'admin@greenBasket.com',
-//             password: hashedPassword,
-//             role: 'admin'
-//         })
+        const admin = new userModel({
+            name: 'Admin',
+            email: 'admin@greenBasket.com',
+            password: hashedPassword,
+            role: 'admin'
+        })
 
-//         await admin.save();
-//         console.log('Admin registered successfully');
-//     } catch (error) {
-//         console.error('Error registering admin:', error);
-//     }
-// }
-
-// registerAdmin();
+        await admin.save();
+        console.log('Admin registered successfully');
+    } catch (error) {
+        console.error('Error registering admin:', error);
+    }
+}
 
 // login user
 const loginUser = async (req, res) => {
@@ -63,7 +74,7 @@ const loginUser = async (req, res) => {
             return res.json({ success: false, message: 'Invalid password' });
         }
 
-        const token = createToken(user._id,);
+        const token = createToken(user._id, user.role);
 
         if (user.role === 'admin') {
             return res.status(200).json({
@@ -216,4 +227,97 @@ const getUserCount = async (req, res) => {
 };
 
 
-export { loginUser, registerUser, verifyOtp, getUserCount };
+// Get all users
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await userModel.find({ role: 'user' }).select('-password').sort({ createdAt: -1 });
+        res.status(200).json({ success: true, data: users });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+// Block / Unblock user
+const blockUnblockUser = async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const user = await userModel.findById(userId);
+        if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+        user.isBlocked = !user.isBlocked;
+        await user.save();
+        res.status(200).json({ success: true, message: user.isBlocked ? 'User blocked' : 'User unblocked', isBlocked: user.isBlocked });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+// Get profile
+const getProfile = async (req, res) => {
+    try {
+        const user = await userModel.findById(req.body.userId).select('-password');
+        if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+        res.json({ success: true, user });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+// Update profile
+const updateProfile = async (req, res) => {
+    const { userId, name, phone, address, dob, gender, addresses, preferences } = req.body;
+    try {
+        const updateData = { name, phone, address, dob, gender };
+        if (addresses !== undefined) updateData.addresses = typeof addresses === 'string' ? JSON.parse(addresses) : addresses;
+        if (preferences !== undefined) updateData.preferences = typeof preferences === 'string' ? JSON.parse(preferences) : preferences;
+        const user = await userModel.findByIdAndUpdate(userId, updateData, { new: true }).select('-password');
+        res.json({ success: true, user });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+// Upload avatar
+const updateAvatar = async (req, res) => {
+    try {
+        if (!req.file) return res.status(400).json({ success: false, message: 'No file uploaded' });
+        const avatarUrl = `/uploads/avatars/${req.file.filename}`;
+        const user = await userModel.findByIdAndUpdate(req.body.userId, { avatar: avatarUrl }, { new: true }).select('-password');
+        res.json({ success: true, avatar: user.avatar });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+// Change password
+const changePassword = async (req, res) => {
+    const { userId, oldPassword, newPassword } = req.body;
+    try {
+        const user = await userModel.findById(userId);
+        if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+        const isMatch = await bcrypt.compare(oldPassword, user.password);
+        if (!isMatch) return res.json({ success: false, message: 'Current password is incorrect' });
+        if (newPassword.length < 8) return res.json({ success: false, message: 'Password must be at least 8 characters' });
+        user.password = await bcrypt.hash(newPassword, 10);
+        await user.save();
+        res.json({ success: true, message: 'Password changed successfully' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+// Delete account
+const deleteAccount = async (req, res) => {
+    const { userId, password } = req.body;
+    try {
+        const user = await userModel.findById(userId);
+        if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) return res.json({ success: false, message: 'Incorrect password' });
+        await userModel.findByIdAndDelete(userId);
+        res.json({ success: true, message: 'Account deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+export { loginUser, registerUser, verifyOtp, getUserCount, registerAdmin, getAllUsers, blockUnblockUser, getProfile, updateProfile, updateAvatar, uploadAvatar, changePassword, deleteAccount };

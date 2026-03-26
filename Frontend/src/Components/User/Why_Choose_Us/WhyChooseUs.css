@@ -1,0 +1,114 @@
+.wc-section {
+    background: #fff;
+    padding: 56px 20px 52px;
+}
+
+.wc-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header */
+.wc-header {
+    text-align: center;
+    margin-bottom: 44px;
+}
+
+.wc-tag {
+    display: inline-block;
+    background: #e8f5e9;
+    color: #059212;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 5px 16px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+}
+
+.wc-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin: 0 0 10px;
+}
+
+.wc-title span { color: #059212; }
+
+.wc-sub {
+    font-size: 0.9rem;
+    color: #888;
+    margin: 0;
+    max-width: 480px;
+    margin-inline: auto;
+    line-height: 1.6;
+}
+
+/* Grid */
+.wc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Card */
+.wc-card {
+    background: var(--bg, #f7fbf7);
+    border-radius: 18px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    border: 1px solid rgba(0,0,0,0.04);
+}
+
+.wc-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+}
+
+.wc-icon-wrap {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s;
+}
+
+.wc-card:hover .wc-icon-wrap {
+    transform: scale(1.1) rotate(-4deg);
+}
+
+.wc-card-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.wc-card-desc {
+    font-size: 0.84rem;
+    color: #666;
+    line-height: 1.65;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .wc-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 576px) {
+    .wc-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .wc-card { padding: 20px 16px; }
+    .wc-title { font-size: 1.6rem; }
+    .wc-icon-wrap { width: 48px; height: 48px; }
+}
+
+@media (max-width: 380px) {
+    .wc-grid { grid-template-columns: 1fr; }
+}

@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes, FaShoppingCart, FaTrash } from "react-icons/fa";
 import {
     fetchProductList,
     loadCartData,
@@ -17,135 +17,113 @@ const CartSidebar = ({ show, onClose }) => {
         (state) => state.cart
     );
 
-    useEffect(() => {
-        dispatch(fetchProductList());
-    }, [dispatch]);
+    useEffect(() => { dispatch(fetchProductList()); }, [dispatch]);
 
     useEffect(() => {
-        if (token) {
-            dispatch(loadCartData(token));
-        }
+        if (token) dispatch(loadCartData(token));
     }, [dispatch, token]);
 
-    const handleAddToCart = (itemId) => {
-        if (token) {
-            dispatch(addToCartAPI({ itemId, token }));
-        } else {
-            alert("Please log in to add items to your cart.");
-        }
+    const handleAdd = (itemId) => {
+        if (token) dispatch(addToCartAPI({ itemId, token }));
+        else alert("Please log in to add items to your cart.");
     };
 
-    const handleRemoveFromCart = (itemId) => {
-        dispatch(removeFromCartAPI({ itemId, token }));
-    };
+    const handleRemove = (itemId) => dispatch(removeFromCartAPI({ itemId, token }));
 
-    const calculateTotalQuantity = () => {
-        return Object.values(cartItems).reduce((total, quantity) => total + quantity, 0);
-    };
-
+    const totalQty = Object.values(cartItems).reduce((t, q) => t + q, 0);
     const isCartEmpty = Object.keys(cartItems).length === 0;
 
-    useEffect(() => {
-        if (show) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "auto";
-        }
+    const totalSavings = Object.keys(cartItems).reduce((total, id) => {
+        const item = product_list.find((p) => p._id === id);
+        return item ? total + (item.price - item.sellingPrice) * cartItems[id] : total;
+    }, 0);
 
-        return () => {
-            document.body.style.overflow = "auto";
-        };
+    useEffect(() => {
+        document.body.style.overflow = show ? "hidden" : "auto";
+        return () => { document.body.style.overflow = "auto"; };
     }, [show]);
 
     return (
         <>
-            {show && (
-                <div className="backdrop" onClick={onClose}></div>
-            )}
+            {show && <div className="cs-backdrop" onClick={onClose} />}
 
-            <div className={`cart-sidebar ${show ? "show" : ""}`}>
-                <div className="cart-header">
-                    <h5>My Cart ({calculateTotalQuantity()} Items)</h5>
-                    <FaTimes size={30} onClick={onClose} style={{ cursor: "pointer",border:"2px solid white",padding:"5px",borderRadius:"10px" }} />
+            <div className={`cs-sidebar${show ? " show" : ""}`}>
+
+                {/* Header */}
+                <div className="cs-header">
+                    <div className="cs-header-left">
+                        <FaShoppingCart size={18} />
+                        <span>My Cart</span>
+                        {totalQty > 0 && <span className="cs-badge">{totalQty}</span>}
+                    </div>
+                    <button className="cs-close-btn" onClick={onClose}>
+                        <FaTimes size={15} />
+                    </button>
                 </div>
 
+                {/* Empty state */}
                 {isCartEmpty ? (
-                    <div className="mt-5 d-flex justify-content-center align-items-center flex-column">
-                        <p className="fs-5 fw-bold">Your cart is empty!</p>
-                        <Link to="/user/fruits" className="btn-success btn" onClick={onClose}>
+                    <div className="cs-empty">
+                        <div className="cs-empty-icon">🛒</div>
+                        <p className="cs-empty-title">Your cart is empty!</p>
+                        <p className="cs-empty-sub">Add some fresh items to get started</p>
+                        <Link to="/user/fruits" className="cs-shop-btn" onClick={onClose}>
                             Continue Shopping
                         </Link>
                     </div>
                 ) : (
-                    <div className="cart-items row mt-2 px-2">
-                        {product_list.map(
-                            (item) =>
-                                cartItems[item._id] > 0 && (
-                                    <div key={item._id} className="cart-item d-flex justify-content-evenly align-items-center py-2 position-relative border-2 border-bottom">
-                                        <div className="d-flex flex-column justify-content-center align-items-center gap-2">
-                                            <img
-                                                src={`http://localhost:3000/uploads/${item.image}`}
-                                                alt={item.name}
-                                                className="cart-item-img"
-                                            />
-                                            <h6>{item.name}</h6>
-                                        </div>
-                                        <div className="d-flex flex-column justify-content-center align-items-center">
-                                            <p>Price: <del className="text-muted">₹{item.price}</del>-₹{item.sellingPrice}</p>
-                                            <p>Subtotal: ₹{item.sellingPrice * cartItems[item._id]}</p>
-
-                                            <div className="quantity-controls d-flex gap-3">
-                                                <button
-                                                    className="btn btn-sm"
-                                                    onClick={() => handleRemoveFromCart(item._id)}
-                                                >
-                                                    -
-                                                </button>
-                                                <span className="mx-2">{cartItems[item._id]}</span>
-                                                <button
-                                                    className="btn btn-sm"
-                                                    onClick={() => handleAddToCart(item._id)}
-                                                >
-                                                    +
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <button
-                                            className="remove-item-btn position-absolute top-0 end-0"
-                                            onClick={() => handleRemoveFromCart(item._id)}
-                                            title="Remove Item"
-                                        >
-                                            <FaTimes />
-                                        </button>
+                    <div className="cs-items">
+                        {product_list.map((item) =>
+                            cartItems[item._id] > 0 && (
+                                <div key={item._id} className="cs-item">
+                                    <div className="cs-item-img-wrap">
+                                        <img
+                                            src={`${import.meta.env.VITE_API_BASE_URL || 'https://green-basket-grocery-project.onrender.com'}/uploads/${item.image}`}
+                                            alt={item.name}
+                                            className="cs-item-img"
+                                        />
                                     </div>
-                                )
+                                    <div className="cs-item-info">
+                                        <p className="cs-item-name">{item.name}</p>
+                                        <div className="cs-item-price">
+                                            <del className="cs-original">₹{item.price}</del>
+                                            <span className="cs-selling">₹{item.sellingPrice}</span>
+                                            <span className="cs-unit">/ {item.unit}</span>
+                                        </div>
+                                        <div className="cs-qty-row">
+                                            <div className="cs-qty">
+                                                <button className="cs-qty-btn" onClick={() => handleRemove(item._id)}>−</button>
+                                                <span className="cs-qty-num">{cartItems[item._id]}</span>
+                                                <button className="cs-qty-btn" onClick={() => handleAdd(item._id)}>+</button>
+                                            </div>
+                                            <span className="cs-subtotal">₹{item.sellingPrice * cartItems[item._id]}</span>
+                                        </div>
+                                    </div>
+                                    <button className="cs-delete-btn" onClick={() => handleRemove(item._id)} title="Remove">
+                                        <FaTrash size={11} />
+                                    </button>
+                                </div>
+                            )
                         )}
                     </div>
-
-
                 )}
 
+                {/* Footer */}
                 {!isCartEmpty && (
-                    <div className="cart-footer">
-                        <div className="d-flex justify-content-between mb-2">
-                            <h6>Total:</h6>
-                            <h6>₹{totalCartAmount}</h6>
+                    <div className="cs-footer">
+                        {totalSavings > 0 && (
+                            <div className="cs-savings">
+                                🎉 You save <strong>₹{totalSavings}</strong> on this order!
+                            </div>
+                        )}
+                        <div className="cs-total-row">
+                            <span>Total Amount</span>
+                            <span className="cs-total-amt">₹{totalCartAmount}</span>
                         </div>
-                        <div className="d-flex justify-content-between mb-3 text-success">
-                            <h6>You Save:</h6>
-                            <h6>₹{Object.keys(cartItems).reduce((total, id) => {
-                                const item = product_list.find((product) => product._id === id);
-                                return item
-                                    ? total + (item.price - item.sellingPrice) * cartItems[id]
-                                    : total;
-                            }, 0)}</h6>
-                        </div>
-                        <Link to="/user/checkout" className="footer-btn" onClick={onClose}>
-                            Proceed to Checkout
+                        <Link to="/user/checkout" className="cs-checkout-btn" onClick={onClose}>
+                            Proceed to Checkout →
                         </Link>
                     </div>
-
-
                 )}
             </div>
         </>

@@ -1,27 +1,33 @@
-import { useState, useEffect } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { FaUser, FaBars, FaTimes } from "react-icons/fa";
-import { FaRegHeart } from "react-icons/fa";
+import { useState, useEffect, useRef } from "react";
+import { FaUser, FaBars, FaTimes, FaRegHeart, FaSearch, FaHome, FaBlog, FaShoppingCart, FaBoxOpen, FaInfoCircle, FaPhoneAlt, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
+import { MdOutlineShoppingBag } from "react-icons/md";
 import { SlHandbag } from "react-icons/sl";
-import { useSelector } from 'react-redux';
-import { Link } from "react-router-dom";
+import { RiUserSmileLine } from "react-icons/ri";
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, useNavigate } from "react-router-dom";
 import { clearWishlistData, clearWishToken } from '../../../Store/wishlistSlice';
 import { clearCartData, clearToken } from '../../../Store/cartSlice';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import CartSidebar from "../../../Pages/User/Cart/CartSidebar";
-import logo from '../../../assets/Images/Images/logo_ai.png';
-import { FaSearch } from "react-icons/fa";
+import NotificationBell from './NotificationBell';
 import './Navbar.css';
+
+const placeholderTexts = [
+    "Search for fruits...",
+    "Search for vegetables...",
+    "Search for snacks...",
+    "Search for grocery...",
+    "Search for cold drinks...",
+    "Search for chocolates...",
+];
 
 const Navbar = ({ setShowLogin }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [showCartSidebar, setShowCartSidebar] = useState(false);
-    const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+    const [menuOpen, setMenuOpen] = useState(false);
     const [query, setQuery] = useState("");
-    const [placeholder, setPlaceholder] = useState("Search for products...");
-
+    const [placeholder, setPlaceholder] = useState(placeholderTexts[0]);
+    const dropdownRef = useRef(null);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -30,26 +36,39 @@ const Navbar = ({ setShowLogin }) => {
     const cartItems = useSelector((state) => state.cart.cartItems);
     const token = localStorage.getItem("token");
 
-    const wishlistCount = Array.isArray(wishlist) ? wishlist.length : Object.keys(wishlist).length;
-    const cartItemCount = Array.isArray(cartItems)
-        ? cartItems.length
-        : Object.values(cartItems).reduce((total, qty) => total + qty, 0);
+    const wishlistCount = Object.keys(wishlist).length;
+    const cartItemCount = Object.values(cartItems).reduce((t, q) => t + q, 0);
 
-    const toggleDropdown = (e) => {
-        e.stopPropagation();
-        setShowDropdown((prevState) => !prevState);
-    };
-
+    // Rotating placeholder
     useEffect(() => {
-        const handleOutsideClick = () => setShowDropdown(false);
-        if (showDropdown) document.addEventListener('click', handleOutsideClick);
-        return () => document.removeEventListener('click', handleOutsideClick);
-    }, [showDropdown]);
+        let i = 0;
+        const interval = setInterval(() => {
+            i = (i + 1) % placeholderTexts.length;
+            setPlaceholder(placeholderTexts[i]);
+        }, 2000);
+        return () => clearInterval(interval);
+    }, []);
 
-    const handleLogOut = async () => {
+    // Outside click — close dropdown
+    useEffect(() => {
+        const handler = (e) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(e.target))
+                setShowDropdown(false);
+        };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, []);
+
+    // Search on query change
+    useEffect(() => {
+        if (query.trim()) navigate(`/user/search?q=${query}`);
+        else navigate("/");
+    }, [query]);
+
+    const handleLogOut = () => {
         dispatch(clearToken());
         dispatch(clearCartData());
-        dispatch(clearWishToken())
+        dispatch(clearWishToken());
         dispatch(clearWishlistData());
         localStorage.removeItem("token");
         localStorage.removeItem("role");
@@ -57,179 +76,155 @@ const Navbar = ({ setShowLogin }) => {
         navigate('/');
     };
 
-    const handleNavCollapse = () => {
-        setIsNavCollapsed((prevState) => !prevState);
-    };
-
-
-    const placeholderTexts = [
-        "Search for fruits...",
-        "Search for vegetables...",
-        "Search for snacks...",
-        "Search for grocery...",
-        "Search for coldrinks...",
-        "Search for chocolates...",
-    ];
-
-    const handleSearch = () => {
-        if (query.trim()) {
-            navigate(`/user/search?q=${query}`);
-        }
-        else {
-            navigate("/")
-        }
-    };
-
-    useEffect(() => {
-        if (query.trim()) {
-            handleSearch();
-        }
-        else {
-            navigate("/")
-        }
-    }, [query]);
-
-    useEffect(() => {
-        let index = 0;
-        const interval = setInterval(() => {
-            index = (index + 1) % placeholderTexts.length;
-            setPlaceholder(placeholderTexts[index]);
-        }, 2000);
-
-        return () => clearInterval(interval);
-    }, []);
-
     return (
-        <nav className="navbar navbar-box navbar-expand-lg navbar-light bg-light">
-            <div className="container px-3 d-flex justify-content-between align-items-center">
-                {/* Logo */}
-                <Link to="/" className="navbar-brand">
-                    <img className="nav-logo" src={logo} alt="Brand Logo" />
-                </Link>
-                <div className="input-group w-50 mx-auto d-flex d-lg-none">
-                    <span className="input-group-text">
-                        <FaSearch size={20} />
-                    </span>
-                    <input
-                        type="text"
-                        className="form-control search-input"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        placeholder={placeholder}
-                        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                    />
-                </div>
-                <button
-                    className="navbar-toggler"
-                    type="button"
-                    aria-expanded={!isNavCollapsed}
-                    aria-label="Toggle navigation"
-                    onClick={handleNavCollapse}
-                >
-                    {isNavCollapsed ? <FaBars /> : <FaTimes />}
-                </button>
+        <>
+            <nav className="nb-nav">
+                <div className="nb-inner">
 
-                {/* Collapsible Content */}
-                <div
-                    className={`collapse navbar-collapse ${isNavCollapsed ? "" : "show"}`}
-                    id="navbarContent"
-                >
+                    {/* Logo */}
+                    <Link to="/" className="nb-logo">
+                        <div className="nb-logo-icon">
+                            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                {/* Basket body */}
+                                <path d="M4 12h20l-2.5 10H6.5L4 12z" fill="#059212" />
+                                {/* Basket weave lines */}
+                                <path d="M7 12l1.5 10M14 12v10M21 12l-1.5 10" stroke="#1a4d2e" strokeWidth="0.8" strokeOpacity="0.4"/>
+                                <path d="M5.5 17h17M5 14.5h18" stroke="#1a4d2e" strokeWidth="0.8" strokeOpacity="0.3"/>
+                                {/* Handle */}
+                                <path d="M9 12 Q9 6 14 6 Q19 6 19 12" stroke="#1a4d2e" strokeWidth="2" fill="none" strokeLinecap="round"/>
+                                {/* Leaf on top */}
+                                <path d="M14 6 Q16 3 19 4 Q17 7 14 6Z" fill="#4caf50"/>
+                            </svg>
+                        </div>
+                        <div className="nb-logo-text">
+                            <span className="nb-logo-green">Green</span>
+                            <span className="nb-logo-dark">Basket</span>
+                        </div>
+                    </Link>
 
-                    <div className="input-group w-50 mx-auto d-none d-lg-flex">
-                        <span className="input-group-text">
-                            <FaSearch size={20} />
-                        </span>
+                    {/* Nav links — desktop */}
+                    <div className="nb-links">
+                        <Link to="/" className="nb-link">Home</Link>
+                        <Link to="/user/about" className="nb-link">About</Link>
+                        <Link to="/user/contact" className="nb-link">Contact</Link>
+                    </div>
+
+                    {/* Search — desktop */}
+                    <div className="nb-search">
+                        <FaSearch size={14} className="nb-search-icon" />
                         <input
+                            className="nb-search-input"
                             type="text"
-                            className="form-control search-input"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             placeholder={placeholder}
-                            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                            onKeyDown={(e) => e.key === "Enter" && query.trim() && navigate(`/user/search?q=${query}`)}
                         />
                     </div>
 
-                    {/* Wishlist, Cart, and Login */}
-                    <div className="d-flex align-items-center flex-column flex-lg-row gap-4">
-                        <div className="position-relative">
-                            <Link to={'/user/wishlist'}>
-                                <FaRegHeart className="icon" size={23} />
-                            </Link>
-                            {wishlistCount > 0 && (
-                                <span
-                                    className="badge h-100 w-100 rounded-circle bg-danger"
-                                    style={{
-                                        position: 'absolute',
-                                        top: '-10px',
-                                        right: '-20px',
-                                        fontSize: '0.7rem',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                    }} >
-                                    {wishlistCount}
-                                </span>
-                            )}
-                        </div>
-                        <div className="position-relative">
-                            <SlHandbag className="icon" size={23} style={{ cursor: "pointer" }} onClick={() => setShowCartSidebar(!showCartSidebar)} />
-                            {cartItemCount > 0 && (
-                                <span
-                                    className="badge h-100 w-100 rounded-circle bg-danger"
-                                    style={{
-                                        position: 'absolute',
-                                        top: '-10px',
-                                        right: '-20px',
-                                        fontSize: '0.8rem',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                    }} >
-                                    {cartItemCount}
-                                </span>
-                            )}
-                        </div>
-                        {showCartSidebar && (
-                            <CartSidebar
-                                show={showCartSidebar}
-                                onClose={() => setShowCartSidebar(false)}
-                            />
-                        )}
+                    {/* Right actions */}
+                    <div className="nb-actions">
 
+                        {/* Notification Bell */}
+                        {token && <NotificationBell />}
+
+                        {/* Wishlist — hide on mobile */}
+                        <Link to="/user/wishlist" className="nb-icon-btn nb-hide-mobile" title="Wishlist">
+                            <FaRegHeart size={20} />
+                            {wishlistCount > 0 && <span className="nb-badge">{wishlistCount}</span>}
+                        </Link>
+
+                        {/* Cart */}
+                        <button className="nb-icon-btn" title="Cart" onClick={() => setShowCartSidebar(true)}>
+                            <SlHandbag size={20} />
+                            {cartItemCount > 0 && <span className="nb-badge">{cartItemCount}</span>}
+                        </button>
+
+                        {/* User — hide on mobile */}
                         {!token ? (
-                            <button onClick={() => setShowLogin(true)} className="login-btn">Login</button>
+                            <button className="nb-login-btn nb-hide-mobile" onClick={() => {
+                                localStorage.setItem('redirectAfterLogin', window.location.pathname);
+                                setShowLogin(true);
+                            }}>Login</button>
                         ) : (
-                            <div className="position-relative">
-                                <FaUser
-                                    className="icon"
-                                    size={23}
-                                    style={{ cursor: "pointer" }}
-                                    onClick={toggleDropdown}
-                                />
+                            <div className="nb-user-wrap nb-hide-mobile" ref={dropdownRef}>
+                                <button className="nb-icon-btn" onClick={() => setShowDropdown((p) => !p)} title="Account">
+                                    <FaUser size={18} />
+                                </button>
                                 {showDropdown && (
-                                    <div className="user-dropdown position-absolute">
-                                        <Link
-                                            to="/user/myorders"
-                                            className="user-dropdown-item"
-                                            onClick={() => setShowDropdown(false)}
-                                        >
-                                            📦 My Orders
+                                    <div className="nb-dropdown">
+                                        <Link to="/user/profile" className="nb-dropdown-item" onClick={() => setShowDropdown(false)}>
+                                            <RiUserSmileLine size={16} /> My Profile
                                         </Link>
-                                        <hr className="user-dropdown-divider" />
-                                        <button
-                                            className="user-dropdown-item logout"
-                                            onClick={() => { handleLogOut(); setShowDropdown(false); }}
-                                        >
-                                            🚪 Log Out
+                                        <Link to="/user/myorders" className="nb-dropdown-item" onClick={() => setShowDropdown(false)}>
+                                            <FaBoxOpen size={15} /> My Orders
+                                        </Link>
+                                        <Link to="/user/wishlist" className="nb-dropdown-item" onClick={() => setShowDropdown(false)}>
+                                            <FaRegHeart size={15} /> Wishlist
+                                        </Link>
+                                        <hr className="nb-dropdown-divider" />
+                                        <button className="nb-dropdown-item nb-logout" onClick={() => { handleLogOut(); setShowDropdown(false); }}>
+                                            <FaSignOutAlt size={15} /> Log Out
                                         </button>
                                     </div>
                                 )}
                             </div>
                         )}
+
+                        {/* Hamburger */}
+                        <button className="nb-hamburger" onClick={() => setMenuOpen((p) => !p)}>
+                            {menuOpen ? <FaTimes size={18} /> : <FaBars size={18} />}
+                        </button>
                     </div>
                 </div>
-            </div>
-        </nav>
+
+                {/* Search — mobile */}
+                <div className="nb-search-mobile">
+                    <div className="nb-search-mobile-inner">
+                        <FaSearch size={14} className="nb-search-icon" />
+                        <input
+                            className="nb-search-input"
+                            type="text"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            placeholder={placeholder}
+                            onKeyDown={(e) => e.key === "Enter" && query.trim() && navigate(`/user/search?q=${query}`)}
+                        />
+                    </div>
+                </div>
+
+                {/* Mobile menu */}
+                {menuOpen && (
+                    <div className="nb-mobile-menu">
+                        <Link to="/" className="nb-mobile-link" onClick={() => setMenuOpen(false)}><FaHome size={15} /> Home</Link>
+                        <Link to="/user/blog" className="nb-mobile-link" onClick={() => setMenuOpen(false)}><MdOutlineShoppingBag size={16} /> Blog</Link>
+                        <Link to="/user/wishlist" className="nb-mobile-link" onClick={() => setMenuOpen(false)}>
+                            <FaRegHeart size={15} /> Wishlist {wishlistCount > 0 && <span className="nb-mobile-badge">{wishlistCount}</span>}
+                        </Link>
+                        <button className="nb-mobile-link nb-mobile-cart-btn" onClick={() => { setShowCartSidebar(true); setMenuOpen(false); }}>
+                            <FaShoppingCart size={15} /> Cart {cartItemCount > 0 && <span className="nb-mobile-badge">{cartItemCount}</span>}
+                        </button>
+                        <Link to="/user/myorders" className="nb-mobile-link" onClick={() => setMenuOpen(false)}><FaBoxOpen size={15} /> My Orders</Link>
+                        <Link to="/user/about" className="nb-mobile-link" onClick={() => setMenuOpen(false)}><FaInfoCircle size={15} /> About</Link>
+                        <Link to="/user/contact" className="nb-mobile-link" onClick={() => setMenuOpen(false)}><FaPhoneAlt size={14} /> Contact</Link>
+                        <hr className="nb-mobile-divider" />
+                        {!token ? (
+                            <button className="nb-mobile-login" onClick={() => {
+                                localStorage.setItem('redirectAfterLogin', window.location.pathname);
+                                setShowLogin(true); setMenuOpen(false);
+                            }}><FaUser size={14} /> Login / Sign Up</button>
+                        ) : (
+                            <>
+                                <Link to="/user/profile" className="nb-mobile-link" onClick={() => setMenuOpen(false)}><RiUserSmileLine size={16} /> My Profile</Link>
+                                <button className="nb-mobile-logout" onClick={() => { handleLogOut(); setMenuOpen(false); }}><FaSignOutAlt size={15} /> Log Out</button>
+                            </>
+                        )}
+                    </div>
+                )}
+            </nav>
+
+            <CartSidebar show={showCartSidebar} onClose={() => setShowCartSidebar(false)} />
+        </>
     );
 };
 

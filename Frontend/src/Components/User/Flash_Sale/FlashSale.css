@@ -1,0 +1,215 @@
+.fs-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 8px;
+}
+
+.fs-banner {
+    position: relative;
+    background: linear-gradient(135deg, #1a4d2e 0%, #059212 50%, #2e7d32 100%);
+    border-radius: 20px;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(5, 146, 18, 0.25);
+}
+
+/* Blobs */
+.fs-blob {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.08;
+    pointer-events: none;
+}
+.fs-blob-1 { width: 280px; height: 280px; background: #fff; top: -100px; right: 200px; }
+.fs-blob-2 { width: 180px; height: 180px; background: #fff; bottom: -80px; left: 100px; }
+
+/* Left */
+.fs-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 1;
+    flex: 1;
+}
+
+.fs-bolt-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffd54f;
+    flex-shrink: 0;
+    animation: fs-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes fs-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.fs-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #ffd54f;
+    margin: 0 0 4px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.fs-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 4px;
+    line-height: 1.2;
+}
+
+.fs-title span {
+    color: #ffd54f;
+    font-size: 1.5rem;
+}
+
+.fs-sub {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.75);
+    margin: 0;
+}
+
+/* Countdown */
+.fs-countdown {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+.fs-ends-in {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0;
+}
+
+.fs-timer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.fs-time-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 8px 14px;
+    min-width: 58px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.fs-num {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.fs-unit {
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+}
+
+.fs-colon {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #ffd54f;
+    line-height: 1;
+    animation: fs-blink 1s step-end infinite;
+    margin-bottom: 12px;
+}
+
+@keyframes fs-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* Right */
+.fs-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+.fs-shop-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: none;
+    background: #fff;
+    color: #059212;
+    font-size: 0.9rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    white-space: nowrap;
+}
+
+.fs-shop-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.fs-close {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.8);
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    flex-shrink: 0;
+}
+
+.fs-close:hover { background: rgba(255,255,255,0.3); color: #fff; }
+
+/* Responsive */
+@media (max-width: 900px) {
+    .fs-banner { flex-wrap: wrap; gap: 20px; padding: 24px 24px; }
+    .fs-left { flex: 100%; }
+    .fs-countdown { flex: 1; }
+}
+
+@media (max-width: 576px) {
+    .fs-banner { padding: 20px 18px; }
+    .fs-title { font-size: 1.1rem; }
+    .fs-title span { font-size: 1.2rem; }
+    .fs-time-block { min-width: 48px; padding: 6px 10px; }
+    .fs-num { font-size: 1.3rem; }
+    .fs-shop-btn { padding: 10px 18px; font-size: 0.85rem; }
+    .fs-sub { display: none; }
+}

@@ -1,20 +1,50 @@
 import './Banners.css';
 import PropTypes from 'prop-types';
+import { FaLeaf } from 'react-icons/fa';
+import { IoIosCart } from 'react-icons/io';
+import { Link } from 'react-router-dom';
 
-const Banners = ({ title1, title2, heading, item_img, backgroundColor }) => {
-
+const Banners = ({ title1, title2, subtitle, tag, accentColor, item_img, stats }) => {
     return (
-        <div className="container-fluid">
-            <div className="row banner_row" style={{background:backgroundColor}}>
-                <div className="col-lg-6 col-md-6 col-sm-6 d-flex justify-content-center align-items-start flex-column banner_text">
-                    <h1 className="first_text ms-3">{title1}</h1>
-                    <h1 className="second_text ms-3">{title2}</h1>
-                    <h5 className='ms-3'>{heading}</h5>
-                    <button className='ms-3'>SHOP NOW</button>
+        <div className="bn-section" style={{ '--bn-accent': accentColor || '#059212' }}>
+            <div className="bn-inner">
+
+                {/* Left */}
+                <div className="bn-left">
+                    <span className="bn-tag">
+                        <FaLeaf size={11} /> {tag}
+                    </span>
+                    <h1 className="bn-title">
+                        {title1} <span>{title2}</span>
+                    </h1>
+                    <p className="bn-subtitle">{subtitle}</p>
+
+                    <div className="bn-actions">
+                        <Link to="#products" className="bn-btn-primary">
+                            <IoIosCart size={18} /> Shop Now
+                        </Link>
+                    </div>
+
+                    {stats && (
+                        <div className="bn-stats">
+                            {stats.map((s, i) => (
+                                <div key={i} className="bn-stat">
+                                    <strong>{s.value}</strong>
+                                    <span>{s.label}</span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
-                <div className="col-lg-6 col-md-6 col-sm-6 banner_img">
-                    <img src={item_img} alt="" />
+
+                {/* Right */}
+                <div className="bn-right">
+                    <div className="bn-img-wrap">
+                        <div className="bn-img-circle" />
+                        <img src={item_img} alt={title2} className="bn-img" />
+                    </div>
                 </div>
+
             </div>
         </div>
     );
@@ -23,9 +53,14 @@ const Banners = ({ title1, title2, heading, item_img, backgroundColor }) => {
 Banners.propTypes = {
     title1: PropTypes.string.isRequired,
     title2: PropTypes.string.isRequired,
-    heading: PropTypes.string.isRequired,
+    subtitle: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
+    accentColor: PropTypes.string,
     item_img: PropTypes.string.isRequired,
-    backgroundColor: PropTypes.string.isRequired
+    stats: PropTypes.arrayOf(PropTypes.shape({
+        value: PropTypes.string,
+        label: PropTypes.string,
+    })),
 };
 
 export default Banners;

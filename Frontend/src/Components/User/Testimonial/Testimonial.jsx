@@ -2,6 +2,50 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import "./Testimonial.css";
+import { FaStar, FaQuoteLeft } from "react-icons/fa";
+
+const testimonials = [
+    {
+        name: "Anikesh Chouhan",
+        location: "Khategaon, M.P.",
+        rating: 5,
+        text: "Green Basket has completely changed how I shop for groceries. The produce is always fresh and delivery is super fast. Highly recommended!",
+        avatar: "AC",
+        color: "#059212",
+    },
+    {
+        name: "Priya Sharma",
+        location: "Dewas, M.P.",
+        rating: 5,
+        text: "Amazing quality fruits and vegetables! The prices are very reasonable and the packaging is eco-friendly. Love shopping here every week.",
+        avatar: "PS",
+        color: "#1a4d2e",
+    },
+    {
+        name: "Aman Rathod",
+        location: "Indore, M.P.",
+        rating: 4,
+        text: "Very convenient service. I ordered late at night and received my groceries the next morning. Customer support is also very helpful.",
+        avatar: "AR",
+        color: "#2e7d32",
+    },
+    {
+        name: "Kuldeep Mangrola",
+        location: "Bhopal, M.P.",
+        rating: 5,
+        text: "Best grocery app in our area! Fresh products, great deals, and the coupon codes save me a lot every month. Keep it up Green Basket!",
+        avatar: "KM",
+        color: "#388e3c",
+    },
+    {
+        name: "Sneha Joshi",
+        location: "Ujjain, M.P.",
+        rating: 5,
+        text: "I love that they source directly from farmers. You can taste the freshness in every vegetable. Will never go back to regular stores!",
+        avatar: "SJ",
+        color: "#059212",
+    },
+];
 
 const settings = {
     dots: true,
@@ -10,69 +54,51 @@ const settings = {
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 3500,
+    pauseOnHover: true,
     responsive: [
-        {
-            breakpoint: 1024,
-            settings: {
-                slidesToShow: 2,
-            },
-        },
-        {
-            breakpoint: 768,
-            settings: {
-                slidesToShow: 1,
-            },
-        },
+        { breakpoint: 1024, settings: { slidesToShow: 2 } },
+        { breakpoint: 640, settings: { slidesToShow: 1 } },
     ],
 };
 
-const testimonials = [
-    {
-        name: "Anikesh Chouhan",
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOuxrvcNMfGLh73uKP1QqYpKoCB0JLXiBMvA&s",
-        text: "Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource-taxing relationships via premier niche markets.",
-    },
-    {
-        name: "Arpit Vishwakarma",
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOuxrvcNMfGLh73uKP1QqYpKoCB0JLXiBMvA&s",
-        text: "Completely synergize resource-taxing relationships via premier niche markets. Professionally cultivate customer service with robust innovation.",
-    },
-    {
-        name: "Aman Rathod",
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOuxrvcNMfGLh73uKP1QqYpKoCB0JLXiBMvA&s",
-        text: "Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource-taxing relationships.",
-    },
-    {
-        name: "Kuldeep Mangrola",
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOuxrvcNMfGLh73uKP1QqYpKoCB0JLXiBMvA&s",
-        text: "Professionally cultivate customer service with robust ideas. Completely synergize resource-taxing relationships via premier niche markets.",
-    },
-    {
-        name: "Rohit",
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOuxrvcNMfGLh73uKP1QqYpKoCB0JLXiBMvA&s",
-        text: "Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource-taxing relationships via premier niche markets.",
-    },
-];
-
 const Testimonial = () => (
-    <div className="testimonial-container container">
-        <h1 className="testimonial-title">The Happy <span>Client</span></h1>
-        <Slider {...settings}>
-            {testimonials.map((testimonial, index) => (
-                <div className="item" key={index}>
-                    <div className="shadow-effect">
-                        <img
-                            src={testimonial.image}
-                            alt={testimonial.name}
-                            className="rounded-circle"
-                        />
-                        <p>{testimonial.text}</p>
+    <div className="tm-section">
+        <div className="tm-header">
+            <span className="tm-tag">💬 Testimonials</span>
+            <h2 className="tm-title">What Our Customers <span>Say</span></h2>
+            <p className="tm-sub">Trusted by thousands of happy families across Madhya Pradesh</p>
+        </div>
+
+        <div className="tm-slider-wrap">
+            <Slider {...settings}>
+                {testimonials.map((t, i) => (
+                    <div key={i} className="tm-slide">
+                        <div className="tm-card">
+                            <FaQuoteLeft size={20} className="tm-quote-icon" />
+
+                            {/* Stars */}
+                            <div className="tm-stars">
+                                {Array.from({ length: 5 }).map((_, si) => (
+                                    <FaStar key={si} size={13} className={si < t.rating ? "tm-star filled" : "tm-star"} />
+                                ))}
+                            </div>
+
+                            <p className="tm-text">{t.text}</p>
+
+                            {/* Author */}
+                            <div className="tm-author">
+                                <div className="tm-avatar" style={{ background: t.color }}>{t.avatar}</div>
+                                <div>
+                                    <p className="tm-name">{t.name}</p>
+                                    <p className="tm-location">{t.location}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="testimonial-name">{testimonial.name}</div>
-                </div>
-            ))}
-        </Slider>
+                ))}
+            </Slider>
+        </div>
     </div>
 );
 

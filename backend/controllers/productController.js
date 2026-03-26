@@ -103,11 +103,17 @@ const productCount = async (req, res) => {
         const count = await productModel.countDocuments();
         res.status(200).json({ success: true, count });
     } catch (error) {
-        console.error('Error fetching product count:', error);
         res.status(500).json({ success: false, message: 'Error fetching product count' });
     }
 };
 
+const lowStockProducts = async (req, res) => {
+    try {
+        const products = await productModel.find({ quantity: { $lte: 10 } }).sort({ quantity: 1 }).limit(10);
+        res.status(200).json({ success: true, data: products });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Error fetching low stock products' });
+    }
+};
 
-
-export { addProduct, listProduct, removeProduct, updateProduct, productCount }
+export { addProduct, listProduct, removeProduct, updateProduct, productCount, lowStockProducts }

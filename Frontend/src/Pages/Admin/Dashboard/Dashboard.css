@@ -1,55 +1,181 @@
-.dashboard-card {
-    border-radius: 10px;
+.db-page { padding: 8px 4px; }
+
+/* Header */
+.db-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.db-title { font-size: 1.6rem; font-weight: 800; color: #1a4d2e; margin: 0 0 4px; }
+.db-sub   { font-size: 0.88rem; color: #888; margin: 0; }
+.db-date  { font-size: 0.8rem; color: #aaa; font-weight: 500; align-self: center; }
+
+/* Stat Cards */
+.db-cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.db-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border: 1px solid #f0f0f0;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.db-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.09); }
+
+.db-card-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.db-card-info { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.db-card-label { font-size: 0.72rem; color: #999; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+.db-card-value { font-size: 1.45rem; font-weight: 800; color: #1a1a1a; line-height: 1.2; }
+
+/* Skeleton value */
+.db-sk-val {
+    display: inline-block;
+    width: 60px; height: 22px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: db-shimmer 1.4s infinite;
+    border-radius: 6px;
+}
+@keyframes db-shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Shared section card */
+.db-chart-wrap,
+.db-lowstock-wrap,
+.db-recent-wrap {
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border: 1px solid #f0f0f0;
+}
+
+.db-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+.db-section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #1a4d2e;
+    margin: 0;
+}
+.db-section-sub { font-size: 0.75rem; color: #aaa; }
+
+/* Chart */
+.db-chart { height: 280px; }
+
+/* Low Stock — full width grid */
+.db-lowstock-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.db-ls-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: #fafafa;
+    border-radius: 12px;
+    border: 1px solid #f0f0f0;
+    transition: box-shadow 0.18s;
+}
+.db-ls-card:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.08); }
+
+.db-ls-img  { width: 44px; height: 44px; object-fit: cover; border-radius: 8px; flex-shrink: 0; border: 1px solid #e8f5e9; }
+.db-ls-info { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.db-ls-name { font-size: 0.82rem; font-weight: 700; color: #1a4d2e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.db-ls-cat  { font-size: 0.7rem; color: #aaa; }
+
+.db-ls-qty { font-size: 0.72rem; font-weight: 800; padding: 3px 9px; border-radius: 20px; flex-shrink: 0; white-space: nowrap; }
+.db-ls-warn     { background: #fff3e0; color: #e65100; }
+.db-ls-critical { background: #ffebee; color: #c62828; }
+
+.db-empty { font-size: 0.85rem; color: #aaa; text-align: center; padding: 20px 0; margin: 0; }
+
+/* Recent Orders Table */
+.db-recent-wrap { margin-bottom: 8px; }
+.db-recent-table-wrap { overflow-x: auto; }
+
+.db-recent-table {
     width: 100%;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
+    border-collapse: collapse;
 }
-
-.dashboard-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+.db-recent-table thead tr { background: #f8fdf8; border-bottom: 2px solid #e8f5e9; }
+.db-recent-table th {
+    padding: 11px 14px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: left;
+    white-space: nowrap;
 }
-
-.card-title {
-    font-weight: bold;
+.db-recent-table td {
+    padding: 12px 14px;
+    font-size: 0.85rem;
     color: #333;
+    border-bottom: 1px solid #f5f5f5;
+    vertical-align: middle;
+}
+.db-recent-table tbody tr:hover { background: #fafffe; }
+.db-recent-table tbody tr:last-child td { border-bottom: none; }
+
+.db-order-id   { font-size: 0.75rem; font-weight: 700; color: #aaa; letter-spacing: 0.05em; }
+.db-order-amt  { font-weight: 800; color: #059212; }
+.db-order-date { font-size: 0.78rem; color: #aaa; }
+
+.db-pay-badge {
+    font-size: 0.7rem; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px;
+}
+.db-paid   { background: #e8f5e9; color: #2e7d32; }
+.db-unpaid { background: #fff3e0; color: #e65100; }
+
+.db-status-badge {
+    font-size: 0.7rem; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px;
+    white-space: nowrap;
 }
 
-.card-text {
-    font-size: 1rem;
-    color: black;
+/* Responsive */
+@media (max-width: 1200px) {
+    .db-cards { grid-template-columns: repeat(3, 1fr); }
+    .db-lowstock-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
 }
-
-h1,
-h3 {
-    color: #333;
+@media (max-width: 700px) {
+    .db-cards { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .db-card  { padding: 14px 12px; }
+    .db-card-value { font-size: 1.2rem; }
+    .db-chart { height: 220px; }
 }
-
-.chart-container {
-    height: 400px;
-    width: 100%;
-    /* Full width */
-    max-width: 800px;
-    /* Max width for larger screens */
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .chart-container {
-        height: 300px;
-    }
-}
-
-@media (max-width: 576px) {
-    .chart-container {
-        height: 250px;
-    }
-
-    .dashboard-row {
-        margin-left: 50px;
-    }
-
-    .dashboard-card {
-        width: 80%;
-    }
+@media (max-width: 420px) {
+    .db-cards { grid-template-columns: 1fr 1fr; }
 }

@@ -25,6 +25,42 @@ const userSchema = new mongoose.Schema({
     wishlistData: {
         type: Object,
         default: {}
+    },
+    isBlocked: {
+        type: Boolean,
+        default: false
+    },
+    phone: {
+        type: String,
+        default: ''
+    },
+    address: {
+        type: Object,
+        default: {}
+    },
+    dob: {
+        type: String,
+        default: ''
+    },
+    gender: {
+        type: String,
+        default: ''
+    },
+    avatar: {
+        type: String,
+        default: ''
+    },
+    addresses: {
+        type: Array,
+        default: []
+    },
+    preferences: {
+        type: Object,
+        default: { emailNotifications: true, defaultAddressIndex: 0 }
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 }, { minimize: false });
 

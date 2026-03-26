@@ -1,69 +1,104 @@
-// import React from 'react';
 import './Footer.css';
 import { IoCall } from 'react-icons/io5';
 import { MdEmail } from 'react-icons/md';
-import { FaAddressCard, FaLinkedin, FaInstagramSquare, FaFacebookSquare } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaLinkedin, FaInstagram, FaFacebook } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
-        <div className="outer-container py-4">
-            <div className="container footer-container">
-                <div className="row">
-                    {/* Quick Links */}
-                    <div className="col-lg-3 col-md-6 col-sm-6 mb-4">
-                        <h3 className="footer-titles">Quick Links</h3>
-                        <ul className="list-unstyled">
-                            <li><Link to="/">Home</Link></li>
-                            <li><Link>Offer</Link></li>
-                            <li><Link>Wishlist</Link></li>
-                            <li><Link>Cart</Link></li>
-                            <li><Link>Account</Link></li>
-                        </ul>
+        <footer className="ft-footer">
+            {/* Wave separator */}
+            <div className="ft-wave">
+                <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                    <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#1a4d2e" />
+                </svg>
+            </div>
+
+            <div className="ft-main">
+                <div className="ft-grid">
+
+                    {/* Brand */}
+                    <div className="ft-brand">
+                        <div className="ft-logo">
+                            <div className="ft-logo-icon">
+                                <svg width="22" height="22" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4 12h20l-2.5 10H6.5L4 12z" fill="#4caf50" />
+                                    <path d="M7 12l1.5 10M14 12v10M21 12l-1.5 10" stroke="#fff" strokeWidth="0.8" strokeOpacity="0.3"/>
+                                    <path d="M5.5 17h17M5 14.5h18" stroke="#fff" strokeWidth="0.8" strokeOpacity="0.2"/>
+                                    <path d="M9 12 Q9 6 14 6 Q19 6 19 12" stroke="#fff" strokeWidth="2" fill="none" strokeLinecap="round"/>
+                                    <path d="M14 6 Q16 3 19 4 Q17 7 14 6Z" fill="#a5d6a7"/>
+                                </svg>
+                            </div>
+                            <div className="ft-logo-text">
+                                <span className="ft-logo-green">Green</span>
+                                <span className="ft-logo-white">Basket</span>
+                            </div>
+                        </div>
+                        <p className="ft-tagline">Fresh groceries delivered to your doorstep. Quality you can trust, prices you'll love.</p>
+                        <div className="ft-socials">
+                            <a href="#" className="ft-social-btn" title="LinkedIn"><FaLinkedin size={16} /></a>
+                            <a href="#" className="ft-social-btn" title="Instagram"><FaInstagram size={16} /></a>
+                            <a href="#" className="ft-social-btn" title="Facebook"><FaFacebook size={16} /></a>
+                        </div>
                     </div>
 
-                    {/* Information */}
-                    <div className="col-lg-3 col-md-6 col-sm-6 mb-4">
-                        <h3 className="footer-titles">Information</h3>
-                        <ul className="list-unstyled">
+                    {/* Quick Links */}
+                    <div className="ft-col">
+                        <h4 className="ft-col-title">Quick Links</h4>
+                        <ul className="ft-links">
+                            <li><Link to="/">Home</Link></li>
+                            <li><Link to="/user/wishlist">Wishlist</Link></li>
+                            <li><Link to="/user/myorders">My Orders</Link></li>
+                            <li><Link to="/user/blog">Blog</Link></li>
                             <li><Link to="/user/about">About Us</Link></li>
-                            <li><Link to="/user/blog">Blogs</Link></li>
                             <li><Link to="/user/contact">Contact Us</Link></li>
-                            <li><Link to="/user/">Terms and Services</Link></li>
-                            <li><Link to="/">Refund Policy</Link></li>
                         </ul>
                     </div>
 
                     {/* Categories */}
-                    <div className="col-lg-3 col-md-6 col-sm-6 mb-4">
-                        <h3 className="footer-titles">Categories</h3>
-                        <ul className="list-unstyled">
+                    <div className="ft-col">
+                        <h4 className="ft-col-title">Categories</h4>
+                        <ul className="ft-links">
                             <li><Link to="/user/fruits">Fruits</Link></li>
                             <li><Link to="/user/vegetables">Vegetables</Link></li>
-                            <li><Link to="/user/chocolates">Chocolate</Link></li>
-                            <li><Link to="/user/drinks">Coldrinks</Link></li>
+                            <li><Link to="/user/chocolates">Chocolates</Link></li>
+                            <li><Link to="/user/drinks">Cold Drinks</Link></li>
                             <li><Link to="/user/snacks">Snacks</Link></li>
                             <li><Link to="/user/grocery">Grocery</Link></li>
                         </ul>
                     </div>
 
-                    {/* About Store */}
-                    <div className="col-lg-3 col-md-6 col-sm-6 mb-4">
-                        <h3 className="footer-titles">About Store</h3>
-                        <ul className="list-unstyled">
-                            <li><a href="#"><IoCall className="me-3" /> +91 6266059961</a></li>
-                            <li><a href="#"><MdEmail className="me-3" /> GreenBasket@gmail.com</a></li>
-                            <li><a href="#"><FaAddressCard className="me-3" /> 18, Khategaon M.P.</a></li>
-                            <li className="icon-s">
-                                <a href="#"><FaLinkedin /></a>
-                                <a href="#"><FaInstagramSquare /></a>
-                                <a href="#"><FaFacebookSquare /></a>
+                    {/* Contact */}
+                    <div className="ft-col">
+                        <h4 className="ft-col-title">Contact Us</h4>
+                        <ul className="ft-contact-list">
+                            <li>
+                                <span className="ft-contact-icon"><IoCall size={14} /></span>
+                                <span>+91 6266059961</span>
+                            </li>
+                            <li>
+                                <span className="ft-contact-icon"><MdEmail size={14} /></span>
+                                <span>GreenBasket@gmail.com</span>
+                            </li>
+                            <li>
+                                <span className="ft-contact-icon"><FaMapMarkerAlt size={14} /></span>
+                                <span>18, Khategaon, M.P.</span>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-        </div>
+
+            {/* Bottom bar */}
+            <div className="ft-bottom">
+                <p>© {new Date().getFullYear()} Green Basket. All rights reserved.</p>
+                <div className="ft-bottom-links">
+                    <Link to="/user/privacy-policy">Privacy Policy</Link>
+                    <Link to="/user/terms-of-service">Terms of Service</Link>
+                    <Link to="/user/refund-policy">Refund Policy</Link>
+                </div>
+            </div>
+        </footer>
     );
 };
 

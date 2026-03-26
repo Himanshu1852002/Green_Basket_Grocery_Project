@@ -1,26 +1,42 @@
 import delivery_boy_img from '../../../assets/Images/Images/scooter.png';
 import './Delivery_Banner.css';
+import { MdAccessTime, MdLocalShipping } from 'react-icons/md';
+import { FaRupeeSign } from 'react-icons/fa';
 
 const Delivery_Banner = () => {
     return (
-        <div className="container" style={{ marginTop: "30px" }}>
-            <div className="row deliver_row flex-md-row flex-column">
-                {/* Image Section */}
-                <div className="col-12 col-md-6 d-flex justify-content-center align-items-center img_div">
-                    <img className="delivery-boy-img" src={delivery_boy_img} alt="Delivery Boy" />
+        <section className="db-section">
+            <div className="db-inner">
+
+                {/* Image */}
+                <div className="db-img-side">
+                    <img src={delivery_boy_img} alt="Delivery" className="db-img" />
                 </div>
 
-                {/* Text Section */}
-                <div className="col-12 col-md-6 d-flex justify-content-center align-items-start flex-column delivery_banner">
-                    <div className="d-flex justify-content-center align-items-center">
-                        <h2>We Deliver on Next Day from 10:00 AM to 08:00 PM</h2>
-                    </div>
-                    <div className='w-100 d-flex justify-content-md-start align-items-ms-start align-items-center justify-content-center'>
-                        <p>* For Orders starting from $100</p>
+                {/* Text */}
+                <div className="db-text-side">
+                    <span className="db-tag"><MdLocalShipping size={14} /> Fast Delivery</span>
+                    <h2 className="db-title">
+                        Next Day Delivery<br />
+                        <span>Right to Your Door</span>
+                    </h2>
+                    <p className="db-desc">
+                        Order today and receive your fresh groceries tomorrow. We ensure safe, fast, and reliable delivery every time.
+                    </p>
+                    <div className="db-chips">
+                        <div className="db-chip">
+                            <MdAccessTime size={16} />
+                            <span>10:00 AM – 8:00 PM</span>
+                        </div>
+                        <div className="db-chip">
+                            <FaRupeeSign size={14} />
+                            <span>Free on orders ₹500+</span>
+                        </div>
                     </div>
                 </div>
+
             </div>
-        </div>
+        </section>
     );
 };
 
