@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 
-const url = "https://green-basket-grocery-project.onrender.com"
+const url = import.meta.env.VITE_API_BASE_URL || 'https://green-basket-grocery-project.onrender.com'
 const initialState = {
     products: [],
     status: 'idle',

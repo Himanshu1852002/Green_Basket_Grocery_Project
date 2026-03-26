@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const url = "https://green-basket-grocery-project.onrender.com"
+const url = import.meta.env.VITE_API_BASE_URL || 'https://green-basket-grocery-project.onrender.com'
 
 
 // Async actions
