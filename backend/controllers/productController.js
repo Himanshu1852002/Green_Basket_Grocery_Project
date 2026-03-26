@@ -6,24 +6,28 @@ import fs from 'fs';
 
 const addProduct = async (req, res) => {
     let image_filename = `${req.file.filename}`;
-
-    const product = new productModel({
-        name: req.body.name,
-        unit: req.body.unit,
-        description: req.body.description,
-        price: req.body.price,
-        sellingPrice: req.body.sellingPrice,
-        category: req.body.category,
-        image: image_filename,
-        quantity: req.body.quantity
-    });
-
     try {
+        const exists = await productModel.findOne({ name: { $regex: new RegExp(`^${req.body.name}$`, 'i') } });
+        if (exists) return res.json({ success: false, message: 'Product with this name already exists' });
+
+        if (Number(req.body.sellingPrice) > Number(req.body.price))
+            return res.json({ success: false, message: 'Selling price cannot be greater than MRP' });
+
+        const product = new productModel({
+            name: req.body.name,
+            unit: req.body.unit,
+            description: req.body.description,
+            price: req.body.price,
+            sellingPrice: req.body.sellingPrice,
+            category: req.body.category,
+            image: image_filename,
+            quantity: req.body.quantity
+        });
         await product.save();
-        res.json({ success: true, message: "Product Added" });
+        res.json({ success: true, message: 'Product Added' });
     } catch (error) {
-        console.error(error)
-        res.json({ success: false, message: "Error" });
+        console.error(error);
+        res.json({ success: false, message: 'Error' });
     }
 }
 

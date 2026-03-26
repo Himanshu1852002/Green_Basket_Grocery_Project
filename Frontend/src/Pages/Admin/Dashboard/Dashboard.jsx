@@ -15,10 +15,11 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 const URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 
 const STATUS_COLORS = {
-    Processing: { bg: '#fff3e0', color: '#e65100' },
-    Shipped:    { bg: '#e3f2fd', color: '#1565c0' },
-    Delivered:  { bg: '#e8f5e9', color: '#2e7d32' },
-    Cancelled:  { bg: '#ffebee', color: '#c62828' },
+    Processing:         { bg: '#fff3e0', color: '#e65100' },
+    Shipped:            { bg: '#e3f2fd', color: '#1565c0' },
+    'Out for Delivery': { bg: '#f3e5f5', color: '#6a1b9a' },
+    Delivered:          { bg: '#e8f5e9', color: '#2e7d32' },
+    Cancelled:          { bg: '#ffebee', color: '#c62828' },
 };
 
 const Dashboard = () => {

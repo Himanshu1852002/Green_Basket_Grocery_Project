@@ -40,6 +40,26 @@ const getReviews = async (req, res) => {
     }
 };
 
+// Get ALL reviews (admin)
+const getAllReviews = async (req, res) => {
+    try {
+        const reviews = await reviewModel.find().sort({ createdAt: -1 });
+        res.json({ success: true, reviews });
+    } catch {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+// Delete review (admin)
+const deleteReview = async (req, res) => {
+    try {
+        await reviewModel.findByIdAndDelete(req.params.id);
+        res.json({ success: true });
+    } catch {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
 // Check if user can review (has delivered order with this product)
 const canReview = async (req, res) => {
     const { userId, productId } = req.body;
@@ -52,4 +72,4 @@ const canReview = async (req, res) => {
     }
 };
 
-export { addReview, getReviews, canReview };
+export { addReview, getReviews, canReview, getAllReviews, deleteReview };

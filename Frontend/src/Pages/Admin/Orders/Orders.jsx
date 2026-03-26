@@ -7,13 +7,14 @@ import { MdLocationOn, MdPhone, MdClose, MdRefresh } from 'react-icons/md';
 const URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 
 const STATUS_COLORS = {
-    Processing: { bg: '#fff3e0', color: '#e65100' },
-    Shipped:    { bg: '#e3f2fd', color: '#1565c0' },
-    Delivered:  { bg: '#e8f5e9', color: '#2e7d32' },
-    Cancelled:  { bg: '#ffebee', color: '#c62828' },
+    Processing:       { bg: '#fff3e0', color: '#e65100' },
+    Shipped:          { bg: '#e3f2fd', color: '#1565c0' },
+    'Out for Delivery': { bg: '#f3e5f5', color: '#6a1b9a' },
+    Delivered:        { bg: '#e8f5e9', color: '#2e7d32' },
+    Cancelled:        { bg: '#ffebee', color: '#c62828' },
 };
 
-const STATUSES = ['All', 'Processing', 'Shipped', 'Delivered', 'Cancelled'];
+const STATUSES = ['All', 'Processing', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled'];
 
 const SkeletonCard = () => (
     <div className="or-card">
@@ -193,6 +194,7 @@ const Orders = () => {
                                             <select className="or-status-select" value={order.orderStatus} onChange={e => statusHandler(e, order._id)}>
                                                 <option value="Processing">Processing</option>
                                                 <option value="Shipped">Shipped</option>
+                                                <option value="Out for Delivery">Out for Delivery</option>
                                                 <option value="Delivered">Delivered</option>
                                                 <option value="Cancelled">Cancelled</option>
                                             </select>

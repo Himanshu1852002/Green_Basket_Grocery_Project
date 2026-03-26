@@ -8,10 +8,12 @@ import Sidebar from "../../Components/Admin/AdminSidebar/Sidebar";
 import "./AdminRoutes.css";
 import Dashboard from '../../Pages/Admin/Dashboard/Dashboard';
 import Users from '../../Pages/Admin/Users/Users';
+import Reviews from '../../Pages/Admin/Reviews/Reviews';
+import SendNotification from '../../Pages/Admin/Notifications/SendNotification';
 import NotFound from '../../Pages/User/NotFound/NotFound';
 
 const AdminRoutes = () => {
-    const url = "https://green-basket-grocery-project.onrender.com"
+    const url = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'
 
     return (
         <div className="admin-layout">
@@ -27,6 +29,8 @@ const AdminRoutes = () => {
                         <Route path="list" element={<List url={url} />} />
                         <Route path="orders" element={<Orders url={url} />} />
                         <Route path="users" element={<Users />} />
+                        <Route path="reviews" element={<Reviews />} />
+                        <Route path="notifications" element={<SendNotification />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </div>
