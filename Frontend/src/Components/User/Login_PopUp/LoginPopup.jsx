@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { FaEye, FaEyeSlash, FaLeaf } from "react-icons/fa";
 import { MdClose, MdEmail, MdLock, MdPerson } from "react-icons/md";
 import './LoginPage.css';
@@ -20,12 +20,65 @@ const LoginPopup = ({ setShowLogin }) => {
     const [otpState, setOtpState] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [resendTimer, setResendTimer] = useState(0);
+    const [otpDigits, setOtpDigits] = useState(['', '', '', '', '', '']);
+    const otpRefs = [useRef(), useRef(), useRef(), useRef(), useRef(), useRef()];
 
     const [data, setData] = useState({ name: "", email: "", password: "", otp: "" });
 
     const onChange = (e) => {
         const { name, value } = e.target;
         setData(prev => ({ ...prev, [name]: value }));
+    };
+
+    // OTP box input handler
+    const handleOtpChange = (index, value) => {
+        if (!/^\d*$/.test(value)) return;
+        const updated = [...otpDigits];
+        updated[index] = value.slice(-1);
+        setOtpDigits(updated);
+        setData(prev => ({ ...prev, otp: updated.join('') }));
+        if (value && index < 5) otpRefs[index + 1].current?.focus();
+    };
+
+    const handleOtpKeyDown = (index, e) => {
+        if (e.key === 'Backspace' && !otpDigits[index] && index > 0)
+            otpRefs[index - 1].current?.focus();
+    };
+
+    const handleOtpPaste = (e) => {
+        const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
+        if (pasted.length === 6) {
+            const arr = pasted.split('');
+            setOtpDigits(arr);
+            setData(prev => ({ ...prev, otp: pasted }));
+            otpRefs[5].current?.focus();
+        }
+    };
+
+    // Start resend countdown
+    const startResendTimer = () => {
+        setResendTimer(30);
+        const interval = setInterval(() => {
+            setResendTimer(prev => {
+                if (prev <= 1) { clearInterval(interval); return 0; }
+                return prev - 1;
+            });
+        }, 1000);
+    };
+
+    const handleResendOtp = async () => {
+        if (resendTimer > 0) return;
+        try {
+            const res = await axios.post(`${URL}/api/user/register`, { name: data.name, email: data.email, password: data.password });
+            if (res.data.success) {
+                toast.info('OTP resent to your email!', { autoClose: 2000 });
+                setOtpDigits(['', '', '', '', '', '']);
+                setData(prev => ({ ...prev, otp: '' }));
+                startResendTimer();
+                otpRefs[0].current?.focus();
+            } else toast.error(res.data.message);
+        } catch { toast.error('Failed to resend OTP'); }
     };
 
     const onLogin = async (e) => {
@@ -43,7 +96,9 @@ const LoginPopup = ({ setShowLogin }) => {
                 const { token, user } = res.data;
                 if (currState === "Sign Up" && !otpState) {
                     setOtpState(true);
+                    startResendTimer();
                     toast.info("OTP sent to your email!", { autoClose: 2000 });
+                    setTimeout(() => otpRefs[0].current?.focus(), 100);
                 } else if (otpState) {
                     dispatch(setToken(token));
                     localStorage.setItem('token', token);
@@ -84,6 +139,7 @@ const LoginPopup = ({ setShowLogin }) => {
     const switchState = () => {
         setCurrState(p => p === "Login" ? "Sign Up" : "Login");
         setOtpState(false);
+        setOtpDigits(['', '', '', '', '', '']);
         setData({ name: "", email: "", password: "", otp: "" });
     };
 
@@ -187,18 +243,47 @@ const LoginPopup = ({ setShowLogin }) => {
                         )}
 
                         {otpState && (
-                            <div className="lp-field">
-                                <MdLock size={16} className="lp-field-icon" />
-                                <input
-                                    name="otp"
-                                    type="text"
-                                    placeholder="Enter 6-digit OTP"
-                                    value={data.otp}
-                                    onChange={onChange}
-                                    required
-                                    className="lp-input lp-otp"
-                                    maxLength={6}
-                                />
+                            <div className="lp-otp-section">
+                                {/* Email hint */}
+                                <div className="lp-otp-hint">
+                                    <MdEmail size={15} color="#059212" />
+                                    <span>OTP sent to <strong>{data.email}</strong></span>
+                                </div>
+
+                                {/* 6 OTP boxes */}
+                                <div className="lp-otp-boxes" onPaste={handleOtpPaste}>
+                                    {otpDigits.map((digit, i) => (
+                                        <input
+                                            key={i}
+                                            ref={otpRefs[i]}
+                                            type="text"
+                                            inputMode="numeric"
+                                            maxLength={1}
+                                            value={digit}
+                                            onChange={e => handleOtpChange(i, e.target.value)}
+                                            onKeyDown={e => handleOtpKeyDown(i, e)}
+                                            className={`lp-otp-box ${digit ? 'lp-otp-filled' : ''}`}
+                                        />
+                                    ))}
+                                </div>
+
+                                {/* Resend */}
+                                <div className="lp-resend-row">
+                                    <span className="lp-resend-text">Didn&apos;t receive OTP?</span>
+                                    {resendTimer > 0
+                                        ? <span className="lp-resend-timer">Resend in {resendTimer}s</span>
+                                        : <button type="button" className="lp-resend-btn" onClick={handleResendOtp}>Resend OTP</button>
+                                    }
+                                </div>
+
+                                {/* Back button */}
+                                <button type="button" className="lp-back-btn" onClick={() => {
+                                    setOtpState(false);
+                                    setOtpDigits(['', '', '', '', '', '']);
+                                    setData(prev => ({ ...prev, otp: '' }));
+                                }}>
+                                    ← Back to Sign Up
+                                </button>
                             </div>
                         )}
 

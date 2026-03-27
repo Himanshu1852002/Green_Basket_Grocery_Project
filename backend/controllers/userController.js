@@ -19,16 +19,16 @@ const uploadAvatar = multer({ storage: avatarStorage, limits: { fileSize: 2 * 10
 
 const otpStore = {};
 
-// Nodemailer Transporter (Email)
-const transporter = nodemailer.createTransport({
+// Create transporter lazily so env vars are loaded
+const getTransporter = () => nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'himanshu77jangid@gmail.com',
-        pass: 'nmdz xqad mhoq qphi',
+        // eslint-disable-next-line no-undef
+        user: process.env.EMAIL_USER,
+        // eslint-disable-next-line no-undef
+        pass: process.env.EMAIL_PASS,
     },
-    tls: {
-        rejectUnauthorized: false,
-    },
+    tls: { rejectUnauthorized: false },
 });
 
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000);
@@ -115,57 +115,52 @@ const createToken = (id, role) => {
 const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
     try {
+        // Check duplicate
         const exists = await userModel.findOne({ email });
-        if (exists) {
-            return res.json({ success: false, message: 'User already exists' });
-        }
+        if (exists) return res.json({ success: false, message: 'User already exists' });
 
-        if (!validator.isEmail(email)) {
+        if (!validator.isEmail(email))
             return res.json({ success: false, message: 'Please enter valid email' });
-        }
 
-        if (password.length < 8) {
-            return res.json({ success: false, message: 'Please Enter Strong password' });
-        }
+        if (password.length < 8)
+            return res.json({ success: false, message: 'Password must be at least 8 characters' });
 
-
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        const newUser = new userModel({
-            name: name,
-            email: email,
-            password: hashedPassword,
-            role: 'user'
-        });
-
-        await newUser.save();
-
-        // Generate OTP and expiry time in-memory
+        // Generate OTP first
         const otp = generateOtp();
         const otpExpiredAt = new Date(Date.now() + 10 * 60 * 1000);
 
-        // Store OTP and expiration time in memory
+        // Send OTP — if email fails, don't save user
+        await getTransporter().sendMail({
+            // eslint-disable-next-line no-undef
+            from: `"Green Basket" <${process.env.EMAIL_USER}>`,
+            to: email,
+            subject: 'Your OTP for Green Basket Registration',
+            html: `
+                <div style="font-family:sans-serif;max-width:480px;margin:auto;padding:24px;border:1px solid #e8f5e9;border-radius:12px">
+                    <h2 style="color:#059212">Green Basket 🌿</h2>
+                    <p>Hello <strong>${name}</strong>,</p>
+                    <p>Your OTP for registration is:</p>
+                    <div style="font-size:2rem;font-weight:800;letter-spacing:8px;color:#1a4d2e;background:#e8f5e9;padding:16px;border-radius:8px;text-align:center">${otp}</div>
+                    <p style="color:#888;font-size:0.85rem;margin-top:16px">This OTP is valid for <strong>10 minutes</strong>. Do not share it with anyone.</p>
+                </div>
+            `,
+        });
+
+        // Save user only after email success
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        const newUser = new userModel({ name, email, password: hashedPassword, role: 'user' });
+        await newUser.save();
+
+        // Store OTP in memory with user info
         otpStore[email] = { otp, otpExpiredAt };
 
-        console.log(`OTP stored for ${email}:`, otp); // Log for debugging
-
-        // Send OTP via email
-        await transporter.sendMail({
-            from: 'himanshu77jangid@gmail.com',
-            to: email,
-            subject: 'Your OTP for Registration',
-            text: `Your OTP is: ${otp}. It is valid for 10 minutes`,
-        });
-        // const token = createToken(user._id);
-        res.status(200).json({
-            success: true,
-            // token,
-            message: 'OTP sent successfully',
-        });
+        res.status(200).json({ success: true, message: 'OTP sent to your email' });
     } catch (error) {
-        console.log(error);
-        res.json({ success: false, message: 'Error' });
+        console.error('Register error:', error.message);
+        // If user was saved but email failed, remove the user
+        await userModel.deleteOne({ email }).catch(() => {});
+        res.json({ success: false, message: 'Failed to send OTP. Please check your email and try again.' });
     }
 };
 
@@ -196,7 +191,7 @@ const verifyOtp = async (req, res) => {
         delete otpStore[email];
 
         const user = await userModel.findOne({ email });
-        const token = createToken(user._id);
+        const token = createToken(user._id, user.role);
 
         res.json({
             success: true,
