@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import { IoIosCart } from "react-icons/io";
 import './SearchResults.css';
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://green-basket-grocery-project.onrender.com';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://green-basket-grocery-project-1.onrender.com';
 
 const SkeletonCard = () => (
     <div className="sr-card sr-skeleton">
