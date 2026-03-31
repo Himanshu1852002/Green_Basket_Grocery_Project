@@ -470,6 +470,7 @@
     flex-direction: column;
     gap: 8px;
     flex: 1;
+    justify-content: space-between;
 }
 
 /* Stars */
@@ -546,6 +547,12 @@
 .pc-smart-budget  { background: #e8eaf6; color: #283593; }
 
 /* Stock Urgency */
+.pc-urgency-wrap {
+    height: 22px;
+    display: flex;
+    align-items: center;
+}
+
 .pc-urgency {
     display: inline-block;
     font-size: 0.68rem;
@@ -608,7 +615,6 @@
     font-size: 0.82rem;
     font-weight: 600;
     cursor: pointer;
-    margin-top: auto;
     transition: background 0.2s, transform 0.15s;
 }
 

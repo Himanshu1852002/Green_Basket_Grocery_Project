@@ -8,6 +8,7 @@ import CategoryCards from "../../../Components/User/Category_Cards/CategoryCards
 import FlashSale from "../../../Components/User/Flash_Sale/FlashSale";
 import WhyChooseUs from "../../../Components/User/Why_Choose_Us/WhyChooseUs";
 import Newsletter from "../../../Components/User/Newsletter/Newsletter";
+import SpecialCollection from "../../../Components/User/Special_Collection/SpecialCollection";
 import { useState } from "react";
 
 const Home = () => {
@@ -19,6 +20,7 @@ const Home = () => {
             <div style={{ background: '#f7fbf7' }}>
                 <Hero />
                 <ExploreMenu category={category} setCategory={setCategory} />
+                <SpecialCollection />
                 <TopSelling />
                 <FlashSale />
                 <CategoryCards />

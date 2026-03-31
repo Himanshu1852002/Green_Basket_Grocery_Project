@@ -10,6 +10,7 @@ import Dashboard from '../../Pages/Admin/Dashboard/Dashboard';
 import Users from '../../Pages/Admin/Users/Users';
 import Reviews from '../../Pages/Admin/Reviews/Reviews';
 import SendNotification from '../../Pages/Admin/Notifications/SendNotification';
+import SpecialCollections from '../../Pages/Admin/SpecialCollections/SpecialCollections';
 import NotFound from '../../Pages/User/NotFound/NotFound';
 
 const AdminRoutes = () => {
@@ -31,6 +32,7 @@ const AdminRoutes = () => {
                         <Route path="users" element={<Users />} />
                         <Route path="reviews" element={<Reviews />} />
                         <Route path="notifications" element={<SendNotification />} />
+                        <Route path="special-collections" element={<SpecialCollections />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </div>

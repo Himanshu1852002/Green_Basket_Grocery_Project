@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import { MdLibraryAdd } from 'react-icons/md';
 
-const CATEGORIES = ['Fruits', 'Vegetables', 'Chocolates', 'Snacks', 'Coldrinks', 'Grocery'];
+const CATEGORIES = ['Fruits', 'Vegetables', 'Chocolates', 'Snacks', 'Coldrinks', 'Grocery', 'IceCream'];
 const UNITS = ['kg', 'g', 'liters', 'ml', 'pieces'];
 
 const Add = ({ url }) => {

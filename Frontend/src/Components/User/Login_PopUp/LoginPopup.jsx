@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { FaEye, FaEyeSlash, FaLeaf } from "react-icons/fa";
 import { MdClose, MdEmail, MdLock, MdPerson } from "react-icons/md";
 import './LoginPage.css';
@@ -17,89 +17,29 @@ const LoginPopup = ({ setShowLogin }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [currState, setCurrState] = useState("Login");
-    const [otpState, setOtpState] = useState(false);
+    const [signupSuccess, setSignupSuccess] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [resendTimer, setResendTimer] = useState(0);
-    const [otpDigits, setOtpDigits] = useState(['', '', '', '', '', '']);
-    const otpRefs = [useRef(), useRef(), useRef(), useRef(), useRef(), useRef()];
 
-    const [data, setData] = useState({ name: "", email: "", password: "", otp: "" });
+    const [data, setData] = useState({ name: "", email: "", password: "" });
 
     const onChange = (e) => {
         const { name, value } = e.target;
         setData(prev => ({ ...prev, [name]: value }));
     };
 
-    // OTP box input handler
-    const handleOtpChange = (index, value) => {
-        if (!/^\d*$/.test(value)) return;
-        const updated = [...otpDigits];
-        updated[index] = value.slice(-1);
-        setOtpDigits(updated);
-        setData(prev => ({ ...prev, otp: updated.join('') }));
-        if (value && index < 5) otpRefs[index + 1].current?.focus();
-    };
-
-    const handleOtpKeyDown = (index, e) => {
-        if (e.key === 'Backspace' && !otpDigits[index] && index > 0)
-            otpRefs[index - 1].current?.focus();
-    };
-
-    const handleOtpPaste = (e) => {
-        const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
-        if (pasted.length === 6) {
-            const arr = pasted.split('');
-            setOtpDigits(arr);
-            setData(prev => ({ ...prev, otp: pasted }));
-            otpRefs[5].current?.focus();
-        }
-    };
-
-    // Start resend countdown
-    const startResendTimer = () => {
-        setResendTimer(30);
-        const interval = setInterval(() => {
-            setResendTimer(prev => {
-                if (prev <= 1) { clearInterval(interval); return 0; }
-                return prev - 1;
-            });
-        }, 1000);
-    };
-
-    const handleResendOtp = async () => {
-        if (resendTimer > 0) return;
-        try {
-            const res = await axios.post(`${URL}/api/user/register`, { name: data.name, email: data.email, password: data.password });
-            if (res.data.success) {
-                toast.info('OTP resent to your email!', { autoClose: 2000 });
-                setOtpDigits(['', '', '', '', '', '']);
-                setData(prev => ({ ...prev, otp: '' }));
-                startResendTimer();
-                otpRefs[0].current?.focus();
-            } else toast.error(res.data.message);
-        } catch { toast.error('Failed to resend OTP'); }
-    };
-
     const onLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
 
-        let endpoint = URL;
-        if (currState === "Login") endpoint += '/api/user/login';
-        else if (currState === "Sign Up" && !otpState) endpoint += '/api/user/register';
-        else if (otpState) endpoint += '/api/user/verifyOtp';
+        const endpoint = currState === "Login" ? `${URL}/api/user/login` : `${URL}/api/user/register`;
 
         try {
             const res = await axios.post(endpoint, data);
             if (res.data.success) {
                 const { token, user } = res.data;
-                if (currState === "Sign Up" && !otpState) {
-                    setOtpState(true);
-                    startResendTimer();
-                    toast.info("OTP sent to your email!", { autoClose: 2000 });
-                    setTimeout(() => otpRefs[0].current?.focus(), 100);
-                } else if (otpState) {
+                if (currState === "Sign Up") {
+                    const { token, user } = res.data;
                     dispatch(setToken(token));
                     localStorage.setItem('token', token);
                     localStorage.setItem('userId', user.userId);
@@ -107,8 +47,7 @@ const LoginPopup = ({ setShowLogin }) => {
                     dispatch(loadCartData(token));
                     dispatch(setWishToken(token));
                     dispatch(fetchWishlist(token));
-                    setShowLogin(false);
-                    toast.success('Account created successfully!', { autoClose: 1500 });
+                    setSignupSuccess(true);
                 } else {
                     dispatch(setToken(token));
                     localStorage.setItem('token', token);
@@ -138,9 +77,8 @@ const LoginPopup = ({ setShowLogin }) => {
 
     const switchState = () => {
         setCurrState(p => p === "Login" ? "Sign Up" : "Login");
-        setOtpState(false);
-        setOtpDigits(['', '', '', '', '', '']);
-        setData({ name: "", email: "", password: "", otp: "" });
+        setSignupSuccess(false);
+        setData({ name: "", email: "", password: "" });
     };
 
     return (
@@ -180,128 +118,57 @@ const LoginPopup = ({ setShowLogin }) => {
                         <MdClose size={18} />
                     </button>
 
-                    <h3 className="lp-form-title">
-                        {otpState ? "Verify OTP" : currState === "Login" ? "Sign In" : "Create Account"}
-                    </h3>
-                    <p className="lp-form-sub">
-                        {otpState
-                            ? "Enter the OTP sent to your email"
-                            : currState === "Login"
-                                ? "Enter your credentials to continue"
-                                : "Fill in the details to get started"}
-                    </p>
+                    {signupSuccess ? (
+                        <div className="lp-success">
+                            <div className="lp-success-icon">✓</div>
+                            <h3 className="lp-success-title">Account Created!</h3>
+                            <p className="lp-success-sub">Welcome to Green Basket, <strong>{data.name}</strong>! Your account has been created successfully.</p>
+                            <button className="lp-submit" onClick={() => { setShowLogin(false); navigate('/user'); switchState(); }}>
+                                Start Shopping
+                            </button>
+                        </div>
+                    ) : (
+                        <>
+                        <h3 className="lp-form-title">
+                            {currState === "Login" ? "Sign In" : "Create Account"}
+                        </h3>
+                        <p className="lp-form-sub">
+                            {currState === "Login" ? "Enter your credentials to continue" : "Fill in the details to get started"}
+                        </p>
 
-                    <form onSubmit={onLogin} className="lp-form">
-
-                        {currState === "Sign Up" && !otpState && (
+                        <form onSubmit={onLogin} className="lp-form">
+                            {currState === "Sign Up" && (
+                                <div className="lp-field">
+                                    <MdPerson size={16} className="lp-field-icon" />
+                                    <input name="name" type="text" placeholder="Full Name" value={data.name} onChange={onChange} required className="lp-input" />
+                                </div>
+                            )}
                             <div className="lp-field">
-                                <MdPerson size={16} className="lp-field-icon" />
-                                <input
-                                    name="name"
-                                    type="text"
-                                    placeholder="Full Name"
-                                    value={data.name}
-                                    onChange={onChange}
-                                    required
-                                    className="lp-input"
-                                />
+                                <MdEmail size={16} className="lp-field-icon" />
+                                <input name="email" type="email" placeholder="Email Address" value={data.email} onChange={onChange} required autoComplete="email" className="lp-input" />
                             </div>
-                        )}
-
-                        {!otpState && (
-                            <>
-                                <div className="lp-field">
-                                    <MdEmail size={16} className="lp-field-icon" />
-                                    <input
-                                        name="email"
-                                        type="email"
-                                        placeholder="Email Address"
-                                        value={data.email}
-                                        onChange={onChange}
-                                        required
-                                        autoComplete="email"
-                                        className="lp-input"
-                                    />
-                                </div>
-                                <div className="lp-field">
-                                    <MdLock size={16} className="lp-field-icon" />
-                                    <input
-                                        name="password"
-                                        type={showPassword ? "text" : "password"}
-                                        placeholder="Password"
-                                        value={data.password}
-                                        onChange={onChange}
-                                        required
-                                        autoComplete="current-password"
-                                        className="lp-input"
-                                    />
-                                    <button type="button" className="lp-eye" onClick={() => setShowPassword(p => !p)}>
-                                        {showPassword ? <FaEyeSlash size={14} /> : <FaEye size={14} />}
-                                    </button>
-                                </div>
-                            </>
-                        )}
-
-                        {otpState && (
-                            <div className="lp-otp-section">
-                                {/* Email hint */}
-                                <div className="lp-otp-hint">
-                                    <MdEmail size={15} color="#059212" />
-                                    <span>OTP sent to <strong>{data.email}</strong></span>
-                                </div>
-
-                                {/* 6 OTP boxes */}
-                                <div className="lp-otp-boxes" onPaste={handleOtpPaste}>
-                                    {otpDigits.map((digit, i) => (
-                                        <input
-                                            key={i}
-                                            ref={otpRefs[i]}
-                                            type="text"
-                                            inputMode="numeric"
-                                            maxLength={1}
-                                            value={digit}
-                                            onChange={e => handleOtpChange(i, e.target.value)}
-                                            onKeyDown={e => handleOtpKeyDown(i, e)}
-                                            className={`lp-otp-box ${digit ? 'lp-otp-filled' : ''}`}
-                                        />
-                                    ))}
-                                </div>
-
-                                {/* Resend */}
-                                <div className="lp-resend-row">
-                                    <span className="lp-resend-text">Didn&apos;t receive OTP?</span>
-                                    {resendTimer > 0
-                                        ? <span className="lp-resend-timer">Resend in {resendTimer}s</span>
-                                        : <button type="button" className="lp-resend-btn" onClick={handleResendOtp}>Resend OTP</button>
-                                    }
-                                </div>
-
-                                {/* Back button */}
-                                <button type="button" className="lp-back-btn" onClick={() => {
-                                    setOtpState(false);
-                                    setOtpDigits(['', '', '', '', '', '']);
-                                    setData(prev => ({ ...prev, otp: '' }));
-                                }}>
-                                    ← Back to Sign Up
+                            <div className="lp-field">
+                                <MdLock size={16} className="lp-field-icon" />
+                                <input name="password" type={showPassword ? "text" : "password"} placeholder="Password" value={data.password} onChange={onChange} required autoComplete="current-password" className="lp-input" />
+                                <button type="button" className="lp-eye" onClick={() => setShowPassword(p => !p)}>
+                                    {showPassword ? <FaEyeSlash size={14} /> : <FaEye size={14} />}
                                 </button>
                             </div>
-                        )}
+                            <button type="submit" className="lp-submit" disabled={loading}>
+                                {loading ? <span className="lp-spinner" /> : currState === "Login" ? "Sign In" : "Create Account"}
+                            </button>
+                        </form>
+                        </>
+                    )}
 
-                        <button type="submit" className="lp-submit" disabled={loading}>
-                            {loading
-                                ? <span className="lp-spinner" />
-                                : otpState ? "Verify OTP"
-                                    : currState === "Login" ? "Sign In"
-                                        : "Create Account"}
-                        </button>
-                    </form>
-
-                    <p className="lp-switch">
-                        {currState === "Login" ? "Don't have an account?" : "Already have an account?"}
-                        {" "}<span onClick={switchState}>
-                            {currState === "Login" ? "Sign Up" : "Login"}
-                        </span>
-                    </p>
+                    {!signupSuccess && (
+                        <p className="lp-switch">
+                            {currState === "Login" ? "Don't have an account?" : "Already have an account?"}
+                            {" "}<span onClick={switchState}>
+                                {currState === "Login" ? "Sign Up" : "Login"}
+                            </span>
+                        </p>
+                    )}
                 </div>
 
             </div>
