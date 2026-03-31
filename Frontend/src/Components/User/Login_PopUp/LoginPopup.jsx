@@ -11,7 +11,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
-const URL = import.meta.env.VITE_API_BASE_URL || "https://green-basket-grocery-project.onrender.com";
+const URL = import.meta.env.VITE_API_BASE_URL || "https://green-basket-grocery-project-1.onrender.com";
 
 const LoginPopup = ({ setShowLogin }) => {
     const dispatch = useDispatch();
