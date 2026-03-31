@@ -1,0 +1,146 @@
+.sc-page { padding: 24px; max-width: 1000px; }
+
+.sc-title { font-size: 1.5rem; font-weight: 800; color: #1a4d2e; margin-bottom: 24px; }
+
+.sc-form {
+    background: #fff;
+    border: 1.5px solid #e8f5e9;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 2px 12px rgba(5,146,18,0.06);
+}
+
+.sc-form h4 { font-size: 1rem; font-weight: 700; color: #1a4d2e; margin: 0; }
+
+.sc-form-row { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.sc-input {
+    flex: 1;
+    min-width: 180px;
+    padding: 10px 14px;
+    border: 1.5px solid #c8e6c9;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.sc-input:focus { border-color: #059212; }
+.sc-search { min-width: 100%; }
+
+.sc-color-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #555;
+}
+.sc-color-label input[type="color"] { width: 40px; height: 36px; border: none; border-radius: 8px; cursor: pointer; padding: 2px; }
+
+.sc-preview {
+    flex: 1;
+    min-width: 140px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 2px solid;
+    font-size: 0.88rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sc-product-section { display: flex; flex-direction: column; gap: 10px; }
+.sc-product-label { font-size: 0.85rem; font-weight: 700; color: #1a4d2e; margin: 0; }
+
+.sc-product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    max-height: 280px;
+    overflow-y: auto;
+    padding: 4px;
+}
+
+.sc-product-item {
+    border: 2px solid #e8f5e9;
+    border-radius: 10px;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: #fff;
+}
+.sc-product-item:hover { border-color: #059212; }
+.sc-product-item.sc-selected { border-color: #059212; background: #f0faf0; }
+.sc-product-item img { width: 56px; height: 56px; object-fit: contain; }
+.sc-product-item span { font-size: 0.7rem; text-align: center; color: #333; line-height: 1.3; }
+
+.sc-check {
+    position: absolute;
+    top: 4px; right: 4px;
+    width: 18px; height: 18px;
+    background: #059212;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 0.65rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.sc-form-actions { display: flex; gap: 10px; }
+
+.sc-btn-primary {
+    display: flex; align-items: center; gap: 7px;
+    padding: 10px 22px;
+    background: #059212; color: #fff;
+    border: none; border-radius: 10px;
+    font-size: 0.88rem; font-weight: 700;
+    cursor: pointer; transition: background 0.2s;
+}
+.sc-btn-primary:hover { background: #1a4d2e; }
+.sc-btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.sc-btn-cancel {
+    padding: 10px 22px;
+    background: #f5f5f5; color: #555;
+    border: 1.5px solid #ddd; border-radius: 10px;
+    font-size: 0.88rem; font-weight: 600;
+    cursor: pointer;
+}
+
+/* List */
+.sc-list { display: flex; flex-direction: column; gap: 12px; }
+
+.sc-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 1px solid #e8f5e9;
+    gap: 16px;
+}
+
+.sc-item-info { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.sc-item-tag { font-size: 0.72rem; font-weight: 700; }
+.sc-item-info h5 { font-size: 1rem; font-weight: 800; color: #1a1a1a; margin: 0; }
+.sc-item-info p { font-size: 0.82rem; color: #888; margin: 0; }
+.sc-item-count { font-size: 0.75rem; color: #059212; font-weight: 600; }
+
+.sc-item-actions { display: flex; align-items: center; gap: 10px; }
+
+.sc-icon-btn { background: none; border: none; cursor: pointer; padding: 4px; display: flex; align-items: center; transition: transform 0.15s; }
+.sc-icon-btn:hover { transform: scale(1.15); }
+
+.sc-empty { color: #aaa; font-size: 0.88rem; text-align: center; padding: 32px; }

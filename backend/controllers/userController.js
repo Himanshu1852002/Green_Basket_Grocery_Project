@@ -2,7 +2,6 @@ import userModel from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
-import nodemailer from 'nodemailer';
 import multer from 'multer';
 import path from 'path';
 import { existsSync, mkdirSync } from 'fs';
@@ -18,20 +17,6 @@ const avatarStorage = multer.diskStorage({
 const uploadAvatar = multer({ storage: avatarStorage, limits: { fileSize: 2 * 1024 * 1024 } });
 
 // otpStore moved to MongoDB via userModel to survive server restarts
-
-// Create transporter lazily so env vars are loaded
-const getTransporter = () => nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        // eslint-disable-next-line no-undef
-        user: process.env.EMAIL_USER,
-        // eslint-disable-next-line no-undef
-        pass: process.env.EMAIL_PASS,
-    },
-    tls: { rejectUnauthorized: false },
-});
-
-const generateOtp = () => Math.floor(100000 + Math.random() * 900000);
 
 
 const registerAdmin = async () => {
@@ -115,7 +100,6 @@ const createToken = (id, role) => {
 const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
     try {
-        // Check duplicate
         const exists = await userModel.findOne({ email });
         if (exists) return res.json({ success: false, message: 'User already exists' });
 
@@ -125,79 +109,21 @@ const registerUser = async (req, res) => {
         if (password.length < 8)
             return res.json({ success: false, message: 'Password must be at least 8 characters' });
 
-        // Generate OTP first
-        const otp = generateOtp();
-        const otpExpiredAt = new Date(Date.now() + 10 * 60 * 1000);
-
-        // Send OTP — if email fails, don't save user
-        await getTransporter().sendMail({
-            // eslint-disable-next-line no-undef
-            from: `"Green Basket" <${process.env.EMAIL_USER}>`,
-            to: email,
-            subject: 'Your OTP for Green Basket Registration',
-            html: `
-                <div style="font-family:sans-serif;max-width:480px;margin:auto;padding:24px;border:1px solid #e8f5e9;border-radius:12px">
-                    <h2 style="color:#059212">Green Basket 🌿</h2>
-                    <p>Hello <strong>${name}</strong>,</p>
-                    <p>Your OTP for registration is:</p>
-                    <div style="font-size:2rem;font-weight:800;letter-spacing:8px;color:#1a4d2e;background:#e8f5e9;padding:16px;border-radius:8px;text-align:center">${otp}</div>
-                    <p style="color:#888;font-size:0.85rem;margin-top:16px">This OTP is valid for <strong>10 minutes</strong>. Do not share it with anyone.</p>
-                </div>
-            `,
-        });
-
-        // Save user only after email success
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        const newUser = new userModel({ name, email, password: hashedPassword, role: 'user', otp, otpExpiredAt, isVerified: false });
+        const newUser = new userModel({ name, email, password: hashedPassword, role: 'user', isVerified: true });
         await newUser.save();
 
-        res.status(200).json({ success: true, message: 'OTP sent to your email' });
+        const token = createToken(newUser._id, newUser.role);
+        res.status(200).json({ success: true, message: 'Account created successfully', token, user: { name: newUser.name, email: newUser.email, userId: newUser._id, role: newUser.role } });
     } catch (error) {
         console.error('Register error:', error.message);
-        await userModel.deleteOne({ email, isVerified: false }).catch(() => {});
-        res.json({ success: false, message: 'Failed to send OTP. Please check your email and try again.' });
+        res.json({ success: false, message: 'Registration failed. Please try again.' });
     }
 };
 
-// Verify OTP
 const verifyOtp = async (req, res) => {
-    const { email, otp } = req.body;
-
-    try {
-
-        const user = await userModel.findOne({ email });
-
-        if (!user || !user.otp) {
-            return res.status(404).json({ success: false, message: 'OTP not generated or expired' });
-        }
-
-        if (String(user.otp) !== String(otp) || new Date() > new Date(user.otpExpiredAt)) {
-            return res.status(400).json({ success: false, message: 'Invalid or expired OTP' });
-        }
-
-        user.otp = null;
-        user.otpExpiredAt = null;
-        user.isVerified = true;
-        await user.save();
-
-        const token = createToken(user._id, user.role);
-
-        res.json({
-            success: true,
-            token,
-            message: 'OTP verified successfully',
-            user: {
-                name: user.name,
-                email: user.email,
-                userId: user._id,
-                role: 'user'
-            },
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: 'Server error' });
-    }
+    res.status(410).json({ success: false, message: 'OTP verification is no longer required' });
 };
 
 // Get user count based on role

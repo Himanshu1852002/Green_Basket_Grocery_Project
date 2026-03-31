@@ -256,104 +256,48 @@
     .lp-right { padding: 24px 24px 28px; }
 }
 
-/* OTP Section */
-.lp-otp-section {
+/* Success Screen */
+.lp-success {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    flex: 1;
+    text-align: center;
+    padding: 20px 0;
 }
 
-.lp-otp-hint {
+.lp-success-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #e8f5e9;
+    border: 3px solid #059212;
     display: flex;
     align-items: center;
-    gap: 8px;
-    background: #f0faf0;
-    border: 1px solid #c8e6c9;
-    border-radius: 10px;
-    padding: 10px 14px;
-    font-size: 0.82rem;
-    color: #555;
-}
-
-.lp-otp-hint strong { color: #1a4d2e; }
-
-/* 6 OTP boxes */
-.lp-otp-boxes {
-    display: flex;
-    gap: 10px;
     justify-content: center;
+    font-size: 2rem;
+    color: #059212;
+    font-weight: 900;
+    animation: lp-pop 0.4s ease;
 }
 
-.lp-otp-box {
-    width: 48px;
-    height: 54px;
-    border: 2px solid #c8e6c9;
-    border-radius: 12px;
-    text-align: center;
-    font-size: 1.4rem;
+@keyframes lp-pop {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.lp-success-title {
+    font-size: 1.5rem;
     font-weight: 800;
     color: #1a4d2e;
-    background: #f7fbf7;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
-    caret-color: #059212;
+    margin: 0;
 }
 
-.lp-otp-box:focus {
-    border-color: #059212;
-    box-shadow: 0 0 0 3px rgba(5,146,18,0.12);
-    background: #fff;
-}
-
-.lp-otp-filled {
-    border-color: #059212;
-    background: #e8f5e9;
-}
-
-/* Resend row */
-.lp-resend-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    font-size: 0.82rem;
-}
-
-.lp-resend-text { color: #888; }
-
-.lp-resend-timer {
-    color: #059212;
-    font-weight: 700;
-}
-
-.lp-resend-btn {
-    background: none;
-    border: none;
-    color: #059212;
-    font-weight: 700;
-    font-size: 0.82rem;
-    cursor: pointer;
-    text-decoration: underline;
-    padding: 0;
-}
-
-.lp-resend-btn:hover { color: #1a4d2e; }
-
-/* Back button */
-.lp-back-btn {
-    background: none;
-    border: none;
-    color: #888;
-    font-size: 0.8rem;
-    cursor: pointer;
-    text-align: center;
-    padding: 0;
-    transition: color 0.2s;
-}
-
-.lp-back-btn:hover { color: #1a4d2e; }
-
-@media (max-width: 400px) {
-    .lp-otp-box { width: 40px; height: 46px; font-size: 1.2rem; }
-    .lp-otp-boxes { gap: 7px; }
+.lp-success-sub {
+    font-size: 0.85rem;
+    color: #666;
+    margin: 0;
+    line-height: 1.6;
 }

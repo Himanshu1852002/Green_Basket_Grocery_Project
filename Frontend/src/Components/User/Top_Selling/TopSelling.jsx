@@ -112,11 +112,11 @@ const ProductCard = ({ product, accentColor, cardBg, index }) => {
                     {discount > 0 && <del className="ts-original">₹{product.price}</del>}
                     <span className="ts-unit">/{product.unit}</span>
                 </div>
-                {urgency && !isOutOfStock && (
-                    <span className={`ts-urgency ${urgency.cls}`}>{urgency.label}</span>
-                )}
-
-                {/* Cart controls */}
+                <div className="ts-urgency-wrap">
+                    {urgency && !isOutOfStock && (
+                        <span className={`ts-urgency ${urgency.cls}`}>{urgency.label}</span>
+                    )}
+                </div>
                 {cartQty > 0 ? (
                     <div className="ts-qty-ctrl" style={{ borderColor: accentColor }}>
                         <button onClick={(e) => { e.stopPropagation(); dispatch(addToCartAPI({ itemId: product._id, token })); }}

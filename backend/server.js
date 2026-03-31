@@ -15,6 +15,8 @@ import searchRouter from './routes/searchRoute.js'
 import reviewRouter from './routes/reviewRoute.js'
 import notificationRouter from './routes/notificationRoute.js'
 
+import specialCollectionRouter from './routes/specialCollectionRoute.js'
+
 
 // app config
 const app = express();
@@ -57,6 +59,7 @@ app.use('/api/orders', orderRouter);
 app.use('/api/search', searchRouter);
 app.use('/api/reviews', reviewRouter);
 app.use('/api/notifications', notificationRouter);
+app.use('/api/special-collections', specialCollectionRouter);
 
 
 app.get("/", (req, res) => {

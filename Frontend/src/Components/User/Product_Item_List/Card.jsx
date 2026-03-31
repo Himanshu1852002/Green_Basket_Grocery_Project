@@ -103,9 +103,11 @@ const Card = ({ _id, name, price, image, sellingPrice, unit, description, quanti
                             <del className="pc-original">₹{price}</del>
                             <span className="pc-unit">/ {unit}</span>
                         </div>
-                        {urgency && !isOutOfStock && (
-                            <span className={`pc-urgency ${urgency.cls}`}>{urgency.label}</span>
-                        )}
+                        <div className="pc-urgency-wrap">
+                            {urgency && !isOutOfStock && (
+                                <span className={`pc-urgency ${urgency.cls}`}>{urgency.label}</span>
+                            )}
+                        </div>
                         <button className={`pc-cart-btn${added ? ' pc-added' : ''}${isOutOfStock ? ' pc-cart-btn-oos' : ''}`} onClick={handleAddToCart} disabled={isOutOfStock}>
                             {isOutOfStock
                                 ? <>Out of Stock</>
