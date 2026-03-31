@@ -17,7 +17,7 @@ const avatarStorage = multer.diskStorage({
 });
 const uploadAvatar = multer({ storage: avatarStorage, limits: { fileSize: 2 * 1024 * 1024 } });
 
-const otpStore = {};
+// otpStore moved to MongoDB via userModel to survive server restarts
 
 // Create transporter lazily so env vars are loaded
 const getTransporter = () => nodemailer.createTransport({
@@ -149,17 +149,13 @@ const registerUser = async (req, res) => {
         // Save user only after email success
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        const newUser = new userModel({ name, email, password: hashedPassword, role: 'user' });
+        const newUser = new userModel({ name, email, password: hashedPassword, role: 'user', otp, otpExpiredAt, isVerified: false });
         await newUser.save();
-
-        // Store OTP in memory with user info
-        otpStore[email] = { otp, otpExpiredAt };
 
         res.status(200).json({ success: true, message: 'OTP sent to your email' });
     } catch (error) {
         console.error('Register error:', error.message);
-        // If user was saved but email failed, remove the user
-        await userModel.deleteOne({ email }).catch(() => {});
+        await userModel.deleteOne({ email, isVerified: false }).catch(() => {});
         res.json({ success: false, message: 'Failed to send OTP. Please check your email and try again.' });
     }
 };
@@ -170,27 +166,21 @@ const verifyOtp = async (req, res) => {
 
     try {
 
-        const storedOtpData = otpStore[email];
-
-        if (!storedOtpData) {
-            return res.status(404).json({
-                success: false,
-                message: 'OTP not generated or expired',
-            });
-        }
-
-        const { otp: storedOtp, otpExpiredAt } = storedOtpData;
-
-        if (String(storedOtp) !== String(otp) || new Date() > new Date(otpExpiredAt)) {
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid or expired OTP',
-            });
-        }
-
-        delete otpStore[email];
-
         const user = await userModel.findOne({ email });
+
+        if (!user || !user.otp) {
+            return res.status(404).json({ success: false, message: 'OTP not generated or expired' });
+        }
+
+        if (String(user.otp) !== String(otp) || new Date() > new Date(user.otpExpiredAt)) {
+            return res.status(400).json({ success: false, message: 'Invalid or expired OTP' });
+        }
+
+        user.otp = null;
+        user.otpExpiredAt = null;
+        user.isVerified = true;
+        await user.save();
+
         const token = createToken(user._id, user.role);
 
         res.json({
