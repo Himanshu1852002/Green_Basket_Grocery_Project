@@ -7,7 +7,7 @@ const search = async (req, res) => {
             name: { $regex: query, $options: 'i' }
         });
 
-        const url = "https://green-basket-grocery-project.onrender.com";
+        const url = `${req.protocol}://${req.get('host')}`;
         if (results.length === 0) {
             return res.status(200).json({ success: true, results: [] });
         }
