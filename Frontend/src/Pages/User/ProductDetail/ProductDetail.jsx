@@ -27,7 +27,8 @@ const ProductDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const token = useSelector(s => s.cart.token);
+    const token = useSelector(s => s.cart.token) || localStorage.getItem('token');
+    const userId = useSelector(s => s.cart.userId) || localStorage.getItem('userId');
     const wishlist = useSelector(s => s.wishlist.items);
     const product_list = useSelector(s => s.cart.product_list);
     const cartItems = useSelector(s => s.cart.cartItems);
@@ -50,6 +51,12 @@ const ProductDetail = () => {
     const isOutOfStock = product?.quantity === 0;
     const cartQty = product ? (cartItems[product._id] || 0) : 0;
 
+    useEffect(() => {
+        const t = token || localStorage.getItem('token');
+        if (t) setCanReview(true);
+        else setCanReview(false);
+    }, [token]);
+
     const fetchReviews = async (productId) => {
         try {
             const res = await axios.get(`${BASE_URL}/api/reviews/product/${productId}`);
@@ -61,15 +68,16 @@ const ProductDetail = () => {
     };
 
     const checkCanReview = async (productId) => {
-        if (!token) return;
+        const t = token || localStorage.getItem('token');
+        if (!t) return;
+        setCanReview(true);
         try {
             const res = await axios.post(`${BASE_URL}/api/reviews/canReview`,
-                { productId }, { headers: { Authorization: `Bearer ${token}` } }
+                { productId, userId }, { headers: { Authorization: `Bearer ${t}` } }
             );
-            if (res.data.success) {
-                setCanReview(res.data.canReview);
+            if (res.data.success && res.data.existing) {
                 setExistingReview(res.data.existing);
-                if (res.data.existing) setReviewForm({ rating: res.data.existing.rating, comment: res.data.existing.comment });
+                setReviewForm({ rating: res.data.existing.rating, comment: res.data.existing.comment });
             }
         } catch { /* silent */ }
     };
@@ -117,7 +125,7 @@ const ProductDetail = () => {
         setReviewSubmitting(true);
         try {
             const res = await axios.post(`${BASE_URL}/api/reviews/add`,
-                { productId: product._id, rating: reviewForm.rating, comment: reviewForm.comment },
+                { productId: product._id, rating: reviewForm.rating, comment: reviewForm.comment, userId },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             if (res.data.success) {

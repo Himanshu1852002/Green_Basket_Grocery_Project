@@ -1,19 +1,22 @@
 import reviewModel from '../models/reviewModel.js';
-import orderModel from '../models/orderModel.js';
 import userModel from '../models/userModel.js';
+import productModel from '../models/productModel.js';
+
+// Check if user can review
+const canReview = async (req, res) => {
+    const { userId, productId } = req.body;
+    try {
+        const existing = await reviewModel.findOne({ userId, productId });
+        res.json({ success: true, canReview: true, existing: existing || null });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
 
 // Add or update review
 const addReview = async (req, res) => {
     const { userId, productId, rating, comment } = req.body;
     try {
-        // Check if user has a delivered order with this product
-        const order = await orderModel.findOne({
-            userId,
-            orderStatus: 'Delivered',
-            'items.itemId': productId
-        });
-        if (!order) return res.json({ success: false, message: 'You can only review products you have purchased and received.' });
-
         const user = await userModel.findById(userId).select('name');
         const review = await reviewModel.findOneAndUpdate(
             { productId, userId },
@@ -40,11 +43,19 @@ const getReviews = async (req, res) => {
     }
 };
 
-// Get ALL reviews (admin)
+// Get ALL reviews with product info (admin)
 const getAllReviews = async (req, res) => {
     try {
         const reviews = await reviewModel.find().sort({ createdAt: -1 });
-        res.json({ success: true, reviews });
+        const reviewsWithProduct = await Promise.all(reviews.map(async (r) => {
+            const product = await productModel.findById(r.productId).select('name image');
+            return {
+                ...r.toObject(),
+                productName: product?.name || 'Unknown Product',
+                productImage: product?.image || null,
+            };
+        }));
+        res.json({ success: true, reviews: reviewsWithProduct });
     } catch {
         res.status(500).json({ success: false, message: 'Server error' });
     }
@@ -56,18 +67,6 @@ const deleteReview = async (req, res) => {
         await reviewModel.findByIdAndDelete(req.params.id);
         res.json({ success: true });
     } catch {
-        res.status(500).json({ success: false, message: 'Server error' });
-    }
-};
-
-// Check if user can review (has delivered order with this product)
-const canReview = async (req, res) => {
-    const { userId, productId } = req.body;
-    try {
-        const order = await orderModel.findOne({ userId, orderStatus: 'Delivered', 'items.itemId': productId });
-        const existing = await reviewModel.findOne({ userId, productId });
-        res.json({ success: true, canReview: !!order, existing: existing || null });
-    } catch (error) {
         res.status(500).json({ success: false, message: 'Server error' });
     }
 };

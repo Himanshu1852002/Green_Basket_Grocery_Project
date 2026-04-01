@@ -7,6 +7,12 @@ import { Link } from 'react-router-dom';
 const Banners = ({ title1, title2, subtitle, tag, accentColor, item_img, stats }) => {
     return (
         <div className="bn-section" style={{ '--bn-accent': accentColor || '#059212' }}>
+
+            {/* Floating particles */}
+            <div className="bn-particles">
+                {Array.from({ length: 10 }).map((_, i) => <div key={i} className="bn-particle" />)}
+            </div>
+
             <div className="bn-inner">
 
                 {/* Left */}

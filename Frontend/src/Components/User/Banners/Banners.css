@@ -1,33 +1,78 @@
 .bn-section {
-    background: linear-gradient(135deg, #1a4d2e 0%, #059212 100%);
+    background: linear-gradient(135deg, #1a4d2e 0%, #059212 60%, #1a4d2e 100%);
+    background-size: 200% 200%;
+    animation: bn-bg-shift 8s ease-in-out infinite;
     padding: 52px 40px 0;
     overflow: hidden;
     position: relative;
 }
 
-/* Decorative blobs */
+@keyframes bn-bg-shift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Animated rings */
 .bn-section::before {
     content: '';
     position: absolute;
-    top: -60px;
-    right: -60px;
-    width: 320px;
-    height: 320px;
-    background: rgba(255,255,255,0.05);
+    top: -80px; right: -80px;
+    width: 380px; height: 380px;
     border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.08);
+    animation: bn-ring 6s ease-in-out infinite;
     pointer-events: none;
 }
 
 .bn-section::after {
     content: '';
     position: absolute;
-    bottom: 0;
-    left: -40px;
-    width: 200px;
-    height: 200px;
-    background: rgba(255,255,255,0.04);
+    bottom: -60px; left: -60px;
+    width: 280px; height: 280px;
     border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.06);
+    animation: bn-ring 6s ease-in-out infinite 3s;
     pointer-events: none;
+}
+
+@keyframes bn-ring {
+    0%, 100% { transform: scale(1);    opacity: 0.6; }
+    50%       { transform: scale(1.15); opacity: 1;   }
+}
+
+/* Floating particles */
+.bn-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.bn-particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    animation: bn-float-up linear infinite;
+}
+
+.bn-particle:nth-child(1)  { width: 8px;  height: 8px;  left: 10%; animation-duration: 7s;  animation-delay: 0s;   }
+.bn-particle:nth-child(2)  { width: 5px;  height: 5px;  left: 25%; animation-duration: 9s;  animation-delay: 1s;   }
+.bn-particle:nth-child(3)  { width: 10px; height: 10px; left: 40%; animation-duration: 6s;  animation-delay: 2s;   }
+.bn-particle:nth-child(4)  { width: 6px;  height: 6px;  left: 55%; animation-duration: 8s;  animation-delay: 0.5s; }
+.bn-particle:nth-child(5)  { width: 4px;  height: 4px;  left: 70%; animation-duration: 10s; animation-delay: 1.5s; }
+.bn-particle:nth-child(6)  { width: 7px;  height: 7px;  left: 82%; animation-duration: 7s;  animation-delay: 3s;   }
+.bn-particle:nth-child(7)  { width: 5px;  height: 5px;  left: 15%; animation-duration: 11s; animation-delay: 2.5s; }
+.bn-particle:nth-child(8)  { width: 9px;  height: 9px;  left: 60%; animation-duration: 8s;  animation-delay: 4s;   }
+.bn-particle:nth-child(9)  { width: 4px;  height: 4px;  left: 90%; animation-duration: 6s;  animation-delay: 1s;   }
+.bn-particle:nth-child(10) { width: 6px;  height: 6px;  left: 35%; animation-duration: 9s;  animation-delay: 3.5s; }
+
+@keyframes bn-float-up {
+    0%   { transform: translateY(400px) scale(0); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.5; }
+    100% { transform: translateY(-60px) scale(1); opacity: 0; }
 }
 
 .bn-inner {
@@ -37,6 +82,8 @@
     align-items: flex-end;
     justify-content: space-between;
     gap: 40px;
+    position: relative;
+    z-index: 1;
 }
 
 /* Left */
@@ -62,6 +109,7 @@
     border-radius: 20px;
     width: fit-content;
     border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(4px);
 }
 
 .bn-title {
@@ -72,9 +120,7 @@
     margin: 0;
 }
 
-.bn-title span {
-    color: #b9f6ca;
-}
+.bn-title span { color: #b9f6ca; }
 
 .bn-subtitle {
     font-size: 0.95rem;
@@ -158,8 +204,14 @@
     width: 320px;
     height: 320px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.08);
-    border: 2px solid rgba(255,255,255,0.1);
+    background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.02) 70%);
+    border: 2px solid rgba(255,255,255,0.12);
+    animation: bn-orb-pulse 4s ease-in-out infinite;
+}
+
+@keyframes bn-orb-pulse {
+    0%, 100% { transform: translateX(-50%) scale(1);    box-shadow: 0 0 0px  rgba(255,255,255,0.1); }
+    50%       { transform: translateX(-50%) scale(1.06); box-shadow: 0 0 40px rgba(255,255,255,0.18); }
 }
 
 .bn-img {
@@ -174,7 +226,7 @@
 
 @keyframes bn-float {
     0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(-10px); }
+    50%       { transform: translateY(-12px); }
 }
 
 /* Responsive */

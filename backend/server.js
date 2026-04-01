@@ -16,6 +16,9 @@ import reviewRouter from './routes/reviewRoute.js'
 import notificationRouter from './routes/notificationRoute.js'
 
 import specialCollectionRouter from './routes/specialCollectionRoute.js'
+import contactRouter from './routes/contactRoute.js'
+import couponRouter from './routes/couponRoute.js'
+import categoryRouter from './routes/categoryRoute.js'
 
 
 // app config
@@ -60,6 +63,9 @@ app.use('/api/search', searchRouter);
 app.use('/api/reviews', reviewRouter);
 app.use('/api/notifications', notificationRouter);
 app.use('/api/special-collections', specialCollectionRouter);
+app.use('/api/contact', contactRouter);
+app.use('/api/coupons', couponRouter);
+app.use('/api/categories', categoryRouter);
 
 
 app.get("/", (req, res) => {

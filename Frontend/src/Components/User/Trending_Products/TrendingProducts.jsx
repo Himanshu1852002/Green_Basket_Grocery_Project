@@ -37,7 +37,6 @@ const TrendingProducts = () => {
             .finally(() => setLoading(false));
     }, []);
 
-    // Get full product data from productList using itemId
     const getProductData = (trendItem) => {
         if (trendItem.itemId) {
             const match = productList.find(p => p._id === trendItem.itemId);
@@ -47,10 +46,7 @@ const TrendingProducts = () => {
     };
 
     const handleAddToCart = (trendItem) => {
-        if (!token) {
-            toast.error('Please log in to add items to cart', { autoClose: 2000 });
-            return;
-        }
+        if (!token) { toast.error('Please log in to add items to cart', { autoClose: 2000 }); return; }
         const product = getProductData(trendItem);
         if (!product) { toast.error('Product not found', { autoClose: 2000 }); return; }
         if (product.quantity === 0) { toast.error('This product is out of stock', { autoClose: 2000 }); return; }
@@ -69,6 +65,17 @@ const TrendingProducts = () => {
     const getPrice = (trendItem) => {
         const product = getProductData(trendItem);
         return product?.sellingPrice || trendItem.price;
+    };
+
+    const getDiscount = (trendItem) => {
+        const p = getProductData(trendItem);
+        if (!p || !p.price || !p.sellingPrice) return 0;
+        return Math.round(((p.price - p.sellingPrice) / p.price) * 100);
+    };
+
+    const getMRP = (trendItem) => {
+        const p = getProductData(trendItem);
+        return p?.price || null;
     };
 
     const isOutOfStock = (trendItem) => {
@@ -94,12 +101,14 @@ const TrendingProducts = () => {
                     : products.map((product, i) => {
                         const oos = isOutOfStock(product);
                         const isAdded = addedId === product.name;
+                        const disc = getDiscount(product);
+                        const mrp = getMRP(product);
+                        const soldPct = Math.min((product.totalSold / 100) * 100, 100);
                         return (
                             <div
                                 className={`tp-card${oos ? ' tp-oos' : ''}`}
                                 key={i}
                                 onClick={() => { const p = getProductData(product); if (p) navigate(`/user/product/${p._id}`); }}
-                                style={{ cursor: 'pointer' }}
                             >
                                 {/* Rank badge */}
                                 {i < 3 && (
@@ -128,7 +137,21 @@ const TrendingProducts = () => {
                                 {/* Info */}
                                 <div className="tp-info">
                                     <h4 className="tp-name">{product.name}</h4>
-                                    <p className="tp-price">₹{getPrice(product)}</p>
+                                    <div className="tp-price-row">
+                                        <span className="tp-price">₹{getPrice(product)}</span>
+                                        {disc > 0 && mrp && (
+                                            <>
+                                                <del className="tp-original">₹{mrp}</del>
+                                                <span className="tp-discount-badge">{disc}% OFF</span>
+                                            </>
+                                        )}
+                                    </div>
+                                    <div className="tp-sold-bar-wrap">
+                                        <span className="tp-sold-label">🔥 {product.totalSold} units sold</span>
+                                        <div className="tp-sold-bar">
+                                            <div className="tp-sold-fill" style={{ width: `${soldPct}%` }} />
+                                        </div>
+                                    </div>
                                     <button
                                         className={`tp-btn${isAdded ? ' tp-btn-added' : ''}${oos ? ' tp-btn-oos' : ''}`}
                                         onClick={e => { e.stopPropagation(); handleAddToCart(product); }}

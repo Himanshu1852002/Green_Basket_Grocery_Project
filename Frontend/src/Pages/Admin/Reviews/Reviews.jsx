@@ -137,7 +137,14 @@ const Reviews = () => {
                                             <span className="rv-username">{r.userName}</span>
                                         </div>
                                     </td>
-                                    <td className="rv-product">{r.productId}</td>
+                                    <td>
+                                        <div className="rv-product-cell">
+                                            {r.productImage && (
+                                                <img src={`${URL}/uploads/${r.productImage}`} alt={r.productName} className="rv-product-img" />
+                                            )}
+                                            <span className="rv-product-name">{r.productName}</span>
+                                        </div>
+                                    </td>
                                     <td><StarRow rating={r.rating} /></td>
                                     <td className="rv-comment">{r.comment || '—'}</td>
                                     <td className="rv-date">

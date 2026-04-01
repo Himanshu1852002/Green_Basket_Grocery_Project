@@ -231,4 +231,32 @@ const deleteAccount = async (req, res) => {
     }
 };
 
-export { loginUser, registerUser, verifyOtp, getUserCount, registerAdmin, getAllUsers, blockUnblockUser, getProfile, updateProfile, updateAvatar, uploadAvatar, changePassword, deleteAccount };
+// Check email exists
+const checkEmailExists = async (req, res) => {
+    const { email } = req.body;
+    try {
+        const user = await userModel.findOne({ email, role: 'user' });
+        if (!user) return res.json({ success: false, message: 'No account found with this email' });
+        res.json({ success: true, message: 'Email verified' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+// Reset password directly
+const resetPassword = async (req, res) => {
+    const { email, newPassword } = req.body;
+    try {
+        const user = await userModel.findOne({ email, role: 'user' });
+        if (!user) return res.json({ success: false, message: 'No account found with this email' });
+        if (!newPassword || newPassword.length < 8)
+            return res.json({ success: false, message: 'Password must be at least 8 characters' });
+        user.password = await bcrypt.hash(newPassword, 10);
+        await user.save();
+        res.json({ success: true, message: 'Password reset successfully' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+export { loginUser, registerUser, verifyOtp, getUserCount, registerAdmin, getAllUsers, blockUnblockUser, getProfile, updateProfile, updateAvatar, uploadAvatar, changePassword, deleteAccount, checkEmailExists, resetPassword };

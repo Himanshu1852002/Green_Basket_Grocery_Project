@@ -1,5 +1,5 @@
 .vf-page {
-    min-height: 100vh;
+    min-height: calc(100vh - 70px);
     background: #f7fbf7;
     display: flex;
     align-items: center;

@@ -1,5 +1,8 @@
 import productModel from '../models/productModel.js';
 import fs from 'fs';
+import { createNotification } from './notificationController.js';
+
+const ADMIN_ID = process.env.ADMIN_ID || null;
 
 
 // add product
@@ -94,6 +97,13 @@ const updateProduct = async (req, res) => {
         product.quantity = req.body.quantity || product.quantity;
 
         await product.save();
+
+        // Out of stock alert
+        if (Number(req.body.quantity) === 0 && ADMIN_ID) {
+            await createNotification(ADMIN_ID, '⚠️ Out of Stock!', `${product.name} is now out of stock.`, 'stock');
+        } else if (Number(req.body.quantity) <= 5 && ADMIN_ID) {
+            await createNotification(ADMIN_ID, '🔔 Low Stock Alert', `${product.name} has only ${req.body.quantity} units left.`, 'stock');
+        }
 
         res.json({ success: true, message: "Product Updated", data: product });
     } catch (error) {

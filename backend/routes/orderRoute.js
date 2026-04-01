@@ -1,6 +1,6 @@
 import express from 'express';
 import authMiddleware from '../middleware/auth.js';
-import { createOrder, fetchAllOrders, orderCancel, orderCount, updateStatus, userOrders, verifyOrder, getTrendingProducts } from '../controllers/orderController.js';
+import { createOrder, fetchAllOrders, orderCancel, orderCount, updateStatus, userOrders, verifyOrder, getTrendingProducts, getSalesReport } from '../controllers/orderController.js';
 import multer from 'multer';
 
 const orderRouter = express.Router();
@@ -23,6 +23,7 @@ orderRouter.post('/updateStatus', updateStatus);
 orderRouter.get('/orderCount', orderCount);
 orderRouter.post('/orderCancel/:orderId', orderCancel)
 orderRouter.get('/trending', getTrendingProducts)
+orderRouter.get('/salesReport', getSalesReport)
 
 
 export default orderRouter;

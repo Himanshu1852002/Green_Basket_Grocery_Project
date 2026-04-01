@@ -282,8 +282,8 @@
     .hr-img { height: 310px; }
     .hr-img-circle { width: 270px; height: 270px; }
     .hr-img-wrap::before { width: 300px; height: 300px; }
-    .hr-badge-top { right: 0; }
-    .hr-badge-bottom { left: 0; }
+    .hr-badge { display: none !important; }
+    .hr-mobile-badges { display: flex !important; }
 }
 
 @media (max-width: 480px) {
@@ -293,4 +293,31 @@
     .hr-img-wrap::before { width: 250px; height: 250px; }
     .hr-stats { gap: 14px; padding: 14px 18px; }
     .hr-stat strong { font-size: 1.1rem; }
+}
+
+/* Mobile badges row */
+.hr-mobile-badges {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.hr-mobile-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    border: 1px solid #e8f5e9;
+    border-radius: 20px;
+    padding: 7px 14px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #1a4d2e;
+    box-shadow: 0 2px 8px rgba(5,146,18,0.08);
+}
+
+@media (max-width: 768px) {
+    .hr-mobile-badges { display: flex; }
 }

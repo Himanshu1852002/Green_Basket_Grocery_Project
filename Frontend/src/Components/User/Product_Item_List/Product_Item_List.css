@@ -2,7 +2,7 @@
 .pl-section {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 32px 20px 60px;
+    padding: 24px 12px 60px;
     background: #f7fbf7;
 }
 
@@ -12,22 +12,22 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 14px;
-    margin-bottom: 16px;
-    padding-bottom: 16px;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
     border-bottom: 2px solid #e8f5e9;
 }
 
 .pl-topbar-left {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 .pl-topbar-right {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
 }
 
@@ -365,16 +365,48 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-    .pl-topbar { flex-direction: column; align-items: flex-start; }
-    .pl-topbar-right { width: 100%; }
-    .pl-search-input { width: 120px; }
-    .pl-filter-panel { gap: 20px; }
+    .pl-section { padding: 16px 10px 40px; }
+    .pl-topbar { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .pl-topbar-right { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .pl-search { grid-column: 1 / -1; }
+    .pl-search-input { width: 100%; min-width: 0; }
+    .pl-sort-wrap { display: flex; }
+    .pl-filter-btn { justify-content: center; }
+    .pl-filter-panel { gap: 16px; padding: 16px; }
     .pl-filter-group { min-width: 100%; }
+    .pl-title { font-size: 1.2rem; }
 }
 
-@media (max-width: 480px) {
-    .pl-search-input { width: 90px; }
-    .pl-sort-wrap { display: none; }
+@media (max-width: 380px) {
+    .col-6 { width: 100% !important; padding: 0 !important; }
+    .row.g-3 { gap: 8px !important; margin: 0 !important; display: flex; flex-direction: column; }
+
+    .pc-card { flex-direction: row !important; height: auto !important; border-radius: 12px; }
+
+    .pc-img-wrap {
+        width: 95px !important;
+        height: auto !important;
+        min-height: 100px;
+        flex-shrink: 0;
+        border-radius: 12px 0 0 12px;
+        padding: 8px !important;
+    }
+
+    .pc-img { max-height: 78px !important; max-width: 78px !important; }
+
+    .pc-badge, .pc-smart-badge, .pc-oos-badge { font-size: 0.58rem; padding: 2px 7px; top: 6px; left: 6px; }
+
+    .pc-wish-img { display: none !important; }
+    .pc-wish-body { display: flex !important; }
+
+    .pc-body { position: relative; padding: 8px 10px 8px 8px !important; gap: 5px !important; }
+
+    .pc-stars { display: none; }
+    .pc-name { font-size: 0.8rem; padding-right: 28px; }
+    .pc-selling { font-size: 0.85rem; }
+    .pc-original { font-size: 0.68rem; }
+    .pc-urgency-wrap { height: 16px; }
+    .pc-cart-btn { font-size: 0.7rem; padding: 6px 0; }
 }
 
 /* ── Card ── */
@@ -432,24 +464,13 @@
     z-index: 2;
 }
 
-/* Action buttons */
-.pc-actions {
+/* Wishlist button */
+.pc-wish-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    z-index: 2;
-}
-
-.pc-card:hover .pc-actions { opacity: 1; }
-
-.pc-action-btn {
-    width: 32px;
-    height: 32px;
+    top: 8px;
+    right: 8px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     border: none;
     background: #fff;
@@ -458,10 +479,24 @@
     justify-content: center;
     cursor: pointer;
     box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-    transition: transform 0.18s;
+    z-index: 3;
+    transition: transform 0.18s, box-shadow 0.18s;
 }
+.pc-wish-btn:hover { transform: scale(1.18); box-shadow: 0 4px 12px rgba(0,0,0,0.18); }
+.pc-wish-active { background: #fff0f0; }
 
-.pc-action-btn:hover { transform: scale(1.15); }
+/* body heart — hidden by default, shown on small screens */
+.pc-wish-body {
+    display: none;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 26px;
+    height: 26px;
+    box-shadow: none;
+    background: #f7fbf7;
+    border: 1px solid #e8f5e9;
+}
 
 /* Body */
 .pc-body {
@@ -861,20 +896,5 @@
 
 @media (max-width: 480px) {
     .pc-modal-thumbs { display: none; }
-    .pc-img-wrap { height: 150px; }
     .pl-title { font-size: 1.2rem; }
-    .pc-cart-btn {
-        font-size: 0.7rem;
-        padding: 7px 0;
-        gap: 4px;
-    }
-}
-
-@media (max-width: 450px) {
-    .col-6 {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-    .pc-card { width: 80%; }
 }

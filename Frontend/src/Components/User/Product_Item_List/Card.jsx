@@ -80,17 +80,16 @@ const Card = ({ _id, name, price, image, sellingPrice, unit, description, quanti
                                 : smartBadge && <span className={`pc-smart-badge ${smartBadge.cls}`}>{smartBadge.label}</span>
                         }
                         <img src={image} className="pc-img" alt={name} />
-                        <div className="pc-actions">
-                            <button className="pc-action-btn" onClick={toggleWishlist} title="Wishlist">
-                                {isWishlisted
-                                    ? <FaHeart size={13} color="#e53935" />
-                                    : <FaRegHeart size={13} color="#666" />}
-                            </button>
-                        </div>
+                        <button className={`pc-wish-btn pc-wish-img${isWishlisted ? ' pc-wish-active' : ''}`} onClick={toggleWishlist}>
+                            {isWishlisted ? <FaHeart size={13} color="#e53935" /> : <FaRegHeart size={13} color="#666" />}
+                        </button>
                     </div>
 
                     {/* Body */}
                     <div className="pc-body">
+                        <button className={`pc-wish-btn pc-wish-body${isWishlisted ? ' pc-wish-active' : ''}`} onClick={toggleWishlist}>
+                            {isWishlisted ? <FaHeart size={12} color="#e53935" /> : <FaRegHeart size={12} color="#666" />}
+                        </button>
                         <div className="pc-stars">
                             {Array.from({ length: 5 }).map((_, i) => (
                                 <FaStar key={i} size={10} color={i < 4 ? "#f59e0b" : "#e0e0e0"} />
