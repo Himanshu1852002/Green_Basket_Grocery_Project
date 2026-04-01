@@ -310,6 +310,36 @@
     padding-top: 12px;
 }
 
+/* Login prompt */
+.ct-login-prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 40px 16px;
+    gap: 10px;
+}
+
+.ct-login-icon {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: #e8f5e9;
+    display: flex; align-items: center; justify-content: center;
+}
+
+.ct-login-prompt h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a4d2e;
+    margin: 0;
+}
+
+.ct-login-prompt p {
+    font-size: 0.87rem;
+    color: #888;
+    margin: 0;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
     .ct-info-grid { grid-template-columns: repeat(2, 1fr); }

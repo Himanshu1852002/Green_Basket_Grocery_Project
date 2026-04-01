@@ -10,13 +10,31 @@
     justify-content: space-between;
     z-index: 999;
     border-right: 1px solid rgba(255,255,255,0.06);
+    overflow: hidden;
 }
 
 .as-nav {
-    padding: 24px 12px;
+    padding: 16px 12px;
     display: flex;
     flex-direction: column;
     gap: 4px;
+    overflow-y: auto;
+    flex: 1;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+.as-nav::-webkit-scrollbar {
+    width: 4px;
+}
+
+.as-nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.as-nav::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.12);
+    border-radius: 4px;
 }
 
 .as-link {

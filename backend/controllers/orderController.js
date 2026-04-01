@@ -136,10 +136,15 @@ const fetchAllOrders = async (req, res) => {
 const updateStatus = async (req, res) => {
     const { orderId, orderStatus, cancelReason, cancelledBy } = req.body;
     try {
-        await orderModel.findByIdAndUpdate(orderId, { orderStatus, cancelReason, cancelledBy });
-
-        // Notification on status change
         const order = await orderModel.findById(orderId);
+        const updateData = { orderStatus, cancelReason, cancelledBy };
+
+        // COD order delivered → mark payment as paid
+        if (orderStatus === 'Delivered' && order?.paymentMethod === 'Cash on Delivery') {
+            updateData.payment = true;
+        }
+
+        await orderModel.findByIdAndUpdate(orderId, updateData);
         if (order) {
             const msgs = {
                 'Out for Delivery': { title: '🚚 Out for Delivery!', msg: 'Your order is on the way!' },
@@ -208,4 +213,18 @@ const getTrendingProducts = async (req, res) => {
     }
 };
 
-export { createOrder, verifyOrder, userOrders, fetchAllOrders, updateStatus, orderCount, orderCancel, getTrendingProducts };
+const getSalesReport = async (req, res) => {
+    const { from, to } = req.query;
+    try {
+        const filter = { payment: true };
+        if (from || to) {
+            filter.date = {};
+            if (from) filter.date.$gte = new Date(from);
+            if (to) { const toDate = new Date(to); toDate.setHours(23,59,59); filter.date.$lte = toDate; }
+        }
+        const orders = await orderModel.find(filter).sort({ date: -1 });
+        res.json({ success: true, data: orders });
+    } catch (e) { res.status(500).json({ success: false, message: e.message }); }
+};
+
+export { createOrder, verifyOrder, userOrders, fetchAllOrders, updateStatus, orderCount, orderCancel, getTrendingProducts, getSalesReport };

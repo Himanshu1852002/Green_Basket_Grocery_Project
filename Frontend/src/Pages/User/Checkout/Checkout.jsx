@@ -22,12 +22,6 @@ const Field = ({ name, type = 'text', placeholder, value, error, onChange }) => 
     </div>
 );
 
-const COUPONS = {
-    FRESH10: { type: 'percent', value: 10, label: '10% off' },
-    SAVE20: { type: 'flat', value: 20, label: '₹20 off' },
-    GREEN50: { type: 'flat', value: 50, label: '₹50 off' },
-};
-
 const STEPS = ['Cart', 'Delivery', 'Payment', 'Confirm'];
 
 const Checkout = () => {
@@ -107,15 +101,24 @@ const Checkout = () => {
         return Object.keys(newErrors).length === 0;
     };
 
-    const applyCoupon = () => {
+    const applyCoupon = async () => {
         const code = couponCode.trim().toUpperCase();
-        if (COUPONS[code]) {
-            setAppliedCoupon({ code, ...COUPONS[code] });
-            setCouponError('');
-        } else {
-            setCouponError('Invalid coupon code');
-            setAppliedCoupon(null);
-        }
+        if (!code) return;
+        try {
+            const res = await fetch(`${url}/api/coupons/apply`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code, orderAmount: totalCartAmount })
+            });
+            const data = await res.json();
+            if (data.success) {
+                setAppliedCoupon({ code, ...data.coupon });
+                setCouponError('');
+            } else {
+                setCouponError(data.message);
+                setAppliedCoupon(null);
+            }
+        } catch { setCouponError('Failed to apply coupon'); }
     };
 
     const removeCoupon = () => {
@@ -365,7 +368,7 @@ const Checkout = () => {
                             </div>
                         )}
                         {couponError && <span className="co-error">{couponError}</span>}
-                        <p className="co-coupon-hint">Try: FRESH10 · SAVE20 · GREEN50</p>
+                        <p className="co-coupon-hint">Apply coupon codes for discounts</p>
                     </div>
 
                     {/* Price summary */}

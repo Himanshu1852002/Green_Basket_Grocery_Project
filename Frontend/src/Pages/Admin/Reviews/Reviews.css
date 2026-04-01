@@ -34,7 +34,9 @@
 .rv-user-cell { display: flex; align-items: center; gap: 10px; }
 .rv-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #059212, #1a4d2e); color: #fff; font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .rv-username { font-weight: 600; color: #1a4d2e; }
-.rv-product { font-size: 0.78rem; color: #888; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rv-product-cell { display: flex; align-items: center; gap: 10px; }
+.rv-product-img { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; border: 1px solid #e8f5e9; background: #f7fbf7; flex-shrink: 0; }
+.rv-product-name { font-size: 0.82rem; font-weight: 600; color: #1a4d2e; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .rv-stars { display: flex; gap: 2px; }
 .rv-comment { max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #555; }
 .rv-date { color: #aaa; font-size: 0.78rem; white-space: nowrap; }

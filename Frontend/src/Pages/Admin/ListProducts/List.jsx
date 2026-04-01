@@ -6,7 +6,7 @@ import axios from 'axios';
 import { MdDeleteForever, MdClose, MdInventory } from 'react-icons/md';
 import { FaEdit, FaListAlt, FaSearch, FaTrash, FaToggleOn, FaToggleOff } from 'react-icons/fa';
 
-const CATEGORIES = ['', 'Fruits', 'Vegetables', 'Chocolates', 'Snacks', 'Coldrinks', 'Grocery'];
+const CATEGORIES = ['', 'Fruits', 'Vegetables', 'Chocolates', 'Snacks', 'Coldrinks', 'Grocery', 'IceCream'];
 
 const List = ({ url }) => {
     const [list, setList]                     = useState([]);
@@ -257,37 +257,84 @@ const List = ({ url }) => {
             {editingProduct && (
                 <div className="lp-overlay" onClick={() => setEditingProduct(null)}>
                     <div className="lp-modal" onClick={e => e.stopPropagation()}>
+
+                        {/* Modal Header */}
                         <div className="lp-modal-header">
-                            <h3>Edit Product</h3>
+                            <div className="lp-modal-header-left">
+                                <div className="lp-modal-header-icon"><FaEdit size={16} /></div>
+                                <div>
+                                    <h3>Edit Product</h3>
+                                    <p>{updatedProduct.name}</p>
+                                </div>
+                            </div>
                             <button className="lp-modal-close" onClick={() => setEditingProduct(null)}><MdClose size={18} /></button>
                         </div>
+
+                        {/* Modal Body — 2 column */}
                         <div className="lp-modal-body">
-                            {[
-                                { label: 'Name', name: 'name', type: 'text' },
-                                { label: 'MRP Price (₹)', name: 'price', type: 'number' },
-                                { label: 'Selling Price (₹)', name: 'sellingPrice', type: 'number' },
-                                { label: 'Quantity', name: 'quantity', type: 'number' },
-                            ].map(f => (
-                                <div className="lp-modal-field" key={f.name}>
-                                    <label>{f.label}</label>
-                                    <input type={f.type} name={f.name} value={updatedProduct[f.name] || ''}
-                                        onChange={e => setUpdatedProduct({ ...updatedProduct, [f.name]: e.target.value })} />
+
+                            {/* Left — Image */}
+                            <div className="lp-modal-left">
+                                <div className="lp-modal-img-box">
+                                    <img
+                                        src={newImage ? URL.createObjectURL(newImage) : `${url}/uploads/${updatedProduct.image}`}
+                                        alt="preview"
+                                        className="lp-modal-img-preview"
+                                    />
+                                    {newImage && <span className="lp-modal-img-new-badge">New</span>}
                                 </div>
-                            ))}
-                            <div className="lp-modal-field">
-                                <label>Category</label>
-                                <select value={updatedProduct.category} onChange={e => setUpdatedProduct({ ...updatedProduct, category: e.target.value })}>
-                                    {CATEGORIES.filter(Boolean).map(c => <option key={c} value={c}>{c}</option>)}
-                                </select>
+                                <label className="lp-modal-img-upload">
+                                    📁 {newImage ? 'Change Image' : 'Upload New Image'}
+                                    <input type="file" accept="image/*" hidden onChange={e => setNewImage(e.target.files[0])} />
+                                </label>
+                                {newImage && (
+                                    <button className="lp-modal-img-remove" onClick={() => setNewImage(null)}>✕ Remove</button>
+                                )}
+                                {updatedProduct.price && updatedProduct.sellingPrice && (
+                                    <div className="lp-modal-disc-preview">
+                                        <span>Discount</span>
+                                        <strong>{discount(updatedProduct.price, updatedProduct.sellingPrice)}% OFF</strong>
+                                    </div>
+                                )}
                             </div>
-                            <div className="lp-modal-field">
-                                <label>New Image (optional)</label>
-                                <input type="file" onChange={e => setNewImage(e.target.files[0])} />
+
+                            {/* Right — Fields */}
+                            <div className="lp-modal-right">
+                                <div className="lp-modal-field">
+                                    <label>Product Name</label>
+                                    <input type="text" value={updatedProduct.name || ''}
+                                        onChange={e => setUpdatedProduct({ ...updatedProduct, name: e.target.value })} />
+                                </div>
+                                <div className="lp-modal-row">
+                                    <div className="lp-modal-field">
+                                        <label>MRP (₹)</label>
+                                        <input type="number" value={updatedProduct.price || ''}
+                                            onChange={e => setUpdatedProduct({ ...updatedProduct, price: e.target.value })} />
+                                    </div>
+                                    <div className="lp-modal-field">
+                                        <label>Selling Price (₹)</label>
+                                        <input type="number" value={updatedProduct.sellingPrice || ''}
+                                            onChange={e => setUpdatedProduct({ ...updatedProduct, sellingPrice: e.target.value })} />
+                                    </div>
+                                </div>
+                                <div className="lp-modal-row">
+                                    <div className="lp-modal-field">
+                                        <label>Quantity</label>
+                                        <input type="number" value={updatedProduct.quantity || ''}
+                                            onChange={e => setUpdatedProduct({ ...updatedProduct, quantity: e.target.value })} />
+                                    </div>
+                                    <div className="lp-modal-field">
+                                        <label>Category</label>
+                                        <select value={updatedProduct.category} onChange={e => setUpdatedProduct({ ...updatedProduct, category: e.target.value })}>
+                                            {CATEGORIES.filter(Boolean).map(c => <option key={c} value={c}>{c}</option>)}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="lp-modal-footer">
+                                    <button className="lp-modal-save" onClick={updateProduct}>Save Changes</button>
+                                    <button className="lp-modal-cancel" onClick={() => setEditingProduct(null)}>Cancel</button>
+                                </div>
                             </div>
-                        </div>
-                        <div className="lp-modal-footer">
-                            <button className="lp-modal-save" onClick={updateProduct}>Save Changes</button>
-                            <button className="lp-modal-cancel" onClick={() => setEditingProduct(null)}>Cancel</button>
                         </div>
                     </div>
                 </div>

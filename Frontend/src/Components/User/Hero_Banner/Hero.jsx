@@ -29,6 +29,16 @@ const Hero = () => {
                             View All
                         </Link>
                     </div>
+                    <div className="hr-mobile-badges">
+                        <div className="hr-mobile-badge">
+                            <MdLocalOffer size={14} color="#059212" />
+                            <span>Free Delivery ₹500+</span>
+                        </div>
+                        <div className="hr-mobile-badge">
+                            <FaLeaf size={13} color="#059212" />
+                            <span>100% Organic</span>
+                        </div>
+                    </div>
                     <div className="hr-stats">
                         <div className="hr-stat">
                             <strong>500+</strong>

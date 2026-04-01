@@ -224,22 +224,203 @@ input[type='number'] { -moz-appearance: textfield; }
 .lp-confirm-no:hover { background: #e0e0e0; }
 
 /* Edit Modal */
-.lp-modal { background: #fff; border-radius: 18px; width: 100%; max-width: 460px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); overflow: hidden; }
-.lp-modal-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; border-bottom: 1px solid #f0f0f0; }
-.lp-modal-header h3 { font-size: 1rem; font-weight: 800; color: #1a4d2e; margin: 0; }
-.lp-modal-close { background: #f5f5f5; border: none; width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #666; }
-.lp-modal-close:hover { background: #ffebee; color: #e53935; }
-.lp-modal-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 14px; max-height: 60vh; overflow-y: auto; }
-.lp-modal-field { display: flex; flex-direction: column; gap: 6px; }
-.lp-modal-field label { font-size: 0.78rem; font-weight: 700; color: #666; text-transform: uppercase; }
-.lp-modal-field input,
-.lp-modal-field select { border: 1.5px solid #e0e0e0; border-radius: 10px; padding: 9px 13px; font-size: 0.88rem; outline: none; transition: border-color 0.2s; }
+.lp-modal {
+    background: #fff;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 720px;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+    overflow: hidden;
+}
+
+.lp-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    background: linear-gradient(135deg, #1a4d2e, #059212);
+}
+
+.lp-modal-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.lp-modal-header-icon {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+}
+
+.lp-modal-header h3 { font-size: 1rem; font-weight: 800; color: #fff; margin: 0; }
+.lp-modal-header p  { font-size: 0.78rem; color: rgba(255,255,255,0.7); margin: 0; }
+
+.lp-modal-close {
+    background: rgba(255,255,255,0.15);
+    border: none; width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: #fff;
+    transition: background 0.2s;
+}
+.lp-modal-close:hover { background: rgba(255,255,255,0.3); }
+
+/* 2-column body */
+.lp-modal-body {
+    display: flex;
+    gap: 0;
+}
+
+/* Left — image panel */
+.lp-modal-left {
+    width: 220px;
+    flex-shrink: 0;
+    background: #f7fbf7;
+    border-right: 1.5px solid #e8f5e9;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.lp-modal-img-box {
+    position: relative;
+    width: 150px; height: 150px;
+    background: #fff;
+    border-radius: 16px;
+    border: 2px solid #e8f5e9;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(5,146,18,0.1);
+}
+
+.lp-modal-img-preview {
+    width: 130px; height: 130px;
+    object-fit: contain;
+    filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.1));
+}
+
+.lp-modal-img-new-badge {
+    position: absolute;
+    top: 8px; right: 8px;
+    background: #059212; color: #fff;
+    font-size: 0.62rem; font-weight: 700;
+    padding: 2px 8px; border-radius: 10px;
+}
+
+.lp-modal-img-upload {
+    width: 100%;
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px;
+    padding: 9px;
+    background: #e8f5e9;
+    color: #1a4d2e;
+    border: 1.5px dashed #a5d6a7;
+    border-radius: 10px;
+    font-size: 0.8rem; font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-align: center;
+}
+.lp-modal-img-upload:hover { background: #c8e6c9; }
+
+.lp-modal-img-remove {
+    width: 100%;
+    background: #ffebee; color: #e53935;
+    border: 1.5px solid #ffcdd2;
+    border-radius: 8px; padding: 7px;
+    font-size: 0.8rem; font-weight: 600;
+    cursor: pointer; transition: background 0.2s;
+}
+.lp-modal-img-remove:hover { background: #ffcdd2; }
+
+.lp-modal-disc-preview {
+    width: 100%;
+    background: #fff3e0;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    margin-top: auto;
+}
+.lp-modal-disc-preview span { font-size: 0.7rem; color: #888; }
+.lp-modal-disc-preview strong { font-size: 1.1rem; color: #e65100; font-weight: 800; }
+
+/* Right — fields */
+.lp-modal-right {
+    flex: 1;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.lp-modal-row {
+    display: flex;
+    gap: 12px;
+}
+
+.lp-modal-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.lp-modal-field label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.lp-modal-field input[type='text'],
+.lp-modal-field input[type='number'],
+.lp-modal-field select {
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px 13px;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: #fafafa;
+    width: 100%;
+}
 .lp-modal-field input:focus,
-.lp-modal-field select:focus { border-color: #059212; }
-.lp-modal-footer { display: flex; gap: 10px; padding: 16px 24px; border-top: 1px solid #f0f0f0; }
-.lp-modal-save   { flex: 1; background: #059212; color: #fff; border: none; border-radius: 10px; padding: 11px; font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
-.lp-modal-save:hover { background: #1a4d2e; }
-.lp-modal-cancel { flex: 1; background: #f5f5f5; color: #666; border: none; border-radius: 10px; padding: 11px; font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+.lp-modal-field select:focus {
+    border-color: #059212;
+    box-shadow: 0 0 0 3px rgba(5,146,18,0.08);
+    background: #fff;
+}
+
+.lp-modal-footer {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 8px;
+}
+
+.lp-modal-save {
+    flex: 1; background: linear-gradient(135deg, #059212, #1a4d2e);
+    color: #fff; border: none; border-radius: 10px; padding: 11px;
+    font-size: 0.88rem; font-weight: 700; cursor: pointer;
+    transition: opacity 0.2s; box-shadow: 0 3px 10px rgba(5,146,18,0.25);
+}
+.lp-modal-save:hover { opacity: 0.9; }
+
+.lp-modal-cancel {
+    flex: 1; background: #f5f5f5; color: #666;
+    border: none; border-radius: 10px; padding: 11px;
+    font-size: 0.88rem; font-weight: 700; cursor: pointer;
+    transition: background 0.2s;
+}
 .lp-modal-cancel:hover { background: #e0e0e0; }
 
 @media (max-width: 900px) {

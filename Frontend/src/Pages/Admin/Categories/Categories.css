@@ -1,0 +1,27 @@
+.cat-page { padding: 24px; max-width: 900px; }
+.cat-title { font-size: 1.4rem; font-weight: 800; color: #1a4d2e; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+
+.cat-form { background: #fff; border: 1.5px solid #e8f5e9; border-radius: 16px; padding: 24px; margin-bottom: 28px; box-shadow: 0 2px 12px rgba(5,146,18,0.06); }
+.cat-form h4 { font-size: 1rem; font-weight: 700; color: #1a4d2e; margin: 0 0 16px; }
+.cat-form-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+.cat-field { display: flex; flex-direction: column; gap: 5px; }
+.cat-field-grow { flex: 1; min-width: 200px; }
+.cat-field label { font-size: 0.75rem; font-weight: 700; color: #666; text-transform: uppercase; }
+.cat-field input { padding: 10px 12px; border: 1.5px solid #e0e0e0; border-radius: 10px; font-size: 0.88rem; outline: none; transition: border-color 0.2s; }
+.cat-field input:focus { border-color: #059212; }
+
+.cat-btn { display: flex; align-items: center; gap: 7px; padding: 10px 22px; background: #059212; color: #fff; border: none; border-radius: 10px; font-size: 0.88rem; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.2s; height: 40px; }
+.cat-btn:hover { background: #1a4d2e; }
+
+.cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+
+.cat-card { background: #fff; border: 1.5px solid #e8f5e9; border-radius: 14px; padding: 16px 18px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 8px rgba(5,146,18,0.06); transition: box-shadow 0.2s; }
+.cat-card:hover { box-shadow: 0 4px 16px rgba(5,146,18,0.12); }
+.cat-inactive { opacity: 0.5; }
+.cat-emoji { font-size: 1.6rem; flex-shrink: 0; }
+.cat-name { font-size: 0.92rem; font-weight: 700; color: #1a1a1a; flex: 1; }
+.cat-actions { display: flex; align-items: center; gap: 6px; }
+.cat-toggle { background: none; border: none; cursor: pointer; padding: 2px; }
+.cat-del { background: #ffebee; border: none; border-radius: 7px; padding: 5px 8px; color: #e53935; cursor: pointer; transition: background 0.2s; }
+.cat-del:hover { background: #e53935; color: #fff; }
+.cat-empty { color: #aaa; font-size: 0.88rem; grid-column: 1/-1; text-align: center; padding: 32px; }

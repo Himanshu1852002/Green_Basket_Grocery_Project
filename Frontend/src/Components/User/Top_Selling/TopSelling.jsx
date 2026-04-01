@@ -168,9 +168,6 @@ const TopSelling = () => {
                     <h2 className="ts-title">Best <span>Sellers</span></h2>
                     <p className="ts-sub">Most loved products across all categories</p>
                 </div>
-                <button className="ts-view-all" onClick={() => navigate(`/user/${activeTab.toLowerCase()}`)}>
-                    View All <FaChevronRight size={11} />
-                </button>
             </div>
 
             {/* Category Tabs */}
@@ -185,6 +182,9 @@ const TopSelling = () => {
                         {cat.label}
                     </button>
                 ))}
+                <button className="ts-view-all" onClick={() => navigate(`/user/${activeTab.toLowerCase()}`)}>
+                    View All <FaChevronRight size={11} />
+                </button>
             </div>
 
             {/* Products Grid */}

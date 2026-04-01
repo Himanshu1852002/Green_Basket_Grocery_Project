@@ -1,6 +1,6 @@
 import './Sidebar.css';
-import { MdLibraryAdd, MdDashboardCustomize, MdShoppingBag } from 'react-icons/md';
-import { FaListAlt, FaUsers, FaStar, FaBell, FaLayerGroup } from 'react-icons/fa';
+import { MdLibraryAdd, MdDashboardCustomize, MdShoppingBag, MdCategory, MdBarChart } from 'react-icons/md';
+import { FaListAlt, FaUsers, FaStar, FaBell, FaLayerGroup, FaEnvelope, FaTag } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 
 const navItems = [
@@ -12,6 +12,10 @@ const navItems = [
     { to: '/admin/reviews',              icon: <FaStar size={17} />,               label: 'Reviews' },
     { to: '/admin/notifications',        icon: <FaBell size={17} />,               label: 'Notifications' },
     { to: '/admin/special-collections',  icon: <FaLayerGroup size={17} />,         label: 'Collections' },
+    { to: '/admin/messages',             icon: <FaEnvelope size={17} />,           label: 'Messages' },
+    { to: '/admin/coupons',              icon: <FaTag size={17} />,                label: 'Coupons' },
+    { to: '/admin/categories',           icon: <MdCategory size={19} />,           label: 'Categories' },
+    { to: '/admin/sales-report',         icon: <MdBarChart size={19} />,           label: 'Sales Report' },
 ];
 
 const Sidebar = () => {

@@ -1,7 +1,11 @@
 import './Contact.css';
 import { useState } from 'react';
 import { CiLocationOn } from "react-icons/ci";
-import { FaPhoneAlt, FaEnvelope, FaClock, FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaPhoneAlt, FaEnvelope, FaClock, FaChevronDown, FaChevronUp, FaLock } from "react-icons/fa";
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://green-basket-grocery-project-1.onrender.com';
 
 const faqs = [
     { q: "What are your delivery hours?", a: "We deliver from 8 AM to 9 PM, 7 days a week including public holidays." },
@@ -14,13 +18,20 @@ const faqs = [
 const Contact = () => {
     const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
     const [submitted, setSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [openFaq, setOpenFaq] = useState(null);
+    const token = useSelector(s => s.cart.token);
 
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (form.name && form.email && form.message) setSubmitted(true);
+        setLoading(true);
+        try {
+            const res = await axios.post(`${BASE_URL}/api/contact/submit`, form);
+            if (res.data.success) setSubmitted(true);
+        } catch { }
+        setLoading(false);
     };
 
     return (
@@ -79,6 +90,12 @@ const Contact = () => {
                                 Send Another
                             </button>
                         </div>
+                    ) : !token ? (
+                        <div className="ct-login-prompt">
+                            <div className="ct-login-icon"><FaLock size={28} color="#059212" /></div>
+                            <h4>Login Required</h4>
+                            <p>Please log in to send us a message.</p>
+                        </div>
                     ) : (
                         <form className="ct-form" onSubmit={handleSubmit}>
                             <div className="ct-form-row">
@@ -99,7 +116,9 @@ const Contact = () => {
                                 <label className="ct-label">Message *</label>
                                 <textarea className="ct-textarea" name="message" rows={5} value={form.message} onChange={handleChange} placeholder="Write your message here..." required />
                             </div>
-                            <button type="submit" className="ct-submit-btn">Send Message →</button>
+                            <button type="submit" className="ct-submit-btn" disabled={loading}>
+                                {loading ? 'Sending...' : 'Send Message →'}
+                            </button>
                         </form>
                     )}
                 </div>
